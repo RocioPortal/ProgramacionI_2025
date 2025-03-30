@@ -23,6 +23,9 @@ def create_app():
 
     api.add_resource(resources.PedidosResource, '/pedidos')
     api.add_resource(resources.PedidoResource, '/pedido/<int:id>')
+
+    api.add_resource(resources.LoginResource, '/login')
+    api.add_resource(resources.LogoutResource, '/logout')
     
     api.init_app(app)
     return app
