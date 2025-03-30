@@ -21,6 +21,9 @@ def create_app():
     api.add_resource(resources.ProductosResource, '/productos')
     api.add_resource(resources.ProductoResource, '/producto/<int:id>')
 
+    api.add_resource(resources.ValoracionResource, "/productos/<int:producto_id>/valoraciones")
+    api.add_resource(resources.NotificacionResource, "/usuarios/<int:usuario_id>/notificaciones")
+
     
     api.init_app(app)
     return app
