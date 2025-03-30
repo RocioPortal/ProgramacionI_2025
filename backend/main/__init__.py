@@ -21,6 +21,8 @@ def create_app():
     api.add_resource(resources.ProductosResource, '/productos')
     api.add_resource(resources.ProductoResource, '/producto/<int:id>')
 
+    api.add_resource(resources.PedidosResource, '/pedidos')
+    api.add_resource(resources.PedidoResource, '/pedido/<int:id>')
     
     api.init_app(app)
     return app
