@@ -17,6 +17,10 @@ def create_app():
     #cargar los recursos
     api.add_resource(resources.UsuarioResource, '/usuario/<int:id>')
     api.add_resource(resources.UsuariosResource, '/usuarios')
+
+    api.add_resource(resources.ProductosResource, '/productos')
+    api.add_resource(resources.ProductoResource, '/producto/<int:id>')
+
     
     api.init_app(app)
     return app
