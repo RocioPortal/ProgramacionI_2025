@@ -1,0 +1,28 @@
+from flask_restful import Resource
+from flask import request
+
+NOTIFICACIONES = {}
+
+def verificar_permiso(roles_requeridos):
+    rol_usuario = 'ADMIN'  
+    if rol_usuario not in roles_requeridos:
+        return False, "No tienes permiso para realizar esta acción", 403
+    return True, "", 200
+
+
+class Notificacion(Resource):
+    def post(self, usuario_id):
+        permitido, mensaje, codigo = verificar_permiso(['ADMIN', 'ENCARGADO'])
+        if not permitido:
+            return mensaje, codigo
+        
+        data = request.get_json()
+        if 'mensaje' not in data:
+            return "Debes proporcionar un mensaje para la notificación", 400
+        
+        if usuario_id not in NOTIFICACIONES:
+            NOTIFICACIONES[usuario_id] = []
+        
+        NOTIFICACIONES[usuario_id].append(data['mensaje'])
+        
+        return "Notificación enviada con éxito", 201
