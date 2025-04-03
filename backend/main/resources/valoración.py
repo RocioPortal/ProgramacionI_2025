@@ -4,7 +4,7 @@ from flask import request
 VALORACIONES = {}
 
 def verificar_permiso(roles_requeridos):
-    rol_usuario = 'USER'  
+    rol_usuario = request.headers.get('Rol', '')
     if rol_usuario not in roles_requeridos:
         return False, "No tienes permiso para realizar esta acción", 403
     return True, "", 200
