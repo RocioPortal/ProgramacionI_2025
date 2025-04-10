@@ -9,8 +9,8 @@ class Pedido (db.Model):
     estado = db.Column(db.String(20), nullable=False, default='pendiente')  # 'pendiente', 'confirmado', 'cancelado'
     fecha_pedido = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    # Relación con Usuario
-    usuario = db.relationship('Usuario', backref=db.backref('pedidos', lazy=True))
+
+    #usuario = db.relationship('Usuario', backref=db.backref('pedidos', lazy=True)) ---->  seria como clave foranea, checkear si funca
 
 
     # Convertir Pedido a JSON
