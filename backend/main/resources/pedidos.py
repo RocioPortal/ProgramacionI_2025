@@ -1,9 +1,12 @@
 from flask_restful import Resource
 from flask import request
+from main.models import AnimalModel
+from .. import db
+
 
 PEDIDOS = {
-    1: {"producto_id": 1, "producto_nombre": "Hamburguesa", "precio": 10000, "cantidad": 2},
-    2: {"producto_id": 2, "producto_nombre": "Pizza", "precio": 7000, "cantidad": 3}
+    1: {"producto_id": 1, "nombre": "Hamburguesa", "precio": 10000, "cantidad": 2},
+    2: {"producto_id": 2, "nombre": "Pizza", "precio": 7000, "cantidad": 3}
 }
 
 def verificar_permiso(roles_requeridos):
@@ -22,8 +25,17 @@ class Pedido(Resource):
         permitido, mensaje, codigo = verificar_permiso(['USER', 'ADMIN', 'ENCARGADO'])
         if not permitido:
             return mensaje, codigo
+
+        pedido = db.session.query(PedidoModel).get_or_404(id)
+        return pedido.to_json()
+
+
+    #def get(self, id):
+    #   permitido, mensaje, codigo = verificar_permiso(['USER', 'ADMIN', 'ENCARGADO'])
+    #   if not permitido:
+    #       return mensaje, codigo
         
-        return PEDIDOS.get(int(id), ('El id es inexistente', 404))
+    #   return PEDIDOS.get(int(id), ('El id es inexistente', 404))
     
     def put(self, id):
         permitido, mensaje, codigo = verificar_permiso(['USER', 'ADMIN', 'ENCARGADO'])
