@@ -2,8 +2,10 @@ from .. import db
 from datetime import datetime
 
 class Pedido (db.Model):
+    __tablename__ = 'pedidos'
+
     id_pedido = db.Column(db.Integer, primary_key=True)
-    id_user = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
+    #id_user = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
     nombre = db.Column(db.String(100), nullable=False)
     precio = db.Column(db.Integer, nullable=False)
     estado = db.Column(db.String(20), nullable=False, default='pendiente')  # 'pendiente', 'confirmado', 'cancelado'
@@ -17,7 +19,7 @@ class Pedido (db.Model):
     def to_json(self):
         pedido_json = {
             'id_pedido': self.id_pedido,
-            'id_user': self.id_user,
+            #'id_user': self.id_user,
             'nombre': str(self.nombre),
             'precio': self.precio,
             'estado': str(self.estado),
