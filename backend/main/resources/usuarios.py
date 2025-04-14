@@ -1,14 +1,11 @@
 from flask_restful import Resource
 from flask import request
-
-USUARIOS = {
-    1: {'nombre': 'Admin', 'rol': 'ADMIN', 'estado': 'activo'},
-    2: {'nombre': 'Encargado1', 'rol': 'ENCARGADO', 'estado': 'activo'}
-}
+from main.models import UsuarioModel
+from .. import db
 
 # Función para verificar permisos de acuerdo al rol
 def verificar_permiso(roles_requeridos):
-    rol_usuario = 'ADMIN'  #Esto hay que cambiar por la lógica para obtener el rol del usuario.
+    rol_usuario = 'ADMIN'  # Temporal, luego se puede obtener del token o sesión
     if rol_usuario not in roles_requeridos:
         return False, "No tienes permiso para realizar esta acción", 403
     return True, "", 200
@@ -19,54 +16,86 @@ class Usuario(Resource):
         permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
         if not permitido:
             return mensaje, codigo
-        
-        if int(id) in USUARIOS:
-            return USUARIOS[int(id)]
+
+        usuario = db.session.query(UsuarioModel).get(id) 
+        if usuario:
+            return usuario.to_json(), 200
         return 'El id es inexistente', 404
-    
+
     def put(self, id):
         permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
         if not permitido:
             return mensaje, codigo
-        
-        if int(id) in USUARIOS:
-            data = request.get_json()
-            # Si el estado es 'suspendido', lo cambiamos a 'activo'
-            if 'estado' in data and data['estado'] == 'activo':
-                if USUARIOS[int(id)]['estado'] == 'suspendido':
-                    USUARIOS[int(id)]['estado'] = 'activo'
-                    return 'Usuario reactivado con éxito', 200
-                return 'El usuario ya está activo', 400
-            USUARIOS[int(id)].update(data)
-            return 'Usuario editado con éxito', 201
-        
-        return 'El id que intentan editar es inexistente', 404
+
+        usuario = db.session.query(UsuarioModel).get(id)  
+        if not usuario:
+            return 'El id que intentan editar es inexistente', 404
+
+        data = request.get_json()
+        if 'estado' in data and data['estado'] == 'activo':
+            if usuario.estado == 'suspendido':
+                usuario.estado = 'activo'
+                db.session.commit()
+                return 'Usuario reactivado con éxito', 200
+            return 'El usuario ya está activo', 200
+
+        # Actualizamos otros campos si llegan
+        if 'nombre' in data:
+            usuario.nombre = data['nombre']
+        if 'rol' in data:
+            usuario.rol = data['rol']
+        if 'estado' in data:
+            usuario.estado = data['estado']
+
+        db.session.commit()
+        return 'Usuario editado con éxito', 200
     
     def delete(self, id):
         permitido, mensaje, codigo = verificar_permiso(['ADMIN', 'ENCARGADO'])
         if not permitido:
             return mensaje, codigo
-        
-        if int(id) in USUARIOS:
-            USUARIOS[int(id)]['estado'] = 'suspendido'  # Suspender usuario
-            return 'Usuario suspendido con éxito', 200
-        return 'El id a eliminar es inexistente', 404
 
-# Recurso para la colección de usuarios
+        usuario = db.session.query(UsuarioModel).get(id)  
+        if not usuario:
+            return 'El id a eliminar es inexistente', 404
+
+        # Cambiar el estado del usuario a 'suspendido'
+        usuario.estado = 'suspendido'
+        db.session.commit()
+
+        # Retornar el usuario con estado 'suspendido'
+        return {
+            "id": usuario.id,
+            "nombre": usuario.nombre,
+            "rol": usuario.rol,
+            "estado": 'suspendido'
+        }, 200
+
+
+# Recurso para todos los usuarios
 class Usuarios(Resource):
     def get(self):
-        permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
+        permitido, mensaje, codigo = verificar_permiso(['ADMIN', 'ENCARGADO'])
         if not permitido:
             return mensaje, codigo
-        
-        return USUARIOS
-    
+
+        usuarios = db.session.query(UsuarioModel).all()  
+        return [usuario.to_json() for usuario in usuarios], 200
+
     def post(self):
         permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
         if not permitido:
             return mensaje, codigo
-        
+
         data = request.get_json()
-        id = int(max(USUARIOS.keys())) + 1 if USUARIOS else 1
-        USUARIOS[id] = data
-        return USUARIOS[id], 201
+        nuevo_usuario = UsuarioModel( 
+            nombre=data.get('nombre'),
+            rol=data.get('rol'),
+            estado=data.get('estado', 'activo')  # Valor por defecto
+        )
+        db.session.add(nuevo_usuario)
+        db.session.commit()
+        return nuevo_usuario.to_json(), 201
+
+
+
