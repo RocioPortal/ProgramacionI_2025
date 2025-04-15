@@ -14,3 +14,12 @@ class Usuario(db.Model):
             'rol': self.rol,
             'estado': self.estado
         }
+    
+    @staticmethod
+    def from_json(usuario_json):
+        return Usuario(
+            id=usuario_json.get('id'),  
+            nombre=usuario_json.get('nombre'),
+            rol=usuario_json.get('rol'),
+            estado=usuario_json.get('estado', 'activo')  
+        )

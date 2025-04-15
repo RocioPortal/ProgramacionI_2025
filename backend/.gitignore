@@ -1,13 +1,8 @@
 env/
 __pycache__/
-<<<<<<< HEAD
 .env
 *.pyc
 
 
 
 
-=======
-*.pyc
-.env
->>>>>>> dev_candela
