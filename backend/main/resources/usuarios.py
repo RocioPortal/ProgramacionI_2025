@@ -3,14 +3,14 @@ from flask import request
 from main.models import UsuarioModel
 from .. import db
 
-# Función para verificar permisos de acuerdo al rol
+
 def verificar_permiso(roles_requeridos):
     rol_usuario = 'ADMIN'  # Temporal, luego se puede obtener del token o sesión
     if rol_usuario not in roles_requeridos:
         return False, "No tienes permiso para realizar esta acción", 403
     return True, "", 200
 
-# Recurso para un usuario específico
+
 class Usuario(Resource):
     def get(self, id):
         permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
@@ -19,7 +19,8 @@ class Usuario(Resource):
 
         usuario = db.session.query(UsuarioModel).get(id) 
         if usuario:
-            return usuario.to_json(), 200
+            #return usuario.to_json(), 200
+            return usuario.to_json_complete(), 200
         return 'El id es inexistente', 404
 
     def put(self, id):
@@ -39,7 +40,7 @@ class Usuario(Resource):
                 return 'Usuario reactivado con éxito', 200
             return 'El usuario ya está activo', 200
 
-        # Actualizamos otros campos si llegan
+      
         if 'nombre' in data:
             usuario.nombre = data['nombre']
         if 'rol' in data:
@@ -59,11 +60,10 @@ class Usuario(Resource):
         if not usuario:
             return 'El id a eliminar es inexistente', 404
 
-        # Cambiar el estado del usuario a 'suspendido'
+       
         usuario.estado = 'suspendido'
         db.session.commit()
 
-        # Retornar el usuario con estado 'suspendido'
         return {
             "id": usuario.id,
             "nombre": usuario.nombre,
@@ -72,7 +72,7 @@ class Usuario(Resource):
         }, 200
 
 
-# Recurso para todos los usuarios
+
 class Usuarios(Resource):
     def get(self):
         permitido, mensaje, codigo = verificar_permiso(['ADMIN', 'ENCARGADO'])
@@ -80,7 +80,8 @@ class Usuarios(Resource):
             return mensaje, codigo
 
         usuarios = db.session.query(UsuarioModel).all()  
-        return [usuario.to_json() for usuario in usuarios], 200
+        #return [usuario.to_json() for usuario in usuarios], 200
+        return [usuario.to_json_complete() for usuario in usuarios], 200
 
     def post(self):
         permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
@@ -91,7 +92,7 @@ class Usuarios(Resource):
         nuevo_usuario = UsuarioModel( 
             nombre=data.get('nombre'),
             rol=data.get('rol'),
-            estado=data.get('estado', 'activo')  # Valor por defecto
+            estado=data.get('estado', 'activo')  
         )
         db.session.add(nuevo_usuario)
         db.session.commit()
