@@ -35,7 +35,7 @@ class Valoracion(Resource):
             #'calificacion': data['calificacion'],
             #'comentario': data['comentario']
         #})
-        nueva_valoracion = Valoracion(
+        nueva_valoracion = ValoracionesModel(
             id_user=data['id_user'],
             id_prod=producto_id,
             calificacion=data['calificacion'],
@@ -54,5 +54,5 @@ class Valoracion(Resource):
             return mensaje, codigo
         
         #return VALORACIONES.get(producto_id, [])
-        valoraciones = Valoracion.query.filter_by(id_prod=producto_id).all()
+        valoraciones = ValoracionesModel.query.filter_by(id_prod=producto_id).all()
         return [v.get_json() for v in valoraciones], 200

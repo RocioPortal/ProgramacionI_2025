@@ -6,7 +6,7 @@ from flask_restful import Api
 
 import os
 
-from flask_sqlalchemy import SQLAlchemy 
+from flask_sqlalchemy import SQLAlchemy
 
 
 #Inicializamos restful
