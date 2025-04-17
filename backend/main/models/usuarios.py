@@ -1,4 +1,5 @@
 from .. import db
+import json
 
 class Usuario(db.Model):
     __tablename__ = 'usuario'
@@ -14,3 +15,23 @@ class Usuario(db.Model):
             'rol': self.rol,
             'estado': self.estado
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
