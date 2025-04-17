@@ -8,6 +8,8 @@ class Producto(db.Model):
     descripcion = db.Column(db.String(200))
     precio = db.Column(db.Float, nullable=False)
     disponible = db.Column(db.Boolean, default=True)
+    
+    valoraciones = db.relationship('Valoracion', back_populates='producto', cascade="all, delete", single_parent=True)
 
     def to_json(self):
         return {
