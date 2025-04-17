@@ -2,60 +2,53 @@ from .. import db
 from datetime import datetime
 from . import UsuarioModel
 
-class Pedido (db.Model):
+class Pedido(db.Model):
     __tablename__ = 'pedidos'
 
     id_pedido = db.Column(db.Integer, primary_key=True)
-    id_user = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)  
+    id_user = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     nombre = db.Column(db.String(100), nullable=False)
     precio = db.Column(db.Integer, nullable=False)
-    estado = db.Column(db.String(20), nullable=False, default='pendiente')  # 'pendiente', 'confirmado', 'cancelado' --> por default "pendiente"
+    estado = db.Column(db.String(20), nullable=False, default='pendiente')
     fecha_pedido = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-
-    usuario  = db.relationship("Usuario", back_populates="pedidos") 
-
+    usuario = db.relationship("Usuario", back_populates="pedidos")
 
     def __repr__(self):
         return f"<Pedido nombre='{self.nombre}', estado='{self.estado}'>"
 
-    # Convertir Pedido a JSON
     def to_json(self):
         self.usuario = db.session.query(UsuarioModel).get_or_404(self.id_user)
-        pedido_json = {
+        return {
             'id_pedido': self.id_pedido,
             'nombre': str(self.nombre),
             'precio': self.precio,
             'estado': str(self.estado),
-            'fecha_pedido': self.fecha_pedido.isoformat(),
-            'usuario': self.usuario.to_json()  # Incluye los datos del usuario relacionado
+            'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
+            'usuario': self.usuario.to_json_short()  # ✅ SOLO info breve del usuario
         }
-        return pedido_json
-    
+
 
     def to_json_complete(self):
         self.usuario = db.session.query(UsuarioModel).get_or_404(self.id_user)
-        pedido_json = {
+        return {
             'id_pedido': self.id_pedido,
             'nombre': str(self.nombre),
             'precio': self.precio,
             'estado': str(self.estado),
-            'fecha_pedido': self.fecha_pedido.strftime("%d-%m-%Y %H:%M:%S"),
-            'usuario': self.usuario.to_json_complete() if hasattr(self.usuario, 'to_json_complete') else self.usuario.to_json()
+            'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
+            'usuario': self.usuario.to_json()  # ✅ Evitás que se llame a to_json_complete()
         }
-        return pedido_json
 
 
     def to_json_short(self):
-        pedido_json = {
+        return {
             'id_pedido': self.id_pedido,
             'nombre': str(self.nombre),
             'precio': self.precio,
             'estado': str(self.estado),
-            'fecha_pedido': self.fecha_pedido.isoformat(),
+            'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
         }
-        return pedido_json
-
 
     @staticmethod
     def from_json(pedido_json):
@@ -67,7 +60,10 @@ class Pedido (db.Model):
         fecha_pedido = pedido_json.get('fecha_pedido')
 
         if fecha_pedido:
-            fecha_pedido = datetime.fromisoformat(fecha_pedido)
+            try:
+                fecha_pedido = datetime.strptime(fecha_pedido, "%d/%m/%Y")
+            except ValueError:
+                fecha_pedido = datetime.utcnow()
         else:
             fecha_pedido = datetime.utcnow()
 
