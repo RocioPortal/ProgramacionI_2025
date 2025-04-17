@@ -27,7 +27,7 @@ class Usuario(db.Model):
             'rol': self.rol,
             'estado': self.estado,
             'pedidos': [pedido.to_json() for pedido in self.pedidos],
-            'valoraciones': [valoracion.to_json() for valoracion in self.valoraciones],
+            'valoraciones': [valoracion.get_json() for valoracion in self.valoraciones],
             'notificaciones': [notificacion.to_json() for notificacion in self.notificaciones]
         }
 

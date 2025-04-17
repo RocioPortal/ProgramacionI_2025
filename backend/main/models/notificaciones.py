@@ -15,7 +15,7 @@ class Notificacion(db.Model):
            'id_notificaciones' : self.id_notificacion,
            'id_user' : self.id_user,
            'mensaje' : str(self.mensaje),
-           'usuario': self.user.nombre
+           'usuario': self.usuario.nombre
        }
       
        return notificaciones_json
@@ -23,6 +23,6 @@ class Notificacion(db.Model):
     @staticmethod
     def from_json(json_data):
         return Notificacion(
-            user_id=json_data.get('user_id'),
-            mensaje=json_data.get('mensaje')
-        )
+        id_user=json_data.get('id_user'),
+        mensaje=json_data.get('mensaje')
+)
