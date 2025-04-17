@@ -28,7 +28,6 @@ class Pedido(db.Model):
             'usuario': self.usuario.to_json_short()  # ✅ SOLO info breve del usuario
         }
 
-
     def to_json_complete(self):
         self.usuario = db.session.query(UsuarioModel).get_or_404(self.id_user)
         return {
@@ -39,7 +38,6 @@ class Pedido(db.Model):
             'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
             'usuario': self.usuario.to_json()  # ✅ Evitás que se llame a to_json_complete()
         }
-
 
     def to_json_short(self):
         return {

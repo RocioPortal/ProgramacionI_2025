@@ -24,6 +24,7 @@ class Pedido(Resource):
         pedido = db.session.query(PedidoModel).get(id)
         if not pedido:
             return {"mensaje": f"No hay pedidos con el ID {id}"}, 404
+        
         return pedido.to_json_complete(), 200
 
 
