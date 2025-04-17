@@ -19,7 +19,7 @@ class Valoracion(db.Model):
             'id_prod': self.id_prod,
             'calificacion': self.calificacion,
             'comentario': str(self.comentario),
-            'usuario' : self.user.nombre if self.user else None,
+            'usuario' : self.usuario.nombre if self.usuario else None,
             'producto' : self.producto.nombre if self.producto else None
         }
         return valoraciones_json
