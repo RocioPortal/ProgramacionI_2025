@@ -32,7 +32,7 @@ class Pedido(Resource):
         if not pedido:
             return jsonify({"mensaje": f"No hay pedidos con el ID {id}"}), 404
         
-        return jsonify(pedido.to_json_complete())
+        return jsonify(pedido.to_json())
 
 
     def delete(self, id):

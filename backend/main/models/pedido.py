@@ -33,18 +33,6 @@ class Pedido (db.Model):
         return pedido_json
     
 
-    def to_json_complete(self):
-        self.usuario = db.session.query(UsuarioModel).get_or_404(self.id_user)
-        pedido_json = {
-            'id_pedido': self.id_pedido,
-            'nombre': str(self.nombre),
-            'precio': self.precio,
-            'estado': str(self.estado),
-            'fecha_pedido': self.fecha_pedido.strftime("%d-%m-%Y %H:%M:%S"),
-            'usuario': self.usuario.to_json_complete() if hasattr(self.usuario, 'to_json_complete') else self.usuario.to_json()
-        }
-        return pedido_json
-
 
     def to_json_short(self):
         pedido_json = {
