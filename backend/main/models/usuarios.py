@@ -38,3 +38,4 @@ class Usuario(db.Model):
 
 
 
+#arreglos
