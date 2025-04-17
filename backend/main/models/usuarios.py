@@ -46,3 +46,4 @@ class Usuario(db.Model):
             estado=usuario_json.get('estado', 'activo')  
         )
 
+#arreglos
