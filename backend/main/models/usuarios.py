@@ -41,6 +41,7 @@ class Usuario(db.Model):
         return {
             'id_user': self.id_user,
             'nombre': self.nombre,
+            'estado': self.estado,
             'email': self.email,
             'telefono': self.telefono
         }
