@@ -5,3 +5,7 @@ Integrantes
 - Marina Rivadeneira
 - Melina Gomez
 - Rocio Portal
+
+## 🗂️ Modelo de Datos
+
+![Modelo de Datos](img/modelodedatos.png)
