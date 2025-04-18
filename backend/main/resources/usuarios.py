@@ -2,6 +2,7 @@ from flask_restful import Resource
 from flask import request
 from main.models import UsuarioModel
 from .. import db
+import re
 
 
 def verificar_permiso(roles_requeridos):
@@ -32,6 +33,14 @@ class Usuario(Resource):
             return 'El id que intentan editar es inexistente', 404
 
         data = request.get_json()
+
+
+        # Validación del correo electrónico
+        if 'email' in data:
+            email = data['email']
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                return {"message": "El correo electrónico no es válido"}, 400
+
 
         if 'estado' in data and data['estado'] == 'activo':
             if usuario.estado == 'suspendido':
@@ -91,6 +100,13 @@ class Usuarios(Resource):
             return mensaje, codigo
 
         data = request.get_json()
+
+        # Validación del correo electrónico
+        if 'email' in data:
+            email = data['email']
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                return {"message": "El correo electrónico no es válido"}, 400
+            
         nuevo_usuario = UsuarioModel(
             nombre=data.get('nombre'),
             rol=data.get('rol'),
