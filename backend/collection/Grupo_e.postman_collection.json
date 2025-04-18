@@ -64,7 +64,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n  \"nombre\": \"Nuevo Usuario\",\n  \"rol\": \"ENCARGADO\",\n  \"estado\": \"activo\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -111,7 +111,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/usuario/1",
+							"raw": "http://127.0.0.1:5000/usuario/3",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -122,7 +122,7 @@
 							"port": "5000",
 							"path": [
 								"usuario",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -132,7 +132,31 @@
 					"name": "usuario",
 					"request": {
 						"method": "PUT",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Usuario Modificado\",\n    \"rol\": \"ENCARGADO\",\n    \"estado\": \"activo\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/usuario/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuario",
+								"3"
+							]
+						}
 					},
 					"response": []
 				},
@@ -140,7 +164,22 @@
 					"name": "usuario",
 					"request": {
 						"method": "DELETE",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/usuario/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuario",
+								"3"
+							]
+						}
 					},
 					"response": []
 				}
@@ -296,10 +335,16 @@
 					"name": "notificaciones",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"mensaje\": \"Tu pedido está listo para recoger\"\n}",
+							"raw": "{\n    \"mensaje\": \"tu pedido fue cancelado\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -307,7 +352,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/usuarios/1/notificaciones",
+							"raw": "http://127.0.0.1:5000/usuarios/2/notificaciones",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -318,7 +363,7 @@
 							"port": "5000",
 							"path": [
 								"usuarios",
-								"1",
+								"2",
 								"notificaciones"
 							]
 						}
@@ -450,7 +495,37 @@
 					"name": "producto",
 					"request": {
 						"method": "POST",
-						"header": []
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"pizza\",\n    \"descripcion\": \"a la piedra\",\n    \"precio\": 20000,\n    \"disponible\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/productos",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"productos"
+							]
+						}
 					},
 					"response": []
 				}
@@ -512,7 +587,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"producto\": \"Café\",\n  \"cantidad\": 2,\n  \"precio\": 150\n}\n",
+							"raw": "{\n    \"id_pedido\": 1,\n    \"nombre\": \"Pedido mari\",\n    \"precio\": 2200,\n    \"estado\": \"cancelado\",\n    \"fecha_pedido\": \"2025-04-18\",\n    \"id_user\": 2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -595,7 +670,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"producto_id\": 1,\n    \"producto_nombre\": \"Empanadas\",\n    \"precio\": 18000,\n    \"cantidad\": 3\n}",
+							"raw": "{\n  \"id_user\": 2,\n  \"nombre\": \"Empanada de carne\",\n  \"precio\": 1600,\n  \"estado\": \"en preparación\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -603,7 +678,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/pedido/1",
+							"raw": "http://127.0.0.1:5000/pedido/4",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -614,7 +689,7 @@
 							"port": "5000",
 							"path": [
 								"pedido",
-								"1"
+								"4"
 							]
 						}
 					},
