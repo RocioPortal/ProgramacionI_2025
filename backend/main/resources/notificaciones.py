@@ -28,7 +28,7 @@ class Notificacion(Resource):
         #NOTIFICACIONES[usuario_id].append(data['mensaje'])
         
         #return "Notificación enviada con éxito", 201
-        nueva_notificacion = Notificacion(
+        nueva_notificacion = NotificacionesModel(
             id_user=usuario_id,
             mensaje=data['mensaje']
         )

@@ -6,7 +6,7 @@ class Pedido(db.Model):
     __tablename__ = 'pedidos'
 
     id_pedido = db.Column(db.Integer, primary_key=True)
-    id_user = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    id_user = db.Column(db.Integer, db.ForeignKey('usuario.id_user'), nullable=False)
     nombre = db.Column(db.String(100), nullable=False)
     precio = db.Column(db.Integer, nullable=False)
     estado = db.Column(db.String(20), nullable=False, default='pendiente')
@@ -25,7 +25,7 @@ class Pedido(db.Model):
             'precio': self.precio,
             'estado': str(self.estado),
             'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
-            'usuario': self.usuario.to_json_short()  # ✅ SOLO info breve del usuario
+            'usuario': self.usuario.to_json_short()  
         }
 
     def to_json_complete(self):
@@ -36,7 +36,7 @@ class Pedido(db.Model):
             'precio': self.precio,
             'estado': str(self.estado),
             'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
-            'usuario': self.usuario.to_json()  # ✅ Evitás que se llame a to_json_complete()
+            'usuario': self.usuario.to_json()  
         }
 
     def to_json_short(self):

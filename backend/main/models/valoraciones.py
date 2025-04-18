@@ -4,7 +4,7 @@ class Valoracion(db.Model):
     __tablename__ = 'valoraciones'
 
     id_valoracion = db.Column(db.Integer, primary_key=True)
-    id_user = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    id_user = db.Column(db.Integer, db.ForeignKey('usuario.id_user'), nullable=False)
     id_prod = db.Column(db.Integer, db.ForeignKey('productos.id_prod'), nullable=False)
     calificacion = db.Column(db.Integer, nullable=False)
     comentario = db.Column(db.Text, nullable=False)

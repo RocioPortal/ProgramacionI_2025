@@ -83,7 +83,6 @@ class Pedidos(Resource):
 
         data = request.get_json()
 
-        # Si no se envió el id_user, retornamos error
         if not data.get('id_user'):
             return {"mensaje": "El campo 'id_user' es obligatorio"}, 400
 
@@ -93,3 +92,11 @@ class Pedidos(Resource):
             precio=data.get('precio'),
             estado=data.get('estado', 'pendiente')
         )
+
+        db.session.add(nuevo_pedido)
+        db.session.commit()
+
+        return {
+            "mensaje": "Pedido creado con éxito",
+            "pedido": nuevo_pedido.to_json()
+        }, 201

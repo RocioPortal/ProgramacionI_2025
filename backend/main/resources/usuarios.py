@@ -6,7 +6,7 @@ import re
 
 
 def verificar_permiso(roles_requeridos):
-    rol_usuario = 'ADMIN'  # Temporal
+    rol_usuario = 'ADMIN'  
     if rol_usuario not in roles_requeridos:
         return False, "No tienes permiso para realizar esta acción", 403
     return True, "", 200
