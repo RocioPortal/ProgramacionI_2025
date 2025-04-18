@@ -5,35 +5,34 @@ from .. import db
 
 
 def verificar_permiso(roles_requeridos):
-    rol_usuario = 'ADMIN'  # Temporal, luego se puede obtener del token o sesión
+    rol_usuario = 'ADMIN'  # Temporal
     if rol_usuario not in roles_requeridos:
         return False, "No tienes permiso para realizar esta acción", 403
     return True, "", 200
 
 
 class Usuario(Resource):
-    def get(self, id):
+    def get(self, id_user):
         permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
         if not permitido:
             return mensaje, codigo
 
-        usuario = db.session.query(UsuarioModel).get(id) 
+        usuario = db.session.query(UsuarioModel).get(id_user)
         if usuario:
             return usuario.to_json_complete(), 200
         return 'El id es inexistente', 404
 
-    def put(self, id):
+    def put(self, id_user):
         permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
         if not permitido:
             return mensaje, codigo
 
-        usuario = db.session.query(UsuarioModel).get(id)  
+        usuario = db.session.query(UsuarioModel).get(id_user)
         if not usuario:
             return 'El id que intentan editar es inexistente', 404
 
         data = request.get_json()
 
-        # Reactivar usuario suspendido
         if 'estado' in data and data['estado'] == 'activo':
             if usuario.estado == 'suspendido':
                 usuario.estado = 'activo'
@@ -41,7 +40,6 @@ class Usuario(Resource):
                 return 'Usuario reactivado con éxito', 200
             return 'El usuario ya está activo', 200
 
-        # Actualización de campos
         if 'nombre' in data:
             usuario.nombre = data['nombre']
         if 'rol' in data:
@@ -55,13 +53,13 @@ class Usuario(Resource):
 
         db.session.commit()
         return 'Usuario editado con éxito', 200
-    
-    def delete(self, id):
+
+    def delete(self, id_user):
         permitido, mensaje, codigo = verificar_permiso(['ADMIN', 'ENCARGADO'])
         if not permitido:
             return mensaje, codigo
 
-        usuario = db.session.query(UsuarioModel).get(id)  
+        usuario = db.session.query(UsuarioModel).get(id_user)
         if not usuario:
             return 'El id a eliminar es inexistente', 404
 
@@ -69,7 +67,7 @@ class Usuario(Resource):
         db.session.commit()
 
         return {
-            "id": usuario.id,
+            "id_user": usuario.id_user,
             "nombre": usuario.nombre,
             "rol": usuario.rol,
             "estado": 'suspendido',
@@ -84,7 +82,7 @@ class Usuarios(Resource):
         if not permitido:
             return mensaje, codigo
 
-        usuarios = db.session.query(UsuarioModel).all()  
+        usuarios = db.session.query(UsuarioModel).all()
         return [usuario.to_json_complete() for usuario in usuarios], 200
 
     def post(self):
@@ -93,7 +91,7 @@ class Usuarios(Resource):
             return mensaje, codigo
 
         data = request.get_json()
-        nuevo_usuario = UsuarioModel( 
+        nuevo_usuario = UsuarioModel(
             nombre=data.get('nombre'),
             rol=data.get('rol'),
             estado=data.get('estado', 'activo'),
@@ -103,6 +101,7 @@ class Usuarios(Resource):
         db.session.add(nuevo_usuario)
         db.session.commit()
         return nuevo_usuario.to_json(), 201
+
 
 
 
