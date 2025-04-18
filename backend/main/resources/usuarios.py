@@ -19,7 +19,6 @@ class Usuario(Resource):
 
         usuario = db.session.query(UsuarioModel).get(id) 
         if usuario:
-            #return usuario.to_json(), 200
             return usuario.to_json_complete(), 200
         return 'El id es inexistente', 404
 
@@ -33,6 +32,8 @@ class Usuario(Resource):
             return 'El id que intentan editar es inexistente', 404
 
         data = request.get_json()
+
+        # Reactivar usuario suspendido
         if 'estado' in data and data['estado'] == 'activo':
             if usuario.estado == 'suspendido':
                 usuario.estado = 'activo'
@@ -40,13 +41,17 @@ class Usuario(Resource):
                 return 'Usuario reactivado con éxito', 200
             return 'El usuario ya está activo', 200
 
-      
+        # Actualización de campos
         if 'nombre' in data:
             usuario.nombre = data['nombre']
         if 'rol' in data:
             usuario.rol = data['rol']
         if 'estado' in data:
             usuario.estado = data['estado']
+        if 'email' in data:
+            usuario.email = data['email']
+        if 'telefono' in data:
+            usuario.telefono = data['telefono']
 
         db.session.commit()
         return 'Usuario editado con éxito', 200
@@ -60,7 +65,6 @@ class Usuario(Resource):
         if not usuario:
             return 'El id a eliminar es inexistente', 404
 
-       
         usuario.estado = 'suspendido'
         db.session.commit()
 
@@ -68,9 +72,10 @@ class Usuario(Resource):
             "id": usuario.id,
             "nombre": usuario.nombre,
             "rol": usuario.rol,
-            "estado": 'suspendido'
+            "estado": 'suspendido',
+            "email": usuario.email,
+            "telefono": usuario.telefono
         }, 200
-
 
 
 class Usuarios(Resource):
@@ -80,7 +85,6 @@ class Usuarios(Resource):
             return mensaje, codigo
 
         usuarios = db.session.query(UsuarioModel).all()  
-        #return [usuario.to_json() for usuario in usuarios], 200
         return [usuario.to_json_complete() for usuario in usuarios], 200
 
     def post(self):
@@ -92,11 +96,14 @@ class Usuarios(Resource):
         nuevo_usuario = UsuarioModel( 
             nombre=data.get('nombre'),
             rol=data.get('rol'),
-            estado=data.get('estado', 'activo')  
+            estado=data.get('estado', 'activo'),
+            email=data.get('email'),
+            telefono=data.get('telefono')
         )
         db.session.add(nuevo_usuario)
         db.session.commit()
         return nuevo_usuario.to_json(), 201
+
 
 
 
