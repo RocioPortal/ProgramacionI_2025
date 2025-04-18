@@ -32,7 +32,7 @@ def create_app():
     import main.resources as resources
     
     #cargar los recursos
-    api.add_resource(resources.UsuarioResource, '/usuario/<int:id>')
+    api.add_resource(resources.UsuarioResource, '/usuario/<int:id_user>')
     api.add_resource(resources.UsuariosResource, '/usuarios')
 
     api.add_resource(resources.ProductosResource, '/productos')
