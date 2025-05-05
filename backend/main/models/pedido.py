@@ -8,11 +8,13 @@ class Pedido(db.Model):
     id_pedido = db.Column(db.Integer, primary_key=True)
     id_user = db.Column(db.Integer, db.ForeignKey('usuario.id_user'), nullable=False)
     nombre = db.Column(db.String(100), nullable=False)
-    precio = db.Column(db.Integer, nullable=False)
     estado = db.Column(db.String(20), nullable=False, default='pendiente')
     fecha_pedido = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     usuario = db.relationship("Usuario", back_populates="pedidos")
+    
+    # Relación con tabla intermedia Orden
+    ordenes = db.relationship("Orden", back_populates="pedido", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Pedido nombre='{self.nombre}', estado='{self.estado}'>"
@@ -22,10 +24,9 @@ class Pedido(db.Model):
         return {
             'id_pedido': self.id_pedido,
             'nombre': str(self.nombre),
-            'precio': self.precio,
             'estado': str(self.estado),
             'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
-            'usuario': self.usuario.to_json_short()  
+            'usuario': self.usuario.to_json_short()
         }
 
     def to_json_complete(self):
@@ -33,17 +34,15 @@ class Pedido(db.Model):
         return {
             'id_pedido': self.id_pedido,
             'nombre': str(self.nombre),
-            'precio': self.precio,
             'estado': str(self.estado),
             'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
-            'usuario': self.usuario.to_json()  
+            'usuario': self.usuario.to_json()
         }
 
     def to_json_short(self):
         return {
             'id_pedido': self.id_pedido,
             'nombre': str(self.nombre),
-            'precio': self.precio,
             'estado': str(self.estado),
             'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
         }
@@ -53,7 +52,6 @@ class Pedido(db.Model):
         id_pedido = pedido_json.get('id_pedido')
         id_user = pedido_json.get('id_user')
         nombre = pedido_json.get('nombre')
-        precio = pedido_json.get('precio')
         estado = pedido_json.get('estado')
         fecha_pedido = pedido_json.get('fecha_pedido')
 
@@ -69,7 +67,6 @@ class Pedido(db.Model):
             id_pedido=id_pedido,
             id_user=id_user,
             nombre=nombre,
-            precio=precio,
             estado=estado,
             fecha_pedido=fecha_pedido
         )
