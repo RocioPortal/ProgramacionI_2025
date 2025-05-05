@@ -10,6 +10,9 @@ class Producto(db.Model):
     disponible = db.Column(db.Boolean, default=True)
     
     valoraciones = db.relationship('Valoracion', back_populates='producto', cascade="all, delete", single_parent=True)
+    
+    # Relación con tabla intermedia Orden
+    ordenes = db.relationship('Orden', back_populates='producto')
 
     def to_json(self):
         return {

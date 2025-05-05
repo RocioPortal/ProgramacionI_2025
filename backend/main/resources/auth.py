@@ -22,7 +22,6 @@ class Login(Resource):
         if not username or not password:
             return {"mensaje": "Usuario y contraseña son requeridos"}, 400
         
-        # Aquí iría la validación contra una base de datos
         if username == "admin" and password == "1234":
             token = "token-admin"
         elif username == "user1" and password == "abcd":
@@ -43,7 +42,6 @@ class Logout(Resource):
         if not token:
             return {"mensaje": "Token requerido"}, 400
         
-        # Buscar el usuario asociado al token
         user_to_logout = None
         for user, stored_token in TOKENS.items():
             if stored_token == token:
