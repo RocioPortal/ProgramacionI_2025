@@ -12,26 +12,42 @@ class Orden(db.Model):
     precio_total = db.Column(db.Float, nullable=False)
 
     # Relaciones con Pedido y Producto
-    pedido = db.relationship("Pedido", back_populates="ordenes")
-    producto = db.relationship("Producto", back_populates="ordenes")
+    pedido = db.relationship("Pedido", back_populates="ordenes", lazy='joined')
+    producto = db.relationship("Producto", back_populates="ordenes", lazy='joined')
 
-    def to_json(self):
+    def to_json_complete(self):
         return {
             "id_orden": self.id_orden,
-            "id_pedido": self.id_pedido,
-            "id_prod": self.id_prod,
             "cantidad": self.cantidad,
             "especificaciones": self.especificaciones,
-            "precio_total": self.precio_total
+            "precio_total": self.precio_total,
+            "producto": self.producto.to_json() if self.producto else None,
+            "pedido": self.pedido.to_json_short() if self.pedido else None
         }
 
     @staticmethod
     def from_json(data):
+        cantidad = data.get("cantidad", 1)
+        if cantidad <= 0:
+            raise ValueError("La cantidad debe ser mayor a cero")
+
+        precio_total = data.get("precio_total", 0)
+        if precio_total < 0:
+            raise ValueError("El precio total no puede ser negativo")
+
         return Orden(
-            id_orden=data.get('id_orden'),
-            id_pedido=data.get('id_pedido'),
-            id_prod=data.get('id_prod'),
-            cantidad=data.get('cantidad'),
-            especificaciones=data.get('especificaciones'),
-            precio_total=data.get('precio_total')
+            cantidad=cantidad,
+            especificaciones=data.get("especificaciones"),
+            precio_total=precio_total,
+            id_pedido=data.get("id_pedido"),
+            id_prod=data.get("id_prod")
         )
+    def to_json(self):
+        return {
+            "id_orden": self.id_orden,
+            "cantidad": self.cantidad,
+            "especificaciones": self.especificaciones,
+            "precio_total": self.precio_total,
+            "id_pedido": self.id_pedido,
+            "id_prod": self.id_prod
+        }

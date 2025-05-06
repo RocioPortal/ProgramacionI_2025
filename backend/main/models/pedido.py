@@ -14,8 +14,8 @@ class Pedido(db.Model):
     usuario = db.relationship("Usuario", back_populates="pedidos")
     
     # Relación con tabla intermedia Orden
-    ordenes = db.relationship("Orden", back_populates="pedido", cascade="all, delete-orphan")
-
+    ordenes = db.relationship("Orden",back_populates="pedido",cascade="all, delete-orphan",lazy="select",passive_deletes=True)
+    
     def __repr__(self):
         return f"<Pedido nombre='{self.nombre}', estado='{self.estado}'>"
 
