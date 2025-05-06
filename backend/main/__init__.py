@@ -30,6 +30,8 @@ def create_app():
        
 
     import main.resources as resources
+    from main.resources.orden import Orden, Ordenes  # Asegúrate de importar las clases correctamente
+
     
     #cargar los recursos
     api.add_resource(resources.UsuarioResource, '/usuario/<int:id_user>')
@@ -47,6 +49,9 @@ def create_app():
     api.add_resource(resources.LoginResource, '/login')
     api.add_resource(resources.LogoutResource, '/logout')
 
-    
+    api.add_resource(resources.OrdenesResource, '/ordenes')
+    api.add_resource(resources.OrdenResource, '/orden/<int:id>')
+
+
     api.init_app(app)
     return app
