@@ -12,8 +12,8 @@ class Producto(db.Model):
     valoraciones = db.relationship('Valoracion', back_populates='producto', cascade="all, delete", single_parent=True)
     
     # Relación con tabla intermedia Orden
-    ordenes = db.relationship('Orden', back_populates='producto')
-
+    ordenes = db.relationship('Orden',back_populates='producto',cascade='all, delete-orphan',lazy='select')
+    
     def to_json(self):
         return {
             'id_prod': self.id_prod,

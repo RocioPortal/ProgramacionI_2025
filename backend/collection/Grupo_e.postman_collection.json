@@ -782,7 +782,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:5000/pedido/4",
+							"raw": "http://127.0.0.1:5000/pedido/7",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -793,7 +793,7 @@
 							"port": "5000",
 							"path": [
 								"pedido",
-								"4"
+								"7"
 							]
 						}
 					},
@@ -931,7 +931,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/orden/6",
+							"raw": "http://127.0.0.1:5000/orden/7",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -942,7 +942,7 @@
 							"port": "5000",
 							"path": [
 								"orden",
-								"6"
+								"7"
 							]
 						}
 					},
@@ -990,7 +990,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n            \"cantidad\": 1,\n            \"especificaciones\": \"a la piedra\",\n            \"id_orden\": 6,\n            \"id_pedido\": 6,\n            \"id_prod\": 6,\n            \"precio_total\": 11000.0\n        }",
+							"raw": "{\n  \"cantidad\": 2,\n  \"especificaciones\": \"sin aceitunas\",\n  \"precio_total\": 22000,\n  \"id_prod\": 6,\n  \"pedido\": {\n    \"id_user\": 3,\n    \"nombre\": \"Pedido de prueba\",\n    \"estado\": \"confirmado\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
