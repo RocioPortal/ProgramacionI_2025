@@ -11,29 +11,16 @@
 			"name": "usuarios",
 			"item": [
 				{
-					"name": "usuarios",
+					"name": "Obtener lista de usuarios",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "rol",
-								"value": "ADMIN",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "rol",
-								"value": "ENCARGADO",
-								"type": "text",
-								"disabled": true
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n    1: {'nombre': 'Admin', 'rol': 'ADMIN'},\n    2: {'nombre': 'Encargado1', 'rol': 'ENCARGADO'}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -58,13 +45,13 @@
 					"response": []
 				},
 				{
-					"name": "usuarios",
+					"name": "Agregar usuarios",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"nombre\": \"Nuevo Usuario\",\n  \"rol\": \"ENCARGADO\",\n  \"estado\": \"activo\"\n}\n",
+							"raw": "{\n    \"nombre\": \"Nuevo usuario\",\n    \"rol\": \"ADMIN\",\n    \"estado\": \"activo\",\n    \"email\": \"nuevo.usuario@dominio.com\",\n    \"telefono\": \"123456789\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -94,12 +81,82 @@
 			"name": "usuario",
 			"item": [
 				{
-					"name": "usuario",
+					"name": "Obtener usuario especif",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
 						"method": "GET",
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/usuario/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuario",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"estado\": \"activo\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/usuario/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuario",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar usuario",
+					"request": {
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -111,7 +168,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/usuario/3",
+							"raw": "http://127.0.0.1:5000/usuario/4",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -122,62 +179,7 @@
 							"port": "5000",
 							"path": [
 								"usuario",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "usuario",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"Usuario Modificado\",\n    \"rol\": \"ENCARGADO\",\n    \"estado\": \"activo\"\n}\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:5000/usuario/3",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"usuario",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "usuario",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:5000/usuario/3",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"usuario",
-								"3"
+								"4"
 							]
 						}
 					},
@@ -332,7 +334,7 @@
 			"name": "notificaciones",
 			"item": [
 				{
-					"name": "notificaciones",
+					"name": "Agregar notificaciones",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -376,7 +378,199 @@
 			"name": "Producto",
 			"item": [
 				{
-					"name": "producto",
+					"name": "Obtener producto especif",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text"
+							},
+							{
+								"key": "rol",
+								"value": "USER",
+								"type": "text"
+							},
+							{
+								"key": "rol",
+								"value": "ENCARGADO",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/producto/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"producto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar producto especif",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text"
+							},
+							{
+								"key": "rol",
+								"value": "ENCARGADO",
+								"type": "text"
+							},
+							{
+								"key": "rol",
+								"value": "USER",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Empanada de pollo\",\n    \"descripcion\": \"al horno\",\n    \"precio\": 1000,\n    \"disponible\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/producto/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"producto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar producto especif",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/producto/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"producto",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "Obtener productos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text"
+							},
+							{
+								"key": "rol",
+								"value": "USER",
+								"type": "text"
+							},
+							{
+								"key": "rol",
+								"value": "ENCARGADO",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/productos",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar productos",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -385,7 +579,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    1: {'nombre': 'Hamburguesa', 'precio': 10000},\n    2: {'nombre': 'Pizza', 'precio': 7000}\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -409,125 +603,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "producto",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "rol",
-								"value": "ADMIN",
-								"type": "text"
-							},
-							{
-								"key": "rol",
-								"value": "ENCARGADO",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://127.0.0.1:5000/producto/1",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"producto",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "producto",
-					"request": {
-						"method": "DELETE",
-						"header": []
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Productos",
-			"item": [
-				{
-					"name": "producto",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    1: {'nombre': 'Hamburguesa', 'precio': 10000},\n    2: {'nombre': 'Pizza', 'precio': 7000}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:5000/productos",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"productos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "producto",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "rol",
-								"value": "ADMIN",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"pizza\",\n    \"descripcion\": \"a la piedra\",\n    \"precio\": 20000,\n    \"disponible\": true\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:5000/productos",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"productos"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -535,7 +610,7 @@
 			"name": "Pedidos",
 			"item": [
 				{
-					"name": "pedidos",
+					"name": "Obtener todos los pedidos",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -575,7 +650,7 @@
 					"response": []
 				},
 				{
-					"name": "pedidos",
+					"name": "Agregar pedidos",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -587,7 +662,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id_pedido\": 1,\n    \"nombre\": \"Pedido mari\",\n    \"precio\": 2200,\n    \"estado\": \"cancelado\",\n    \"fecha_pedido\": \"2025-04-18\",\n    \"id_user\": 2\n}",
+							"raw": "{\n    \"id_pedido\": 1,\n    \"nombre\": \"Pedido mari\",\n    \"estado\": \"cancelado\",\n    \"fecha_pedido\": \"2025-04-18\",\n    \"id_user\": 2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -617,7 +692,7 @@
 			"name": "Pedido",
 			"item": [
 				{
-					"name": "pedido 1",
+					"name": "Obtener pedido especif",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -640,7 +715,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/pedido/1",
+							"raw": "http://127.0.0.1:5000/pedido/6",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -651,14 +726,14 @@
 							"port": "5000",
 							"path": [
 								"pedido",
-								"1"
+								"6"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "pedido 1",
+					"name": "Editar pedido especif",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -696,7 +771,7 @@
 					"response": []
 				},
 				{
-					"name": "pedido 1",
+					"name": "Borrar pedido especif",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -707,7 +782,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:5000/pedido/1",
+							"raw": "http://127.0.0.1:5000/pedido/7",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -718,7 +793,7 @@
 							"port": "5000",
 							"path": [
 								"pedido",
-								"1"
+								"7"
 							]
 						}
 					},
@@ -730,7 +805,7 @@
 			"name": "Valoraciones",
 			"item": [
 				{
-					"name": "valoración",
+					"name": "Obtener valoraciones",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -753,7 +828,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/productos/1/valoraciones",
+							"raw": "http://127.0.0.1:5000/productos/3/valoraciones",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -764,7 +839,7 @@
 							"port": "5000",
 							"path": [
 								"productos",
-								"1",
+								"3",
 								"valoraciones"
 							]
 						}
@@ -772,7 +847,7 @@
 					"response": []
 				},
 				{
-					"name": "valoración",
+					"name": "Agregar valoracion",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -784,7 +859,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"calificacion\": 5,\n    \"comentario\": \"Muy buena la pizza\"\n}",
+							"raw": "{\n  \"id_user\": 3,\n  \"calificacion\": 5,\n  \"comentario\": \"Producto excelente, llegó en tiempo y forma.\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -805,6 +880,135 @@
 								"productos",
 								"1",
 								"valoraciones"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orden",
+			"item": [
+				{
+					"name": "Obtener orden especif.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/orden/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"orden",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar orden especif.",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/orden/7",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"orden",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar orden",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ordenes",
+			"item": [
+				{
+					"name": "Obtener lista de ordenes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/ordenes",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ordenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar orden",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cantidad\": 2,\n  \"especificaciones\": \"sin aceitunas\",\n  \"precio_total\": 22000,\n  \"id_prod\": 6,\n  \"pedido\": {\n    \"id_user\": 3,\n    \"nombre\": \"Pedido de prueba\",\n    \"estado\": \"confirmado\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/ordenes",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ordenes"
 							]
 						}
 					},
