@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import request
+from flask import request, jsonify
 from main.models import PedidoModel, OrdenModel, ProductoModel
 from .. import db
 
@@ -61,11 +61,41 @@ class Pedidos(Resource):
         if not permitido:
             return {"mensaje": mensaje}, codigo
 
-        pedidos = PedidoModel.query.all()
-        if not pedidos:
-            return {"mensaje": "No hay pedidos en la base de datos"}, 404
+        # Parámetros de paginación con valores por defecto
+        page = int(request.args.get('page', 1))
+        per_page = int(request.args.get('per_page', 10))
 
-        return [pedido.to_json() for pedido in pedidos], 200
+        # Construcción de la consulta base
+        pedidos_query = db.session.query(PedidoModel)
+
+        # Filtro por estado
+        estado = request.args.get('estado')
+        if estado:
+            pedidos_query = pedidos_query.filter(PedidoModel.estado.ilike(f"%{estado}%"))
+
+        # Filtro por nombre
+        nombre = request.args.get('nombre')
+        if nombre:
+            pedidos_query = pedidos_query.filter(PedidoModel.nombre.ilike(f"%{nombre}%"))
+
+        # Ordenamiento por estado
+        if request.args.get('sortby_estado'):
+            pedidos_query = pedidos_query.order_by(PedidoModel.estado)
+
+        # Ordenamiento por nombre
+        if request.args.get('sortby_nombre'):
+            pedidos_query = pedidos_query.order_by(PedidoModel.nombre)
+
+        # Aplicar paginación
+        pedidos_paginados = pedidos_query.paginate(page=page, per_page=per_page, error_out=False)
+
+        # Construcción de la respuesta
+        return jsonify({
+            'pedidos': [pedido.to_json() for pedido in pedidos_paginados.items],
+            'total': pedidos_paginados.total,
+            'pages': pedidos_paginados.pages,
+            'page': pedidos_paginados.page
+        })
 
     def post(self):
         permitido, mensaje, codigo = verificar_permiso(['USER', 'ADMIN', 'ENCARGADO'])
@@ -97,7 +127,7 @@ class Pedidos(Resource):
                 db.session.rollback()
                 return {"mensaje": f"Producto con ID {id_prod} no encontrado"}, 404
 
-            orden = Orden(
+            orden = OrdenModel(
                 id_pedido=nuevo_pedido.id_pedido,
                 id_prod=id_prod,
                 cantidad=cantidad,
