@@ -57,11 +57,12 @@ class Pedido(db.Model):
 
         if fecha_pedido:
             try:
-                fecha_pedido = datetime.strptime(fecha_pedido, "%d/%m/%Y")
+                fecha_pedido = datetime.strptime(fecha_pedido, "%d/%m/%Y").date()
             except ValueError:
-                fecha_pedido = datetime.utcnow()
+                fecha_pedido = datetime.utcnow().date()
         else:
-            fecha_pedido = datetime.utcnow()
+            fecha_pedido = datetime.utcnow().date()
+
 
         return Pedido(
             id_pedido=id_pedido,
