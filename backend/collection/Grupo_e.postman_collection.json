@@ -20,7 +20,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    1: {'nombre': 'Admin', 'rol': 'ADMIN'},\n    2: {'nombre': 'Encargado1', 'rol': 'ENCARGADO'}\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -70,6 +70,46 @@
 							"port": "5000",
 							"path": [
 								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prueba_paginación",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/usuarios?estado=suspendido",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "suspendido"
+								}
 							]
 						}
 					},
@@ -128,7 +168,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"estado\": \"activo\" }",
+							"raw": "{\n  \"nombre\": \"Ana\",\n  \"rol\": \"ADMIN\",\n  \"estado\": \"activo\",\n  \"email\": \"ana.gomez@example.com\",\n  \"telefono\": \"2617394757\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -136,7 +176,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/usuario/4",
+							"raw": "http://127.0.0.1:5000/usuario/7",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -147,7 +187,7 @@
 							"port": "5000",
 							"path": [
 								"usuario",
-								"4"
+								"7"
 							]
 						}
 					},
@@ -571,12 +611,49 @@
 				},
 				{
 					"name": "Agregar productos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Lomo\",\n    \"descripcion\": \"carne de lomo con salsa de verdeo\",\n    \"precio\": 19000,\n    \"disponible\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/productos",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prueba_paginación",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -587,7 +664,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/producto/2",
+							"raw": "http://127.0.0.1:5000/productos?page=2&per_page=10",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -597,8 +674,17 @@
 							],
 							"port": "5000",
 							"path": [
-								"producto",
-								"2"
+								"productos"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -681,6 +767,40 @@
 							"port": "5000",
 							"path": [
 								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prueba_paginacion",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:5000/pedidos?estado=pendiente",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "pendiente"
+								}
 							]
 						}
 					},
@@ -828,7 +948,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/productos/3/valoraciones",
+							"raw": "http://127.0.0.1:5000/valoraciones",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -838,8 +958,6 @@
 							],
 							"port": "5000",
 							"path": [
-								"productos",
-								"3",
 								"valoraciones"
 							]
 						}
@@ -859,7 +977,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id_user\": 3,\n  \"calificacion\": 5,\n  \"comentario\": \"Producto excelente, llegó en tiempo y forma.\"\n}",
+							"raw": "{\n  \"id_user\": 8,\n  \"id_prod\": 12,\n  \"calificacion\": 5,\n  \"comentario\": \"Excelente producto\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -867,7 +985,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/productos/1/valoraciones",
+							"raw": "http://127.0.0.1:5000/valoraciones",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -877,9 +995,57 @@
 							],
 							"port": "5000",
 							"path": [
-								"productos",
-								"1",
 								"valoraciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prueba_paginación",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/valoraciones?calificacion_min=2&calificacion_max=4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"valoraciones"
+							],
+							"query": [
+								{
+									"key": "calificacion_min",
+									"value": "2"
+								},
+								{
+									"key": "calificacion_max",
+									"value": "4"
+								}
 							]
 						}
 					},
@@ -1009,6 +1175,40 @@
 							"port": "5000",
 							"path": [
 								"ordenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prueba_paginación",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "rol",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:5000/ordenes?id_user=11",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ordenes"
+							],
+							"query": [
+								{
+									"key": "id_user",
+									"value": "11"
+								}
 							]
 						}
 					},

@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from flask import request, jsonify
+from sqlalchemy import desc
 from main.models import UsuarioModel
 from .. import db
 import re
@@ -85,21 +86,17 @@ class Usuarios(Resource):
         if not permitido:
             return mensaje, codigo
             
-        # Página inicial por defecto
         page = 1
-        # Cantidad de elementos por página por defecto
         per_page = 10
         
-        # Obtener los parámetros de consulta para paginación
         if request.args.get('page'):
             page = int(request.args.get('page'))
         if request.args.get('per_page'):
             per_page = int(request.args.get('per_page'))
-        
-        # Iniciar la consulta base
+
         usuarios = db.session.query(UsuarioModel)
         
-        ### FILTROS ###
+        #FILTROS
         
         # Filtrar por estado
         if request.args.get('estado'):
@@ -109,11 +106,11 @@ class Usuarios(Resource):
         if request.args.get('rol'):
             usuarios = usuarios.filter(UsuarioModel.rol == request.args.get('rol'))
         
-        # Filtrar por nombre (búsqueda parcial)
+        # Filtrar por nombre
         if request.args.get('nombre'):
             usuarios = usuarios.filter(UsuarioModel.nombre.like(f"%{request.args.get('nombre')}%"))
         
-        # Filtrar por email (búsqueda parcial)
+        # Filtrar por email 
         if request.args.get('email'):
             usuarios = usuarios.filter(UsuarioModel.email.like(f"%{request.args.get('email')}%"))
         
@@ -121,7 +118,7 @@ class Usuarios(Resource):
         if request.args.get('telefono'):
             usuarios = usuarios.filter(UsuarioModel.telefono.like(f"%{request.args.get('telefono')}%"))
             
-        ### ORDENAMIENTO ###
+        #ORDENAMIENTO
         
         # Ordenar por ID
         if request.args.get('sortby_id'):
@@ -151,19 +148,10 @@ class Usuarios(Resource):
             else:
                 usuarios = usuarios.order_by(UsuarioModel.estado)
         
-        # Ordenar por email
-        if request.args.get('sortby_email'):
-            if request.args.get('sortby_email').lower() == 'desc':
-                usuarios = usuarios.order_by(desc(UsuarioModel.email))
-            else:
-                usuarios = usuarios.order_by(UsuarioModel.email)
-                
-        ### FIN ORDENAMIENTO ###
         
-        # Obtener resultado paginado
+        #resultado paginado
         usuarios_paginados = usuarios.paginate(page=page, per_page=per_page, error_out=False)
         
-        # Devolver resultado paginado en formato JSON
         return jsonify({
             'usuarios': [usuario.to_json_complete() for usuario in usuarios_paginados.items],
             'total': usuarios_paginados.total,
@@ -173,18 +161,22 @@ class Usuarios(Resource):
         })
 
     def post(self):
-        permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
-        if not permitido:
-            return mensaje, codigo
-
         data = request.get_json()
 
-        # Validación del correo electrónico
+        # Validar y restringir rol
+        if 'rol' in data and data['rol'] != 'USER':
+            permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
+            if not permitido:
+                return mensaje, codigo
+        else:
+            data['rol'] = 'USER'  # Asignación automática si no es ADMIN
+
+        # Validación de correo
         if 'email' in data:
             email = data['email']
             if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
                 return {"message": "El correo electrónico no es válido"}, 400
-            
+
         nuevo_usuario = UsuarioModel(
             nombre=data.get('nombre'),
             rol=data.get('rol'),
@@ -192,6 +184,7 @@ class Usuarios(Resource):
             email=data.get('email'),
             telefono=data.get('telefono')
         )
+
         db.session.add(nuevo_usuario)
         db.session.commit()
 
