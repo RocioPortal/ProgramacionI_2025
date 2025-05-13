@@ -4,15 +4,8 @@ from main.models import ProductoModel
 from .. import db
 from sqlalchemy import desc
 
-#PRODUCTOS = {
-#    1: {'nombre': 'Hamburguesa', 'precio': 10000},
-#    2: {'nombre': 'Pizza', 'precio': 7000}
-#}
-
-
-# Función para verificar permisos (puede estar mejor centralizada luego)
 def verificar_permiso(roles_requeridos):
-    rol_usuario = 'ADMIN'  # Cambiar esto según lógica real
+    rol_usuario = 'ADMIN'  
     if rol_usuario not in roles_requeridos:
         return False, "No tienes permiso para realizar esta acción", 403
     return True, "", 200
@@ -65,11 +58,9 @@ class Productos(Resource):
         if not permitido:
             return mensaje, codigo
 
-        # Parámetros de paginación por defecto
         page = int(request.args.get('page', 1))
         per_page = int(request.args.get('per_page', 10))
 
-        # Construcción de la consulta base
         query = ProductoModel.query
 
         # Filtros
@@ -111,10 +102,8 @@ class Productos(Resource):
         elif sort_by == 'nombre_desc':
             query = query.order_by(desc(ProductoModel.nombre))
 
-        # Paginación
         paginated = query.paginate(page=page, per_page=per_page, error_out=False)
 
-        # Construcción de la respuesta
         productos = [producto.to_json() for producto in paginated.items]
         return jsonify({
             'productos': productos,
