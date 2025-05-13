@@ -61,35 +61,29 @@ class Pedidos(Resource):
         if not permitido:
             return {"mensaje": mensaje}, codigo
 
-        # Parámetros de paginación con valores por defecto
         page = int(request.args.get('page', 1))
         per_page = int(request.args.get('per_page', 10))
 
-        # Construcción de la consulta base
         pedidos_query = db.session.query(PedidoModel)
-
-        # Filtro por estado
+        #FILTROS
         estado = request.args.get('estado')
         if estado:
             pedidos_query = pedidos_query.filter(PedidoModel.estado.ilike(f"%{estado}%"))
 
-        # Filtro por nombre
         nombre = request.args.get('nombre')
         if nombre:
             pedidos_query = pedidos_query.filter(PedidoModel.nombre.ilike(f"%{nombre}%"))
 
-        # Ordenamiento por estado
+        #ORDENAMIENTOS
+
         if request.args.get('sortby_estado'):
             pedidos_query = pedidos_query.order_by(PedidoModel.estado)
 
-        # Ordenamiento por nombre
         if request.args.get('sortby_nombre'):
             pedidos_query = pedidos_query.order_by(PedidoModel.nombre)
 
-        # Aplicar paginación
         pedidos_paginados = pedidos_query.paginate(page=page, per_page=per_page, error_out=False)
 
-        # Construcción de la respuesta
         return jsonify({
             'pedidos': [pedido.to_json() for pedido in pedidos_paginados.items],
             'total': pedidos_paginados.total,
@@ -104,36 +98,33 @@ class Pedidos(Resource):
 
         data = request.get_json()
 
-        productos = data.get('productos', [])  
+        productos = data.get('productos')
+
         if not data.get('id_user'):
             return {"mensaje": "El campo 'id_user' es obligatorio"}, 400
-        if not productos:
-            return {"mensaje": "Debes incluir productos en el pedido"}, 400
 
-        nuevo_pedido = PedidoModel(
-            id_user=data['id_user'],
-            nombre=data.get('nombre', ''),
-            estado=data.get('estado', 'pendiente')
-        )
+        nuevo_pedido = PedidoModel.from_json(data)
         db.session.add(nuevo_pedido)
         db.session.flush()  
 
-        for prod in productos:
-            id_prod = prod.get('id_prod')
-            cantidad = prod.get('cantidad', 1)
-            producto = db.session.get(ProductoModel, id_prod)
+        if productos:
+            for prod in productos:
+                id_prod = prod.get('id_prod')
+                cantidad = prod.get('cantidad', 1)
+                producto = db.session.get(ProductoModel, id_prod)
 
-            if not producto:
-                db.session.rollback()
-                return {"mensaje": f"Producto con ID {id_prod} no encontrado"}, 404
+                if not producto:
+                    db.session.rollback()
+                    return {"mensaje": f"Producto con ID {id_prod} no encontrado"}, 404
 
-            orden = OrdenModel(
-                id_pedido=nuevo_pedido.id_pedido,
-                id_prod=id_prod,
-                cantidad=cantidad,
-                precio_total=producto.precio * cantidad
-            )
-            db.session.add(orden)
+                orden = OrdenModel(
+                    id_pedido=nuevo_pedido.id_pedido,
+                    id_prod=id_prod,
+                    cantidad=cantidad,
+                    especificaciones=prod.get("especificaciones", ""),
+                    precio_total=producto.precio * cantidad
+                )
+                db.session.add(orden)
 
         db.session.commit()
 

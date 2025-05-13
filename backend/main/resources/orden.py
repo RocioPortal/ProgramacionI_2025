@@ -1,7 +1,8 @@
 from flask_restful import Resource
 from flask import request, jsonify
+from sqlalchemy import desc
 from .. import db
-from main.models import OrdenModel, PedidoModel
+from main.models import OrdenModel, PedidoModel, ProductoModel
 
 class Orden(Resource):
     # Obtener una orden específica por ID
@@ -27,21 +28,17 @@ class Orden(Resource):
 
 class Ordenes(Resource):
     def get(self):
-        # Página inicial por defecto
         page = 1
-        # Cantidad de elementos por página por defecto
         per_page = 10
         
-        # Obtener los parámetros de consulta para paginación
         if request.args.get('page'):
             page = int(request.args.get('page'))
         if request.args.get('per_page'):
             per_page = int(request.args.get('per_page'))
         
-        # Iniciar la consulta base
         ordenes = db.session.query(OrdenModel)
         
-        ### FILTROS ###
+        #FILTROS
         
         # Filtrar por ID de pedido
         if request.args.get('id_pedido'):
@@ -61,19 +58,13 @@ class Ordenes(Resource):
         if request.args.get('estado'):
             ordenes = ordenes.join(PedidoModel).filter(PedidoModel.estado == request.args.get('estado'))
         
-        # Filtrar por monto total (asumiendo que existe un campo monto_total)
-        if request.args.get('monto_minimo') and hasattr(OrdenModel, 'monto_total'):
-            ordenes = ordenes.filter(OrdenModel.monto_total >= float(request.args.get('monto_minimo')))
-        if request.args.get('monto_maximo') and hasattr(OrdenModel, 'monto_total'):
-            ordenes = ordenes.filter(OrdenModel.monto_total <= float(request.args.get('monto_maximo')))
-        
         # Filtrar por nombre de cliente (asumiendo relación con pedido)
         if request.args.get('nombre_cliente'):
             ordenes = ordenes.join(PedidoModel).filter(
                 PedidoModel.nombre.like(f"%{request.args.get('nombre_cliente')}%")
             )
         
-        ### ORDENAMIENTO ###
+        #ORDENAMIENTO
         
         # Ordenar por ID
         if request.args.get('sortby_id'):
@@ -89,13 +80,6 @@ class Ordenes(Resource):
             else:
                 ordenes = ordenes.order_by(OrdenModel.fecha_creacion)
         
-        # Ordenar por monto total (asumiendo que existe un campo monto_total)
-        if request.args.get('sortby_monto') and hasattr(OrdenModel, 'monto_total'):
-            if request.args.get('sortby_monto').lower() == 'desc':
-                ordenes = ordenes.order_by(desc(OrdenModel.monto_total))
-            else:
-                ordenes = ordenes.order_by(OrdenModel.monto_total)
-        
         # Ordenar por estado de pedido
         if request.args.get('sortby_estado'):
             if request.args.get('sortby_estado').lower() == 'desc':
@@ -103,12 +87,8 @@ class Ordenes(Resource):
             else:
                 ordenes = ordenes.join(PedidoModel).order_by(PedidoModel.estado)
         
-        ### FIN ORDENAMIENTO ###
-        
-        # Obtener resultado paginado
         ordenes_paginadas = ordenes.paginate(page=page, per_page=per_page, error_out=False)
         
-        # Devolver resultado paginado en formato JSON
         return jsonify({
             'ordenes': [orden.to_json_complete() for orden in ordenes_paginadas.items],
             'total': ordenes_paginadas.total,
@@ -120,25 +100,28 @@ class Ordenes(Resource):
     def post(self):
         data = request.get_json()
 
-        # Si viene un pedido anidado, lo creamos
-        if 'pedido' in data:
-            pedido_data = data['pedido']
-            nuevo_pedido = PedidoModel(
-                id_user=pedido_data.get('id_user'),
-                nombre=pedido_data.get('nombre'),
-                estado=pedido_data.get("estado", "pendiente")  # valor por defecto
-            )
+        pedido_data = data.get("pedido")
+        if not pedido_data:
+            return {"message": "Datos del pedido faltan"}, 400
 
-            db.session.add(nuevo_pedido)
-            db.session.commit()
-            data['id_pedido'] = nuevo_pedido.id_pedido  
+        nuevo_pedido = PedidoModel.from_json(pedido_data)
+        db.session.add(nuevo_pedido)
+        db.session.flush()  
 
-        
-        try:
-            orden = OrdenModel.from_json(data)
-            db.session.add(orden)
-            db.session.commit()
-            return orden.to_json(), 201
-        except Exception as e:
-            db.session.rollback()
-            return {'error': str(e)}, 500
+        productos_data = data.get("productos")
+        if not productos_data:
+            return {"message": "Lista de productos faltante"}, 400
+
+        for producto in productos_data:
+            try:
+                orden = OrdenModel.from_json({
+                    **producto,
+                    "id_pedido": nuevo_pedido.id_pedido
+                })
+                db.session.add(orden)
+            except ValueError as e:
+                db.session.rollback()
+                return {"message": str(e)}, 400
+
+        db.session.commit()
+        return {"message": "Pedido y órdenes creados con éxito"}, 201

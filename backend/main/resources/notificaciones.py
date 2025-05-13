@@ -3,8 +3,6 @@ from flask import request
 from main.models import NotificacionesModel
 from main import db
 
-#NOTIFICACIONES = {}
-
 def verificar_permiso(roles_requeridos):
     rol_usuario = request.headers.get('ROL',"") 
     if rol_usuario not in roles_requeridos:
@@ -22,12 +20,6 @@ class Notificacion(Resource):
         if 'mensaje' not in data:
             return "Debes proporcionar un mensaje para la notificación", 400
         
-        #if usuario_id not in NOTIFICACIONES:
-            #NOTIFICACIONES[usuario_id] = []
-        
-        #NOTIFICACIONES[usuario_id].append(data['mensaje'])
-        
-        #return "Notificación enviada con éxito", 201
         nueva_notificacion = NotificacionesModel(
             id_user=usuario_id,
             mensaje=data['mensaje']
