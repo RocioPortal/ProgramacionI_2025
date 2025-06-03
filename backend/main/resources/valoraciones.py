@@ -1,21 +1,16 @@
 from flask_restful import Resource
 from flask import request, jsonify
+from flask_jwt_extended import jwt_required
+from sqlalchemy import desc
 from main.models import ValoracionesModel
 from main import db
-from sqlalchemy import desc
+from main.auth.decorators import role_required
 
-def verificar_permiso(roles_requeridos):
-    rol_usuario = request.headers.get('Rol', '')
-    if rol_usuario not in roles_requeridos:
-        return False, "No tienes permiso para realizar esta acción", 403
-    return True, "", 200
 
 class Valoracion(Resource):
+    @jwt_required()
+    @role_required(['USER'])
     def post(self):
-        permitido, mensaje, codigo = verificar_permiso(['USER'])
-        if not permitido:
-            return mensaje, codigo
-
         data = request.get_json()
         campos_obligatorios = ['id_user', 'id_prod', 'calificacion', 'comentario']
         if not all(campo in data for campo in campos_obligatorios):
@@ -35,6 +30,7 @@ class Valoracion(Resource):
 
         return nueva_valoracion.get_json(), 201
 
+    @jwt_required()
     def get(self):
         page = int(request.args.get('page', 1))
         per_page = int(request.args.get('per_page', 10))
@@ -68,11 +64,6 @@ class Valoracion(Resource):
 
         # Paginación
         valoraciones_paginadas = valoraciones.paginate(page=page, per_page=per_page, error_out=False)
-
-        if request.args.get('admin') == 'true':
-            permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
-            if not permitido:
-                return mensaje, codigo
 
         return jsonify({
             'valoraciones': [v.get_json() for v in valoraciones_paginadas.items],

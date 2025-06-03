@@ -1,5 +1,7 @@
 from flask_restful import Resource
 from flask import request
+from main.auth.decorators import role_required
+
 
 TOKENS = {
     "admin": "token-admin",
