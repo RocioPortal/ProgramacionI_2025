@@ -1,42 +1,52 @@
 from flask import request, jsonify, Blueprint
 from .. import db
-from main.models import UsuarioModel
-from flask_jwt_extended import create_access_token
+from main.models.usuarios import Usuario
 from werkzeug.security import check_password_hash
+from flask_jwt_extended import create_access_token, get_jwt, get_jwt_identity, verify_jwt_in_request
+from flask_jwt_extended.exceptions import NoAuthorizationError
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 @auth.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    email = data.get("email")
-    password = data.get("password")
+    email = data.get('email')
+    password = data.get('password')
 
-    usuario = db.session.query(UsuarioModel).filter_by(email=email).first()
+    usuario = db.session.query(Usuario).filter_by(email=email).first()
+    if not usuario or not usuario.validate_pass(password):
+        return {'mensaje': 'Email o contraseña incorrectos'}, 401
 
-    if not usuario or not check_password_hash(usuario.password, password):
-        return {'message': 'Usuario o contraseña incorrectos'}, 401
-
-    access_token = create_access_token(identity=usuario)
+    # PASAR SOLO EL ID como string
+    access_token = create_access_token(identity=str(usuario.id_user))
 
     return {
-        'id_user': usuario.id_user,
-        'email': usuario.email,
-        'rol': usuario.rol,
-        'access_token': access_token
+        'mensaje': 'Login exitoso',
+        'token': access_token,
+        'usuario': {
+            'id_user': usuario.id_user,
+            'email': usuario.email
+        }
     }, 200
+
 
 @auth.route('/register', methods=['POST'])
 def register():
-    try:
-        usuario = UsuarioModel.from_json(request.get_json())
-        exists = db.session.query(UsuarioModel).filter_by(email=usuario.email).first()
-        if exists:
-            return {'message': 'Email ya registrado'}, 409
+    data = request.get_json()
 
-        db.session.add(usuario)
+    if not data.get("email") or not data.get("password") or not data.get("nombre"):
+        return {"mensaje": "Faltan datos obligatorios (email, nombre o password)"}, 400
+
+    existe = db.session.query(Usuario).filter_by(email=data["email"]).first()
+    if existe:
+        return {"mensaje": "El email ya está registrado"}, 409
+
+    try:
+        nuevo_usuario = Usuario.from_json(data)
+        db.session.add(nuevo_usuario)
         db.session.commit()
-        return usuario.to_json(), 201
+        return {"mensaje": "Usuario registrado correctamente"}, 201
+
     except Exception as e:
         db.session.rollback()
-        return {'message': str(e)}, 400
+        return {"mensaje": f"Error al registrar: {str(e)}"}, 500

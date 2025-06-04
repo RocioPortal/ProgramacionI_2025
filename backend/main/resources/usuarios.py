@@ -5,15 +5,25 @@ from main.models import UsuarioModel
 from .. import db
 import re
 from main.auth.decorators import role_required
-
+from flask_jwt_extended import get_jwt_identity
 
 class Usuario(Resource):
-    @role_required(['ADMIN'])
+    @role_required(['USER', 'ADMIN', 'ENCARGADO'])
     def get(self, id_user):
-        usuario = db.session.query(UsuarioModel).get(id_user)
+        # Obtener el id del usuario autenticado
+        usuario_actual_id = get_jwt_identity()
+
+        # Solo permitir que el usuario vea su propia info, o un admin vea cualquier usuario
+        if usuario_actual_id != id_user:
+            # Opcional: permitir que ADMIN vea todo
+            usuario_actual = db.session.get(UsuarioModel, usuario_actual_id)
+            if not usuario_actual or usuario_actual.rol != 'ADMIN':
+                return {'message': 'No tienes permiso para ver esta información'}, 403
+
+        usuario = db.session.get(UsuarioModel, id_user)
         if usuario:
             return usuario.to_json_complete(), 200
-        return 'El id es inexistente', 404
+        return {'message': 'El usuario no existe'}, 404
 
     @role_required(['ADMIN'])
     def put(self, id_user):

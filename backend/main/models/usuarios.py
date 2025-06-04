@@ -14,6 +14,8 @@ class Usuario(db.Model):
     telefono = db.Column(db.String(20))
 
     pedidos = db.relationship('Pedido', back_populates='usuario', cascade='all, delete-orphan')
+    valoraciones = db.relationship('Valoracion', back_populates='usuario', cascade="all, delete-orphan")
+    notificaciones = db.relationship('Notificacion', back_populates='usuario', cascade="all, delete-orphan")
 
     # ----- Autenticación -----
 
@@ -51,29 +53,35 @@ class Usuario(db.Model):
         return {
             'id_user': self.id_user,
             'nombre': self.nombre,
-            'rol': self.rol,
-            'estado': self.estado,
             'email': self.email,
             'telefono': self.telefono,
-            'pedidos': [p.to_json_short() for p in self.pedidos] if self.pedidos else []
+            'estado': self.estado,
+            'rol': self.rol,
+            'pedidos': [p.to_json_short() for p in self.pedidos] if self.pedidos else [],
+            'notificaciones': [n.to_json() for n in self.notificaciones] if self.notificaciones else [],
+            'valoraciones': [v.to_json() for v in self.valoraciones] if self.valoraciones else []
         }
 
     @staticmethod
     def from_json(usuario_json):
-        id_user = usuario_json.get('id_user')
+        id_user = usuario_json.get("id_user")
         nombre = usuario_json.get('nombre')
-        rol = usuario_json.get('rol', 'USER')
-        estado = usuario_json.get('estado', 'activo')
         email = usuario_json.get('email')
         telefono = usuario_json.get('telefono')
+        estado = usuario_json.get('estado', 'pendiente')
+        rol = usuario_json.get('rol', 'cliente')
         password = usuario_json.get('password')
 
-        return Usuario(
+        usuario = Usuarios(
             id_user=id_user,
             nombre=nombre,
-            rol=rol,
-            estado=estado,
             email=email,
             telefono=telefono,
-            plain_password=password
+            estado=estado,
+            rol=rol
         )
+
+        if password:
+            usuario.plain_password = password
+
+        return usuario

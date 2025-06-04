@@ -6,10 +6,6 @@ from .productos import Productos as ProductosResource
 
 from .pedidos import Pedido as PedidoResource, Pedidos as PedidosResource
 
-
-from .auth import Login as LoginResource
-from .auth import Logout as LogoutResource
-
 from .valoraciones import Valoracion as ValoracionResource
 from .notificaciones import Notificacion as NotificacionResource
 
