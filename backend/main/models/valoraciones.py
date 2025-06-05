@@ -33,4 +33,11 @@ class Valoracion(db.Model):
             comentario=json_data.get('comentario')
         )
     
-       
+    def to_json(self):
+        return {
+            'id_valoracion': self.id_valoracion,
+            'comentario': self.comentario,
+            'calificacion': self.calificacion,
+            'id_user': self.id_user,
+            'id_prod': self.id_prod
+        }
