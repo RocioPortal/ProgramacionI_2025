@@ -314,7 +314,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"nombre\": \"maxi\",\n  \"email\": \"max39@gmail.com\",\n  \"password\": \"1730\",\n  \"telefono\": \"2617402854\"\n}",
+							"raw": "{\n  \"nombre\": \"Rocio\",\n  \"email\": \"p.portal@alumno.um.edu.ar\",\n  \"password\": \"1730\",\n  \"telefono\": \"2617402854\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
