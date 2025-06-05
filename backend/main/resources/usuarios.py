@@ -5,15 +5,25 @@ from main.models import UsuarioModel
 from .. import db
 import re
 from main.auth.decorators import role_required
-
+from flask_jwt_extended import get_jwt_identity
 
 class Usuario(Resource):
-    @role_required(['ADMIN'])
+    @role_required(['USER', 'ADMIN', 'ENCARGADO'])
     def get(self, id_user):
-        usuario = db.session.query(UsuarioModel).get(id_user)
+        # Obtener el id del usuario autenticado
+        usuario_actual_id = get_jwt_identity()
+
+        # Solo permitir que el usuario vea su propia info, o un admin vea cualquier usuario
+        if usuario_actual_id != id_user:
+            # Opcional: permitir que ADMIN vea todo
+            usuario_actual = db.session.get(UsuarioModel, usuario_actual_id)
+            if not usuario_actual or usuario_actual.rol != 'ADMIN':
+                return {'message': 'No tienes permiso para ver esta información'}, 403
+
+        usuario = db.session.get(UsuarioModel, id_user)
         if usuario:
             return usuario.to_json_complete(), 200
-        return 'El id es inexistente', 404
+        return {'message': 'El usuario no existe'}, 404
 
     @role_required(['ADMIN'])
     def put(self, id_user):
@@ -46,12 +56,24 @@ class Usuario(Resource):
         db.session.commit()
         return 'Usuario editado con éxito', 200
 
-    @role_required(['ADMIN', 'ENCARGADO'])
+    @role_required(['ADMIN', 'ENCARGADO', 'USER'])
     def delete(self, id_user):
+        # Obtener el ID del usuario autenticado
+        usuario_actual_id = get_jwt_identity()
+
+        # Convertir ambos valores a string para asegurar una comparación correcta
+        if str(usuario_actual_id) != str(id_user):
+            # Si no es el mismo usuario, verificar si tiene rol ADMIN o ENCARGADO
+            usuario_actual = db.session.query(UsuarioModel).get(usuario_actual_id)
+            if not usuario_actual or usuario_actual.rol not in ['ADMIN', 'ENCARGADO']:
+                return {'message': 'No tienes permiso para eliminar este usuario'}, 403
+
+        # Buscar el usuario a eliminar
         usuario = db.session.query(UsuarioModel).get(id_user)
         if not usuario:
-            return 'El id a eliminar es inexistente', 404
+            return {'message': 'El usuario no existe'}, 404
 
+        # Cambiar el estado del usuario a "suspendido"
         usuario.estado = 'suspendido'
         db.session.commit()
 
@@ -63,7 +85,6 @@ class Usuario(Resource):
             "email": usuario.email,
             "telefono": usuario.telefono
         }, 200
-
 
 class Usuarios(Resource):
     @role_required(['ADMIN', 'ENCARGADO'])

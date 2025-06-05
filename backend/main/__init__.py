@@ -1,77 +1,53 @@
 from flask import Flask
-from dotenv import load_dotenv
-
-
 from flask_restful import Api
-
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
+from dotenv import load_dotenv
 import os
 
-from flask_sqlalchemy import 
-from flask_migrate import Migrate
-#Importar Flask JWT
-from flask_jwt_extended import JWTManager
-
-
-#Inicializamos restful
+# Inicializaciones fuera de create_app
 api = Api()
-
-#Inicializar sqlalchemy
 db = SQLAlchemy()
-
-#Inicializar Migrate
 migrate = Migrate()
-
-#Inicializar JWT
 jwt = JWTManager()
 
-
 def create_app():
-    #Inicializar flask
     app = Flask(__name__)
-    #cargamos variables de entorno
     load_dotenv()
 
     if not os.path.exists(os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME')):
         os.mknod(os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME'))
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////'+os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.getenv('DATABASE_PATH') + os.getenv('DATABASE_NAME')
+
     db.init_app(app)
-    migrate.init_app(app,db)
-       
+    migrate.init_app(app, db)  # ← AQUÍ es donde debe estar
 
-    import main.resources as resources
-    from main.resources.orden import Orden, Ordenes  # Asegúrate de importar las clases correctamente
-
-    
-    #cargar los recursos
-    api.add_resource(resources.UsuarioResource, '/usuario/<int:id_user>')
-    api.add_resource(resources.UsuariosResource, '/usuarios')
-
-    api.add_resource(resources.ProductosResource, '/productos')
-    api.add_resource(resources.ProductoResource, '/producto/<int:id>')
-
-    api.add_resource(resources.ValoracionResource, "/valoraciones")
-    api.add_resource(resources.NotificacionResource, "/usuarios/<int:usuario_id>/notificaciones")
-
-    api.add_resource(resources.PedidosResource, '/pedidos')
-    api.add_resource(resources.PedidoResource, '/pedido/<int:id>')
-
-    api.add_resource(resources.LoginResource, '/login')
-    api.add_resource(resources.LogoutResource, '/logout')
-
-    api.add_resource(resources.OrdenesResource, '/ordenes')
-    api.add_resource(resources.OrdenResource, '/orden/<int:id>')
-
-
-    api.init_app(app)
-     #Cargar clave secreta
+    # Configurar JWT
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
-    #Cargar tiempo de expiración de los tokens
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES'))
     jwt.init_app(app)
 
+    import main.resources as resources
+    from main.resources.orden import Orden, Ordenes
+
+    # Registrar recursos
+    api.add_resource(resources.UsuarioResource, '/usuario/<int:id_user>')
+    api.add_resource(resources.UsuariosResource, '/usuarios')
+    api.add_resource(resources.ProductosResource, '/productos')
+    api.add_resource(resources.ProductoResource, '/producto/<int:id>')
+    api.add_resource(resources.ValoracionResource, "/valoraciones")
+    api.add_resource(resources.NotificacionResource, "/usuarios/<int:usuario_id>/notificaciones")
+    api.add_resource(resources.PedidosResource, '/pedidos')
+    api.add_resource(resources.PedidoResource, '/pedido/<int:id>')
+    api.add_resource(resources.OrdenesResource, '/ordenes')
+    api.add_resource(resources.OrdenResource, '/orden/<int:id>')
+
+    api.init_app(app)
+
     from main.auth import routes
-    #Importar blueprint
     app.register_blueprint(routes.auth)
+
     return app
