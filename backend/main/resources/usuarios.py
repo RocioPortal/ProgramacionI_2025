@@ -10,12 +10,10 @@ from flask_jwt_extended import get_jwt_identity
 class Usuario(Resource):
     @role_required(['USER', 'ADMIN', 'ENCARGADO'])
     def get(self, id_user):
-        # Obtener el id del usuario autenticado
+        # id del usuario autenticado
         usuario_actual_id = get_jwt_identity()
-
-        # Solo permitir que el usuario vea su propia info, o un admin vea cualquier usuario
-        if usuario_actual_id != id_user:
-            # Opcional: permitir que ADMIN vea todo
+        # comparación
+        if str(usuario_actual_id) != str(id_user):
             usuario_actual = db.session.get(UsuarioModel, usuario_actual_id)
             if not usuario_actual or usuario_actual.rol != 'ADMIN':
                 return {'message': 'No tienes permiso para ver esta información'}, 403
@@ -61,9 +59,8 @@ class Usuario(Resource):
         # Obtener el ID del usuario autenticado
         usuario_actual_id = get_jwt_identity()
 
-        # Convertir ambos valores a string para asegurar una comparación correcta
+        # comparación 
         if str(usuario_actual_id) != str(id_user):
-            # Si no es el mismo usuario, verificar si tiene rol ADMIN o ENCARGADO
             usuario_actual = db.session.query(UsuarioModel).get(usuario_actual_id)
             if not usuario_actual or usuario_actual.rol not in ['ADMIN', 'ENCARGADO']:
                 return {'message': 'No tienes permiso para eliminar este usuario'}, 403
@@ -181,7 +178,7 @@ class Usuarios(Resource):
         nuevo_usuario = UsuarioModel(
             nombre=data.get('nombre'),
             rol=data.get('rol'),
-            estado=data.get('estado', 'activo'),
+            estado=data.get('estado', 'suspendido'),
             email=data.get('email'),
             telefono=data.get('telefono')
         )
