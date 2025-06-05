@@ -93,7 +93,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/usuarios?estado=suspendido",
+							"raw": "http://127.0.0.1:5000/usuarios?estado=activo",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -108,7 +108,32 @@
 							"query": [
 								{
 									"key": "estado",
-									"value": "suspendido"
+									"value": "activo"
+								},
+								{
+									"key": "nombre",
+									"value": "candela",
+									"disabled": true
+								},
+								{
+									"key": "id_user",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "nombre",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "rol",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": null,
+									"disabled": true
 								}
 							]
 						}
@@ -228,19 +253,33 @@
 			]
 		},
 		{
-			"name": "Login",
+			"name": "auth",
 			"item": [
 				{
-					"name": "login_admin",
+					"name": "login",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0OTA4NjY3MiwianRpIjoiZjQyMmY2MzAtMGIyOS00ZWFmLTg4ZGQtMDFlMjRkNjJjNDEzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjI1IiwibmJmIjoxNzQ5MDg2NjcyLCJjc3JmIjoiMWM3MTJmYzItMDRlOS00MThlLWEwZWItNTI5YzUyMDgxM2QxIiwicm9sIjoiVVNFUiIsImlkIjoyNSwiZW1haWwiOiJhbmEucHJ1ZWJhQGdtYWlsLmNvbSJ9.lkqdk3_jdYpw9G2-51rJU_aVIcQUhXs36gH5d4WOi9Y",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"1234\"\n}\n\n\n\n",
+							"raw": "{\n  \"email\": \"orlando@gmail.com\",\n  \"password\": \"1730\"\n}\n\n\n\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -248,7 +287,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/login",
+							"raw": "http://127.0.0.1:5000/auth/login",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -258,6 +297,7 @@
 							],
 							"port": "5000",
 							"path": [
+								"auth",
 								"login"
 							]
 						}
@@ -265,7 +305,7 @@
 					"response": []
 				},
 				{
-					"name": "login_user1",
+					"name": "register",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -274,7 +314,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"user1\",\n  \"password\": \"abcd\"\n}",
+							"raw": "{\n  \"nombre\": \"maxi\",\n  \"email\": \"max39@gmail.com\",\n  \"password\": \"1730\",\n  \"telefono\": \"2617402854\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -282,7 +322,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/login",
+							"raw": "http://127.0.0.1:5000/auth/register",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -292,77 +332,8 @@
 							],
 							"port": "5000",
 							"path": [
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "login_encargado",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\": \"encargado\",\n  \"password\": \"5678\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:5000/login",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"login"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Logout",
-			"item": [
-				{
-					"name": "logout",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"token\": \"token-falso\"\n}\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:5000/logout",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"logout"
+								"auth",
+								"register"
 							]
 						}
 					},
@@ -664,7 +635,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/productos?page=2&per_page=10",
+							"raw": "http://127.0.0.1:5000/productos?nombre=hamburguesa",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -679,11 +650,32 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "2"
+									"value": "2",
+									"disabled": true
 								},
 								{
 									"key": "per_page",
-									"value": "10"
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "nombre",
+									"value": "hamburguesa"
+								},
+								{
+									"key": "disponible",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "precio_min",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "precio_max",
+									"value": null,
+									"disabled": true
 								}
 							]
 						}
@@ -784,7 +776,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:5000/pedidos?estado=pendiente",
+							"raw": "http://127.0.0.1:5000/pedidos?estado=pendiente&nombre",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -800,6 +792,10 @@
 								{
 									"key": "estado",
 									"value": "pendiente"
+								},
+								{
+									"key": "nombre",
+									"value": null
 								}
 							]
 						}
@@ -1007,12 +1003,52 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0OTEyODMxNCwianRpIjoiZTBjMjJiMDgtOTBhNC00ZDkzLWFiZGYtNjg1OTdmMTcwMjViIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjQiLCJuYmYiOjE3NDkxMjgzMTQsImNzcmYiOiI1ZDI3ODk2ZC0wNmNlLTQyNzEtOTFlMi0zZDRiNGRkNDg5ZTYiLCJyb2wiOiJVU0VSIiwiaWQiOjQsImVtYWlsIjoicm9jaW8ucEBnbWFpbC5jb20ifQ.TjZWx7biRhx-y7Ss24ZXXeMvulA_5zqg3Arck_wLBLc",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "rol",
 								"value": "ADMIN",
 								"type": "text"
+							},
+							{
+								"key": "id_prod",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "id_user",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "calificacion",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "calificacion_min",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "calificacion_max",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -1025,7 +1061,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/valoraciones?calificacion_min=2&calificacion_max=4",
+							"raw": "http://127.0.0.1:5000/valoraciones?calificacion=2",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1040,11 +1076,27 @@
 							"query": [
 								{
 									"key": "calificacion_min",
-									"value": "2"
+									"value": "2",
+									"disabled": true
 								},
 								{
 									"key": "calificacion_max",
-									"value": "4"
+									"value": "4",
+									"disabled": true
+								},
+								{
+									"key": "calificacion",
+									"value": "2"
+								},
+								{
+									"key": "id_user",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "id_prod",
+									"value": null,
+									"disabled": true
 								}
 							]
 						}
@@ -1189,6 +1241,42 @@
 								"key": "rol",
 								"value": "ADMIN",
 								"type": "text"
+							},
+							{
+								"key": "id_user",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "id_pedido",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "fecha_desde",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "fecha_hasta",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "estado",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "nombre_cliente",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
