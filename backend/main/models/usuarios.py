@@ -1,18 +1,35 @@
 from .. import db
-import json
+from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class Usuario(db.Model):
     __tablename__ = 'usuario'
-    id_user = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(50), nullable=False)
-    rol = db.Column(db.String(50), nullable=False)
-    estado = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(100), nullable=True)
-    telefono = db.Column(db.String(20), nullable=True)
 
-    pedidos = db.relationship("Pedido", back_populates="usuario", cascade="all, delete-orphan")
-    notificaciones = db.relationship('Notificacion', back_populates='usuario', cascade="all, delete", single_parent=True)
-    valoraciones = db.relationship('Valoracion', back_populates='usuario', cascade="all, delete", single_parent=True)
+    id_user = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    rol = db.Column(db.String(20), nullable=False, default='USER')
+    estado = db.Column(db.String(20), nullable=False, default='activo')
+    email = db.Column(db.String(64), unique=True, index=True, nullable=False)
+    password = db.Column(db.String(128), nullable=False)
+    telefono = db.Column(db.String(20))
+
+    pedidos = db.relationship('Pedido', back_populates='usuario', cascade='all, delete-orphan')
+    valoraciones = db.relationship('Valoracion', back_populates='usuario', cascade="all, delete-orphan")
+    notificaciones = db.relationship('Notificacion', back_populates='usuario', cascade="all, delete-orphan")
+
+    # ----- Autenticación -----
+
+    @property
+    def plain_password(self):
+        raise AttributeError('La contraseña no se puede leer.')
+
+    @plain_password.setter
+    def plain_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def validate_pass(self, password):
+        return check_password_hash(self.password, password)
+
 
     def to_json(self):
         return {
@@ -23,37 +40,47 @@ class Usuario(db.Model):
             'email': self.email,
             'telefono': self.telefono
         }
-    
-    def to_json_complete(self):
-        return {
-            'id_user': self.id_user,
-            'nombre': self.nombre,
-            'rol': self.rol,
-            'estado': self.estado,
-            'email': self.email,
-            'telefono': self.telefono,
-            'pedidos': [pedido.to_json() for pedido in self.pedidos],
-            'valoraciones': [valoracion.get_json() for valoracion in self.valoraciones],
-            'notificaciones': [notificacion.to_json() for notificacion in self.notificaciones]
-        }
 
     def to_json_short(self):
         return {
             'id_user': self.id_user,
             'nombre': self.nombre,
-            'estado': self.estado,
-            'email': self.email,
-            'telefono': self.telefono
+            'email': self.email
         }
-    
+
+    def to_json_complete(self):
+        return {
+            'id_user': self.id_user,
+            'nombre': self.nombre,
+            'email': self.email,
+            'telefono': self.telefono,
+            'estado': self.estado,
+            'rol': self.rol,
+            'pedidos': [p.to_json_short() for p in self.pedidos] if self.pedidos else [],
+            'notificaciones': [n.to_json() for n in self.notificaciones] if self.notificaciones else [],
+            'valoraciones': [v.to_json() for v in self.valoraciones] if self.valoraciones else []
+        }
+
     @staticmethod
     def from_json(usuario_json):
-        return Usuario(
-            id_user=usuario_json.get('id_user'),
-            nombre=usuario_json.get('nombre'),
-            rol=usuario_json.get('rol'),
-            estado=usuario_json.get('estado', 'activo'),
-            email=usuario_json.get('email'),
-            telefono=usuario_json.get('telefono')
+        id_user = usuario_json.get("id_user")
+        nombre = usuario_json.get('nombre')
+        email = usuario_json.get('email')
+        telefono = usuario_json.get('telefono')
+        estado = usuario_json.get('estado', 'activo')
+        rol = usuario_json.get('rol', 'USER')
+        password = usuario_json.get('password')
+
+        usuario = Usuario(
+            id_user=id_user,
+            nombre=nombre,
+            email=email,
+            telefono=telefono,
+            estado=estado,
+            rol=rol
         )
 
+        if password:
+            usuario.plain_password = password
+
+        return usuario

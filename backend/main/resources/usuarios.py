@@ -4,31 +4,29 @@ from sqlalchemy import desc
 from main.models import UsuarioModel
 from .. import db
 import re
-
-
-def verificar_permiso(roles_requeridos):
-    rol_usuario = 'ADMIN'  
-    if rol_usuario not in roles_requeridos:
-        return False, "No tienes permiso para realizar esta acción", 403
-    return True, "", 200
-
+from main.auth.decorators import role_required
+from flask_jwt_extended import get_jwt_identity
 
 class Usuario(Resource):
+    @role_required(['USER', 'ADMIN', 'ENCARGADO'])
     def get(self, id_user):
-        permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
-        if not permitido:
-            return mensaje, codigo
+        # Obtener el id del usuario autenticado
+        usuario_actual_id = get_jwt_identity()
 
-        usuario = db.session.query(UsuarioModel).get(id_user)
+        # Solo permitir que el usuario vea su propia info, o un admin vea cualquier usuario
+        if usuario_actual_id != id_user:
+            # Opcional: permitir que ADMIN vea todo
+            usuario_actual = db.session.get(UsuarioModel, usuario_actual_id)
+            if not usuario_actual or usuario_actual.rol != 'ADMIN':
+                return {'message': 'No tienes permiso para ver esta información'}, 403
+
+        usuario = db.session.get(UsuarioModel, id_user)
         if usuario:
             return usuario.to_json_complete(), 200
-        return 'El id es inexistente', 404
+        return {'message': 'El usuario no existe'}, 404
 
+    @role_required(['ADMIN'])
     def put(self, id_user):
-        permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
-        if not permitido:
-            return mensaje, codigo
-
         usuario = db.session.query(UsuarioModel).get(id_user)
         if not usuario:
             return 'El id que intentan editar es inexistente', 404
@@ -58,15 +56,24 @@ class Usuario(Resource):
         db.session.commit()
         return 'Usuario editado con éxito', 200
 
+    @role_required(['ADMIN', 'ENCARGADO', 'USER'])
     def delete(self, id_user):
-        permitido, mensaje, codigo = verificar_permiso(['ADMIN', 'ENCARGADO'])
-        if not permitido:
-            return mensaje, codigo
+        # Obtener el ID del usuario autenticado
+        usuario_actual_id = get_jwt_identity()
 
+        # Convertir ambos valores a string para asegurar una comparación correcta
+        if str(usuario_actual_id) != str(id_user):
+            # Si no es el mismo usuario, verificar si tiene rol ADMIN o ENCARGADO
+            usuario_actual = db.session.query(UsuarioModel).get(usuario_actual_id)
+            if not usuario_actual or usuario_actual.rol not in ['ADMIN', 'ENCARGADO']:
+                return {'message': 'No tienes permiso para eliminar este usuario'}, 403
+
+        # Buscar el usuario a eliminar
         usuario = db.session.query(UsuarioModel).get(id_user)
         if not usuario:
-            return 'El id a eliminar es inexistente', 404
+            return {'message': 'El usuario no existe'}, 404
 
+        # Cambiar el estado del usuario a "suspendido"
         usuario.estado = 'suspendido'
         db.session.commit()
 
@@ -79,79 +86,74 @@ class Usuario(Resource):
             "telefono": usuario.telefono
         }, 200
 
-
 class Usuarios(Resource):
+    @role_required(['ADMIN', 'ENCARGADO'])
     def get(self):
-        permitido, mensaje, codigo = verificar_permiso(['ADMIN', 'ENCARGADO'])
-        if not permitido:
-            return mensaje, codigo
-            
         page = 1
         per_page = 10
-        
+
         if request.args.get('page'):
             page = int(request.args.get('page'))
         if request.args.get('per_page'):
             per_page = int(request.args.get('per_page'))
 
         usuarios = db.session.query(UsuarioModel)
-        
+
         #FILTROS
-        
+
         # Filtrar por estado
         if request.args.get('estado'):
             usuarios = usuarios.filter(UsuarioModel.estado == request.args.get('estado'))
-        
+
         # Filtrar por rol
         if request.args.get('rol'):
             usuarios = usuarios.filter(UsuarioModel.rol == request.args.get('rol'))
-        
+
         # Filtrar por nombre
         if request.args.get('nombre'):
             usuarios = usuarios.filter(UsuarioModel.nombre.like(f"%{request.args.get('nombre')}%"))
-        
+
         # Filtrar por email 
         if request.args.get('email'):
             usuarios = usuarios.filter(UsuarioModel.email.like(f"%{request.args.get('email')}%"))
-        
+
         # Filtrar por teléfono
         if request.args.get('telefono'):
             usuarios = usuarios.filter(UsuarioModel.telefono.like(f"%{request.args.get('telefono')}%"))
-            
+
         #ORDENAMIENTO
-        
+
         # Ordenar por ID
         if request.args.get('sortby_id'):
             if request.args.get('sortby_id').lower() == 'desc':
                 usuarios = usuarios.order_by(desc(UsuarioModel.id_user))
             else:
                 usuarios = usuarios.order_by(UsuarioModel.id_user)
-        
+
         # Ordenar por nombre
         if request.args.get('sortby_nombre'):
             if request.args.get('sortby_nombre').lower() == 'desc':
                 usuarios = usuarios.order_by(desc(UsuarioModel.nombre))
             else:
                 usuarios = usuarios.order_by(UsuarioModel.nombre)
-        
+
         # Ordenar por rol
         if request.args.get('sortby_rol'):
             if request.args.get('sortby_rol').lower() == 'desc':
                 usuarios = usuarios.order_by(desc(UsuarioModel.rol))
             else:
                 usuarios = usuarios.order_by(UsuarioModel.rol)
-        
+
         # Ordenar por estado
         if request.args.get('sortby_estado'):
             if request.args.get('sortby_estado').lower() == 'desc':
                 usuarios = usuarios.order_by(desc(UsuarioModel.estado))
             else:
                 usuarios = usuarios.order_by(UsuarioModel.estado)
-        
-        
+
         #resultado paginado
         usuarios_paginados = usuarios.paginate(page=page, per_page=per_page, error_out=False)
-        
+
         return jsonify({
             'usuarios': [usuario.to_json_complete() for usuario in usuarios_paginados.items],
             'total': usuarios_paginados.total,
@@ -160,14 +162,13 @@ class Usuarios(Resource):
             'per_page': per_page
         })
 
+    @role_required(['ADMIN'])
     def post(self):
         data = request.get_json()
 
         # Validar y restringir rol
         if 'rol' in data and data['rol'] != 'USER':
-            permitido, mensaje, codigo = verificar_permiso(['ADMIN'])
-            if not permitido:
-                return mensaje, codigo
+            return {"message": "Solo ADMIN puede asignar roles distintos a USER"}, 403
         else:
             data['rol'] = 'USER'  # Asignación automática si no es ADMIN
 
