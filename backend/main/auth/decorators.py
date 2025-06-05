@@ -22,10 +22,13 @@ def user_identity_lookup(user_id):
     return str(user_id)
 
 @jwt.additional_claims_loader
-def add_claims_to_access_token(user_id):
-    usuario = db.session.get(Usuario, int(user_id))  # buscamos el usuario por ID
-    return {
+def add_claims_to_access_token(usuario_id):
+    usuario = db.session.query(Usuario).get(usuario_id)
+    if not usuario:
+        return {}
+    claims = {
         'rol': usuario.rol,
         'id': usuario.id_user,
         'email': usuario.email
     }
+    return claims

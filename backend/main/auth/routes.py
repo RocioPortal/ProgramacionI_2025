@@ -2,7 +2,7 @@ from flask import request, jsonify, Blueprint
 from .. import db
 from main.models.usuarios import Usuario
 from werkzeug.security import check_password_hash
-from flask_jwt_extended import create_access_token, get_jwt, get_jwt_identity, verify_jwt_in_request
+from flask_jwt_extended import create_access_token, get_jwt, get_jwt_identity, verify_jwt_in_request, jwt_required
 from flask_jwt_extended.exceptions import NoAuthorizationError
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
@@ -50,3 +50,4 @@ def register():
     except Exception as e:
         db.session.rollback()
         return {"mensaje": f"Error al registrar: {str(e)}"}, 500
+    

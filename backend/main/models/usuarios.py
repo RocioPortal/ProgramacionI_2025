@@ -30,7 +30,6 @@ class Usuario(db.Model):
     def validate_pass(self, password):
         return check_password_hash(self.password, password)
 
-    # ----- JSON -----
 
     def to_json(self):
         return {
@@ -68,11 +67,11 @@ class Usuario(db.Model):
         nombre = usuario_json.get('nombre')
         email = usuario_json.get('email')
         telefono = usuario_json.get('telefono')
-        estado = usuario_json.get('estado', 'pendiente')
-        rol = usuario_json.get('rol', 'cliente')
+        estado = usuario_json.get('estado', 'activo')
+        rol = usuario_json.get('rol', 'USER')
         password = usuario_json.get('password')
 
-        usuario = Usuarios(
+        usuario = Usuario(
             id_user=id_user,
             nombre=nombre,
             email=email,
