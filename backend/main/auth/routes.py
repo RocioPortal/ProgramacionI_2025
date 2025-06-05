@@ -17,7 +17,6 @@ def login():
     if not usuario or not usuario.validate_pass(password):
         return {'mensaje': 'Email o contraseña incorrectos'}, 401
 
-    # PASAR SOLO EL ID como string
     access_token = create_access_token(identity=str(usuario.id_user))
 
     return {
