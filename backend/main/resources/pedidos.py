@@ -26,7 +26,7 @@ class Pedido(Resource):
         return {"mensaje": f"Pedido con ID {id} eliminado con éxito"}, 200
 
     @jwt_required()
-    @role_required(['USER', 'ADMIN', 'ENCARGADO'])
+    @role_required(['USER', 'ADMIN', 'ENCARGADO']) 
     def put(self, id):
         pedido = db.session.get(PedidoModel, id)
         if not pedido:
