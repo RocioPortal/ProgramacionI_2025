@@ -8,7 +8,7 @@ class Usuario(db.Model):
     id_user = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     rol = db.Column(db.String(20), nullable=False, default='USER')
-    estado = db.Column(db.String(20), nullable=False, default='activo')
+    estado = db.Column(db.String(20), nullable=False, default='suspendido')
     email = db.Column(db.String(64), unique=True, index=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
     telefono = db.Column(db.String(20))
@@ -67,7 +67,7 @@ class Usuario(db.Model):
         nombre = usuario_json.get('nombre')
         email = usuario_json.get('email')
         telefono = usuario_json.get('telefono')
-        estado = usuario_json.get('estado', 'activo')
+        estado = usuario_json.get('estado', 'suspendido')
         rol = usuario_json.get('rol', 'USER')
         password = usuario_json.get('password')
 
