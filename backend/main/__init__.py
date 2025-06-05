@@ -6,7 +6,7 @@ from flask_restful import Api
 
 import os
 
-from flask_sqlalchemy import 
+from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 #Importar Flask JWT
 from flask_jwt_extended import JWTManager
