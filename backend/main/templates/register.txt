@@ -1,0 +1,24 @@
+Bienvenid@ {{ nombre }} a Sabores de Mamás
+
+Gracias por unirte a nuestra comunidad.
+
+Algunos productos de la rotisería:
+- Ñoquis
+- Variedad de pizzas
+- Milanesas
+- Pollo al horno
+
+Los favoritos de nuestros clientes:
+- Hamburguesas 
+- Lomo pizza 
+- Empanadas 
+
+Comentarios:
+- "¡La mejor comida casera que he probado!"
+- "Excelente atención y productos deliciosos."
+- "Siempre vuelvo por sus empanadas, son increíbles."
+
+Si necesitas algo, no dudes en escribirnos.
+¡Nos vemos pronto!
+
+— El equipo de Sabores de Mamás
