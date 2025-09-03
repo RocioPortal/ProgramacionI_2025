@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pedidos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+    }
+    header {
+      background: #ff4500;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 18px;
+      position: relative;
+    }
+    .btn-back {
+      position: absolute;
+      left: 15px;
+      top: 8px;
+      background: #fff;
+      color: #ff4500;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+    .btn-back:hover {
+      background: #f2f2f2;
+    }
+    .container {
+      padding: 20px;
+    }
+    .btn {
+      display: inline-block;
+      background: #ff4500;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      text-decoration: none;
+      margin: 10px 0;
+      cursor: pointer;
+    }
+    .btn-outline {
+      background: white;
+      border: 2px solid #ff4500;
+      color: #ff4500;
+    }
+    .status {
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    .acciones {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    .pantalla {
+      display: none;
+    }
+    .visible {
+      display: block;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <!-- Pantalla de lista de pedidos -->
+  <div id="pantallaPedidos" class="pantalla visible">
+    <header>
+      <a href="menu.html" class="btn-back">&larr; volver</a>
+      Pedido
+    </header>
+    <div class="container">
+      <button class="btn">PEDIDOS</button>
+      <table>
+        <tr>
+          <td># 5430</td>
+          <td><span class="status">Confirmado</span></td>
+          <td>
+            <span class="acciones" onclick="verDetalle(5430)">✏️</span>
+            <span class="acciones">🗑️</span>
+          </td>
+        </tr>
+        <tr>
+          <td># 1942</td>
+          <td><span class="status">Pendiente</span></td>
+          <td>
+            <span class="acciones" onclick="verDetalle(1942)">✏️</span>
+            <span class="acciones">🗑️</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pantalla detalle pedido -->
+  <div id="pantallaDetalle" class="pantalla">
+    <header>
+      <a href="menu.html" class="btn-back">&larr; volver</a>
+      Información del pedido
+    </header>
+    <div class="container">
+      <button class="btn">DATOS</button>
+      <p><b>Id Pedido</b> # <span id="idPedido"></span></p>
+      <p><b>Nombre</b> Lola Argenta</p>
+      <p><b>Teléfono</b> 261 31931319</p>
+      <p><b>Email</b> lolaargenta123@gmail.com</p>
+      <p>
+        <b>Estado</b>
+        <select id="estadoPedido">
+          <option>Confirmado</option>
+          <option>Pendiente</option>
+          <option>Cancelado</option>
+        </select>
+      </p>
+      <button class="btn-outline" onclick="volver()">Cancelar</button>
+      <button class="btn" onclick="confirmar()">Confirmar</button>
+    </div>
+  </div>
+
+  <script>
+    function verDetalle(id) {
+      document.getElementById("pantallaPedidos").classList.remove("visible");
+      document.getElementById("pantallaDetalle").classList.add("visible");
+      document.getElementById("idPedido").innerText = id;
+    }
+
+    function volver() {
+      document.getElementById("pantallaDetalle").classList.remove("visible");
+      document.getElementById("pantallaPedidos").classList.add("visible");
+    }
+
+    function confirmar() {
+      alert("Pedido confirmado!");
+      volver();
+    }
+  </script>
+</body>
+</html>

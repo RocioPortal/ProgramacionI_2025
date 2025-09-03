@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Productos - Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+    .section {
+      min-height: 100vh;
+      padding: 2rem;
+      display: none;             /* oculto por defecto */
+      flex-direction: column;
+      justify-content: center;
+    }
+    .section.active {
+      display: flex;             /* solo la sección activa se muestra */
+    }
+    .btn-orange {
+      background-color: #FF4500;
+      color: white;
+      border-radius: 25px;
+      font-weight: bold;
+    }
+    .btn-orange:hover {
+      background-color: #e03d00;
+      color: white;
+    }
+    .btn-back {
+      display: inline-block;
+      background-color: #FF4500;
+      color: #fff;
+      padding: 8px 15px;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    .btn-back:hover {
+      background-color: #e03d00;
+      color: #fff;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    img.product-img {
+      max-width: 100%;
+      border-radius: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pantalla 1: Todos los productos -->
+  <section id="productos" class="section active">
+    <div class="container">
+      <a href="menu.html" class="btn-back">&larr; volver</a>
+
+      <h2 class="text-center mb-4">Productos</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Ñoquis de Papa</h5>
+            <p>$9000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Ravioles</h5>
+            <p>$19000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Hamburguesa</h5>
+            <p>$9000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Lomo</h5>
+            <p>$19000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Lomopizza</h5>
+            <p>$19000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Choripan</h5>
+            <p>$7000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Pancho</h5>
+            <p>$2500</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Milanesa Napolitana</h5>
+            <p>$10000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Pollo al horno</h5>
+            <p>$20000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Papas Fritas</h5>
+            <p>$5500</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Pizza Muzza</h5>
+            <p>$11000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Pizza con Ananas</h5>
+            <p>$12000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Empanadas de pollo</h5>
+            <p>$750</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Empanadas de carne</h5>
+            <p>$800</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Lata Gaseosa</h5>
+            <p>$1500</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Gaseosa</h5>
+            <p>$2800</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Agua con gas</h5>
+            <p>$2100</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Agua sin gas</h5>
+            <p>$2000</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Agua saborizada</h5>
+            <p>$2200</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Lata de cerveza</h5>
+            <p>$3700</p>
+            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button onclick="showSection('nuevo')" class="btn btn-orange">Nuevo producto</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pantalla 2: Ver producto -->
+  <section id="producto" class="section">
+    <div class="container text-center">
+      <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+
+      <h2>Pizza Napolitana</h2>
+      <img src="https://via.placeholder.com/300" alt="Descripción" class="product-img my-3">
+      <p>Deliciosa pizza con salsa de tomate, mozzarella y albahaca fresca.</p>
+      <p><strong>Precio:</strong> $4500</p>
+      <p><strong>Cantidad:</strong> 10</p>
+      <div class="d-flex justify-content-center gap-3 mt-3">
+        <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+        <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pantalla 3: Añadir producto -->
+  <section id="nuevo" class="section">
+    <div class="container">
+      <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+
+      <h2 class="text-center mb-4">Añadir producto</h2>
+      <form class="card p-4">
+        <div class="mb-3">
+          <label class="form-label">Foto</label>
+          <input type="file" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Precio</label>
+          <input type="number" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cantidad</label>
+          <input type="number" class="form-control">
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-orange">Agregar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 🔗 Captura clics en anclas internas (#...) y cambia de sección
+    document.addEventListener('click', function (e) {
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+
+      const targetId = link.getAttribute('href').slice(1); // quita el '#'
+      const targetEl = document.getElementById(targetId);
+      if (targetEl && targetEl.classList.contains('section')) {
+        e.preventDefault();
+        showSection(targetId);
+      }
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
