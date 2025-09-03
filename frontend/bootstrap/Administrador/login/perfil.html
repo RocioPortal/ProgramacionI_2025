@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil Usuario</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #ffffff;
+      width: 360px;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h2 {
+      color: #ff4500;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      text-align: left;
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .profile-card {
+      background-color: #fafafa;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      margin-bottom: 20px;
+    }
+
+    .profile-card img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .profile-card h3 {
+      margin: 5px 0;
+      font-size: 18px;
+    }
+
+    .profile-card p {
+      margin: 3px 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .btn-logout {
+      background-color: #ff4500;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .btn-logout:hover {
+      background-color: #e63900;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Mi perfil</h2>
+
+    <div class="section-title">Datos personales</div>
+
+    <div class="profile-card">
+      <img src="https://i.imgur.com/0y0y0y0.png" alt="Foto de perfil">
+      <h3>Ana Guerra</h3>
+      <p>AnaGuerra@gmail.com</p>
+      <p>+261 1234567</p>
+      <p>Rol: Administrador</p>
+    </div>
+
+    <button class="btn-logout" onclick="location.href='menu.html'">CERRAR SESIÓN</button>  </div>
+</body>
+</html>

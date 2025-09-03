@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Usuarios — Sabores de Mamás (Admin)</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --orange: #ff5a1a;
+      --orange-dark: #e65100;
+      --peach: #fde7db;
+      --search-pink: #fdeff3;
+      --green: #27b85a;
+    }
+
+    body {
+      background: #f8f9fa;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    .container-main {
+      padding: 30px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .page-header {
+      display:flex;
+      align-items:center;
+      margin-bottom:20px;
+    }
+    .back-btn {
+      margin-right:10px;
+      background: transparent;
+      border:none;
+      color: var(--orange);
+      font-size: 24px;
+      text-decoration: none;
+    }
+    .page-title {
+      font-weight:700;
+      font-size:28px;
+      margin:0;
+    }
+
+    .search-box {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background: var(--search-pink);
+      padding:10px 12px;
+      border-radius: 12px;
+      margin-bottom:14px;
+    }
+    .search-box input {
+      border:0;
+      background: transparent;
+      outline:none;
+      width:100%;
+      font-size:14px;
+    }
+    .search-icon {
+      width:18px; height:18px; opacity:0.7;
+    }
+
+    .pills {
+      display:flex;
+      gap:10px;
+      margin-bottom:20px;
+    }
+    .pill {
+      flex:1;
+      padding:10px 0;
+      border-radius: 30px;
+      text-align:center;
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      border: 1px solid rgba(0,0,0,0.04);
+      background: #f6f6f6;
+      color: #6d6d6d;
+    }
+    .pill.active {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .edit-btn {
+      width:32px; height:32px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: var(--green);
+      color: #fff;
+      border: none;
+    }
+
+    .modify-top {
+      background: var(--peach);
+      padding: 20px;
+      border-radius: 12px 12px 0 0;
+      display:flex;
+      align-items:center;
+    }
+    .modify-card {
+      background: #fff;
+      border-radius: 0 0 12px 12px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .form-control.custom, .form-select.custom {
+      border: 2px solid var(--orange);
+      border-radius: 10px;
+    }
+    .save-btn {
+      background: var(--orange);
+      color:#fff;
+      border-radius: 12px;
+      padding: 12px;
+      border: none;
+      font-weight:700;
+      width:100%;
+      margin-top:14px;
+    }
+    .save-btn:hover { background: var(--orange-dark); }
+  </style>
+</head>
+<body>
+
+  <div class="container-main">
+
+    <!-- SCREEN: Buscar Usuarios -->
+    <div id="screen-search">
+      <div class="page-header">
+        <a href="menu.html" class="back-btn">&larr;</a>
+        <h1 class="page-title">Usuarios</h1>
+      </div>
+
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="6" stroke="#b8b8b8" stroke-width="2"/></svg>
+        <input id="searchInput" type="search" placeholder="Buscar usuarios" oninput="renderList()" />
+        <button class="btn btn-link p-0" title="Filtros" style="color:#b7b7b7;">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="#bdbdbd" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <div class="pills">
+        <div id="pill-clients" class="pill active" onclick="setType('client')">CLIENTES</div>
+        <div id="pill-employees" class="pill" onclick="setType('employee')">EMPLEADOS</div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped align-middle" id="userTable">
+          <thead class="table-light">
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Rol</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="userList"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SCREEN: Modificar Usuario -->
+    <div id="screen-modify" style="display:none;">
+      <div class="modify-top">
+        <button class="back-btn" onclick="backToSearch()">&larr;</button>
+        <div class="modify-title fw-bold">Modificar Usuario</div>
+      </div>
+
+      <div class="modify-card">
+        <form id="modifyForm" onsubmit="saveUser(event)">
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input id="m-name" required type="text" class="form-control custom" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input id="m-email" required type="email" class="form-control custom" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Teléfono</label>
+            <input id="m-phone" type="tel" class="form-control custom" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">ROL</label>
+            <select id="m-role" class="form-select custom">
+              <option value="Empleado">Empleado</option>
+              <option value="Administrador">Administrador</option>
+              <option value="Cliente">Cliente</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">ESTADO</label>
+            <select id="m-status" class="form-select custom">
+              <option value="Activo">Activo</option>
+              <option value="Inactivo">Inactivo</option>
+            </select>
+          </div>
+          <button type="submit" class="save-btn">GUARDAR</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    let currentType = "client";
+    let users = [
+      {name:"Juan Pérez", email:"juan@gmail.com", phone:"123456", role:"Cliente", status:"Activo", type:"client"},
+      {name:"María López", email:"maria@gmail.com", phone:"987654", role:"Empleado", status:"Activo", type:"employee"},
+      {name:"Carlos Gómez", email:"carlos@gmail.com", phone:"456789", role:"Cliente", status:"Inactivo", type:"client"}
+    ];
+    let editingUser = null;
+
+    function setType(type){
+      currentType = type;
+      document.getElementById("pill-clients").classList.toggle("active", type==="client");
+      document.getElementById("pill-employees").classList.toggle("active", type==="employee");
+      renderList();
+    }
+
+    function renderList(){
+      const list = document.getElementById("userList");
+      const search = document.getElementById("searchInput").value.toLowerCase();
+      list.innerHTML="";
+      users.filter(u => u.type===currentType && 
+        (u.name.toLowerCase().includes(search) || u.email.toLowerCase().includes(search))
+      ).forEach(u=>{
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${u.name}</td>
+          <td>${u.email}</td>
+          <td>${u.phone}</td>
+          <td>${u.role}</td>
+          <td>${u.status}</td>
+          <td><button class="edit-btn" onclick="editUser('${u.email}')">✎</button></td>
+        `;
+        list.appendChild(tr);
+      });
+    }
+
+    function editUser(email){
+      editingUser = users.find(u => u.email===email);
+      if(!editingUser) return;
+      document.getElementById("m-name").value = editingUser.name;
+      document.getElementById("m-email").value = editingUser.email;
+      document.getElementById("m-phone").value = editingUser.phone;
+      document.getElementById("m-role").value = editingUser.role;
+      document.getElementById("m-status").value = editingUser.status;
+      document.getElementById("screen-search").style.display="none";
+      document.getElementById("screen-modify").style.display="block";
+    }
+
+    function backToSearch(){
+      document.getElementById("screen-modify").style.display="none";
+      document.getElementById("screen-search").style.display="block";
+    }
+
+    function saveUser(e){
+      e.preventDefault();
+      if(editingUser){
+        editingUser.name = document.getElementById("m-name").value;
+        editingUser.email = document.getElementById("m-email").value;
+        editingUser.phone = document.getElementById("m-phone").value;
+        editingUser.role = document.getElementById("m-role").value;
+        editingUser.status = document.getElementById("m-status").value;
+      }
+      backToSearch();
+      renderList();
+    }
+
+    renderList();
+  </script>
+
+</body>
+</html>

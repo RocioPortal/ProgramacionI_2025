@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sabores de Mamás - Acceso</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+      text-align: center;
+    }
+    .pantalla {
+      display: none;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .activa {
+      display: block;
+    }
+    .logo {
+      margin-top: 80px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff5e00;
+    }
+    .boton {
+      display: block;
+      margin: 20px auto;
+      padding: 15px;
+      width: 80%;
+      max-width: 300px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      background: #ff5e00;
+      color: white;
+      cursor: pointer;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .tab.activo {
+      border-bottom: 2px solid #ff5e00;
+      font-weight: bold;
+    }
+    .formulario input {
+      display: block;
+      width: 80%;
+      margin: 10px auto;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .formulario small {
+      display: block;
+      margin-top: 5px;
+      color: #3498db;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Pantalla 2: Acceso o Registro -->
+  <div id="pantalla1" class="pantalla activa">
+    <div class="logo">¡BIENVENIDOS A SABORES DE MAMÁS!</div>
+    <button class="boton" onclick="mostrar('pantalla2')">ACCESO</button>
+    <button class="boton" onclick="mostrar('pantalla3')">REGISTRARSE</button>
+  </div>
+
+  <!-- Pantalla 3: Login -->
+  <div id="pantalla2" class="pantalla">
+    <div class="tabs">
+      <div class="tab activo" onclick="mostrar('pantalla4')">Iniciar sesión</div>
+      <div class="tab" onclick="mostrar('pantalla5')">Registrarse</div>
+    </div>
+    <form class="formulario">
+      <input type="email" placeholder="Tu correo electrónico" required>
+      <input type="password" placeholder="Tu contraseña" required>
+      <label><input type="checkbox"> Recordarme</label>
+      <small>¿Olvidaste tu contraseña?</small>
+      <button class="boton" type="button" onclick="window.location.href='menu.html'">ACCEDER</button>
+    </form>
+  </div>
+
+  <!-- Pantalla 4: Registro -->
+  <div id="pantalla3" class="pantalla">
+    <div class="tabs">
+      <div class="tab" onclick="mostrar('pantalla2')">Iniciar sesión</div>
+      <div class="tab activo" onclick="mostrar('pantalla4')">Registrarse</div>
+    </div>
+    <form class="formulario">
+      <input type="text" placeholder="Tu nombre completo" required>
+      <input type="email" placeholder="Tu correo electrónico" required>
+      <input type="tel" placeholder="Tu número de teléfono" required>
+      <input type="password" placeholder="Tu contraseña" required>
+      
+      <!-- Botón modificado para ir directo al menú -->
+      <button class="boton" type="button" onclick="window.location.href='menu.html'">CREAR CUENTA</button>
+    </form>
+  </div>
+
+  <script>
+    function mostrar(id) {
+      document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+      document.getElementById(id).classList.add('activa');
+    }
+  </script>
+
+</body>
+</html>
