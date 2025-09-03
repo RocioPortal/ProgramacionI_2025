@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agregar Pedido - Sabores de Mamás</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- Ajustes visuales -->
+    <style>
+      .pill-tab{
+        background: var(--color-principal);
+        color:#fff;
+        border:none;
+        border-radius: 999px;
+        padding:.6rem 1.8rem;
+        font-weight:700;
+        box-shadow: var(--shadow-soft);
+      }
+      .info-card{
+        border-radius: 20px;
+        padding: 1.25rem 1.25rem;
+        box-shadow: var(--shadow-soft);
+        font-size: 1.05rem;
+        margin-bottom:1rem;
+      }
+      .info-row{
+        display:grid;
+        grid-template-columns: 150px 1fr;
+        gap:.75rem;
+        align-items:center;
+        padding:.5rem 0;
+        border-bottom:1px dashed #eee;
+      }
+      .info-row:last-child{ border-bottom:0; }
+      .info-label{
+        color:#6b6460;
+        font-weight:600;
+      }
+      .totals-box{
+        background: var(--color-fondo);
+        border-radius: 20px;
+        padding: 1.25rem 1.25rem;
+        font-size: 1.05rem;
+        box-shadow: var(--shadow-soft);
+        margin-top:1.5rem;
+      }
+      .btn-confirmar{
+        min-width:100%;
+        border-radius:999px;
+        padding:.9rem 1.5rem;
+        font-weight:700;
+        margin-top:1.5rem;
+      }
+    </style>
+  </head>
+
+  <body class="bg-cream">
+    <!-- Navbar -->
+    <nav class="navbar bg-brand">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="pedidos.html">← Volver</a>
+        <span class="navbar-text text-white fw-bold">Agregar Pedido</span>
+        <span></span>
+      </div>
+    </nav>
+
+    <!-- Contenido -->
+    <div class="container pt-4">
+
+      <div class="text-center mb-3">
+        <button type="button" class="pill-tab">NUEVO PEDIDO</button>
+      </div>
+
+      <div class="card info-card">
+        <div class="info-row">
+          <div class="info-label">Id Pedido</div>
+          <div># 5431</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Nombre</div>
+          <div>Claudia</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Teléfono</div>
+          <div>261241543</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Productos</div>
+          <div>Pizza muzza, lata stella</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Detalles</div>
+          <div>Tener en cuenta …</div>
+        </div>
+      </div>
+
+      <div class="totals-box">
+        <div class="d-flex justify-content-between mb-2">
+          <span>Subtotal</span>
+          <input type="number" class="form-control form-control-sm" placeholder="$ Ingrese monto" style="max-width: 180px;">
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span>Código de promoción</span>
+          <input type="text" class="form-control form-control-sm" placeholder="$ --------" style="max-width: 180px;">
+        </div>
+        <div class="d-flex justify-content-between fw-bold mt-3">
+          <span>Total</span>
+          <span>$ 0</span>
+        </div>
+      </div>
+
+      <!-- Botón Confirmar -->
+      <div class="text-center">
+        <a href="pedidos.html" class="btn btn-custom btn-confirmar">Confirmar</a>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
