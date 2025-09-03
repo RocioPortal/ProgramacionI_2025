@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pedido - Sabores de Mamás</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons (para el tacho y el lápiz) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Estilos propios -->
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- Ajustes de esta pantalla (podés moverlos a styles.css si querés) -->
+    <style>
+      /* Botón "PEDIDOS" centrado y en pill */
+      .btn-pedidos-pill{
+        background: var(--color-principal);
+        color:#fff;
+        border:none;
+        border-radius: 999px;
+        padding:.7rem 2.2rem;
+        font-weight:700;
+        box-shadow: var(--shadow-soft);
+      }
+      /* Cada fila de pedido como item grande */
+      .pedido-item{
+        display: grid;
+        grid-template-columns: 1fr auto auto;  /* ID | Estado | Acciones */
+        gap: .75rem;
+        align-items: center;
+        background: #fff;
+        border-radius: 16px;
+        padding: 1rem 1rem;
+        margin-bottom: .8rem;
+        box-shadow: var(--shadow-soft);
+        font-size: 1.05rem;            /* más grande */
+      }
+      .pedido-id{
+        color:#6b6460;
+        font-weight:600;
+      }
+      .pedido-estado{
+        font-weight:700;
+      }
+      /* Estados con colores suaves */
+      .estado-confirmado{ color:#157347; }
+      .estado-pendiente{ color:#8a6a00; }
+      .estado-cancelado{ color:#b02a37; }
+
+      /* Botones circulares grandes para acciones */
+      .action-btn{
+        width: 42px; height: 42px;
+        display:inline-flex; align-items:center; justify-content:center;
+        border-radius:50%;
+        border: none;
+        font-size: 1.1rem;
+      }
+      .action-delete{ background:#ffebeb; color:#dc3545; border:1px solid #f6c6cc; }
+      .action-edit  { background:#e9f7ef; color:#157347; border:1px solid #cfe9da; }
+
+      /* botón inferior grande */
+      .btn-agregar{
+        min-width: 280px;
+        border-radius: 999px;
+        padding: .9rem 1.5rem;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body class="bg-cream">
+    <!-- Header / Navbar -->
+    <nav class="navbar bg-brand">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="menu.html">← Volver</a>
+        <span class="navbar-text text-white fw-bold">Pedido</span>
+        <span></span>
+      </div>
+    </nav>
+
+    <!-- Contenido -->
+    <div class="container pt-4">
+      <div class="text-center mb-3">
+        <button type="button" class="btn btn-pedidos-pill">PEDIDOS</button>
+      </div>
+
+      <hr class="mt-4">
+
+      <h5 class="mt-3 mb-3" style="color:#2f2a26;">Id Pedidos</h5>
+
+      <!-- Lista de pedidos (solo ID, Estado y acciones) -->
+      <div class="pedido-item">
+        <div class="pedido-id"># 5430</div>
+        <div class="pedido-estado estado-confirmado">Confirmado</div>
+        <div class="d-flex gap-2">
+          <button class="action-btn action-delete" title="Eliminar">
+            <i class="bi bi-trash"></i>
+          </button>
+          <!-- Editar lleva a pedido-info -->
+          <a class="action-btn action-edit" href="pedido-info.html" title="Editar">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="pedido-item">
+        <div class="pedido-id"># 1942</div>
+        <div class="pedido-estado estado-pendiente">Pendiente</div>
+        <div class="d-flex gap-2">
+          <button class="action-btn action-delete" title="Eliminar">
+            <i class="bi bi-trash"></i>
+          </button>
+          <a class="action-btn action-edit" href="pedido-info.html" title="Editar">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="pedido-item">
+        <div class="pedido-id"># 3492</div>
+        <div class="pedido-estado estado-cancelado">Cancelado</div>
+        <div class="d-flex gap-2">
+          <button class="action-btn action-delete" title="Eliminar">
+            <i class="bi bi-trash"></i>
+          </button>
+          <a class="action-btn action-edit" href="pedido-info.html" title="Editar">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="pedido-item">
+        <div class="pedido-id"># 6853</div>
+        <div class="pedido-estado estado-pendiente">Pendiente</div>
+        <div class="d-flex gap-2">
+          <button class="action-btn action-delete" title="Eliminar">
+            <i class="bi bi-trash"></i>
+          </button>
+          <a class="action-btn action-edit" href="pedido-info.html" title="Editar">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Botón inferior "Agregar pedido" -->
+      <div class="text-center my-4 py-2">
+        <a href="pedido-nuevo.html" class="btn btn-custom btn-agregar">Agregar pedido</a>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

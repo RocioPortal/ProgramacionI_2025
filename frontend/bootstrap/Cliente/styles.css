@@ -1,0 +1,104 @@
+body {
+    background-color: #F6F1E7;
+    font-family: Arial, sans-serif;
+}
+
+.text-naranja {
+    color: #FA4A0C;
+}
+
+.text-marron {
+    color: #5B3D2A;
+}
+
+.btn-naranja {
+    background-color: #FA4A0C;
+    color: white;
+    border-radius: 12px;
+}
+
+.btn-naranja:hover {
+    background-color: #d63b08;
+    color: white;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Barra inferior de navegación */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.bottom-nav a {
+    color: #5B3D2A;
+    text-align: center;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.bottom-nav a.active {
+    color: #FA4A0C;
+}
+
+.bottom-nav .cart-btn {
+    background-color: #FA4A0C;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    margin-top: -25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor de datos personales */
+.perfil-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin: 20px auto;
+  width: 90%;
+}
+
+
+
+/* Avatar */
+.perfil-card img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+
+
+/* Botón cerrar sesión */
+.cerrar-sesion {
+  display: block;
+  width: 90%;
+  margin: 20px auto;
+  border-radius: 25px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #FA4A0C;
+  color: #fff;
+  border: none;
+  text-align: center;
+}
