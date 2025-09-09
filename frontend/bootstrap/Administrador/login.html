@@ -1,123 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sabores de Mamás - Acceso</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #fff;
-      color: #333;
-      text-align: center;
-    }
-    .pantalla {
-      display: none;
-      height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    .activa {
-      display: block;
-    }
-    .logo {
-      margin-top: 80px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #ff5e00;
-    }
-    .boton {
-      display: block;
-      margin: 20px auto;
-      padding: 15px;
-      width: 80%;
-      max-width: 300px;
-      border: none;
-      border-radius: 25px;
-      font-size: 16px;
-      background: #ff5e00;
-      color: white;
-      cursor: pointer;
-    }
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    .tab {
-      padding: 10px 20px;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-    }
-    .tab.activo {
-      border-bottom: 2px solid #ff5e00;
-      font-weight: bold;
-    }
-    .formulario input {
-      display: block;
-      width: 80%;
-      margin: 10px auto;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    .formulario small {
-      display: block;
-      margin-top: 5px;
-      color: #3498db;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-
-
-  <!-- Pantalla 2: Acceso o Registro -->
-  <div id="pantalla1" class="pantalla activa">
-    <div class="logo">¡BIENVENIDOS A SABORES DE MAMÁS!</div>
-    <button class="boton" onclick="mostrar('pantalla2')">ACCESO</button>
-    <button class="boton" onclick="mostrar('pantalla3')">REGISTRARSE</button>
-  </div>
-
-  <!-- Pantalla 3: Login -->
-  <div id="pantalla2" class="pantalla">
-    <div class="tabs">
-      <div class="tab activo" onclick="mostrar('pantalla4')">Iniciar sesión</div>
-      <div class="tab" onclick="mostrar('pantalla5')">Registrarse</div>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Acceso - Sabores de Mamás</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+  </head>
+  <body class="d-flex flex-column justify-content-center align-items-center vh-100" style="background-color: var(--color-fondo);">
+    <div class="text-center mb-3">
     </div>
-    <form class="formulario">
-      <input type="email" placeholder="Tu correo electrónico" required>
-      <input type="password" placeholder="Tu contraseña" required>
-      <label><input type="checkbox"> Recordarme</label>
-      <small>¿Olvidaste tu contraseña?</small>
-      <button class="boton" type="button" onclick="window.location.href='menu.html'">ACCEDER</button>
-    </form>
-  </div>
 
-  <!-- Pantalla 4: Registro -->
-  <div id="pantalla3" class="pantalla">
-    <div class="tabs">
-      <div class="tab" onclick="mostrar('pantalla2')">Iniciar sesión</div>
-      <div class="tab activo" onclick="mostrar('pantalla4')">Registrarse</div>
+    <div class="card shadow p-4" style="border-radius: 20px; max-width: 360px; width: 100%;">
+      <ul class="nav nav-tabs mb-3" id="authTabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Iniciar sesión</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="registro.html">Registrarse</a>
+        </li>
+      </ul>
+
+      <form action="menu.html" method="get" novalidate>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" placeholder="Tu correo electrónico" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Contraseña</label>
+          <input type="password" class="form-control" placeholder="Tu contraseña" required minlength="4">
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="recordarme">
+            <label class="form-check-label" for="recordarme">Recordarme</label>
+          </div>
+          <a href="#" class="small text-decoration-none" style="color: var(--color-principal);">
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
+        <button type="submit" class="btn btn-custom w-100">Acceso</button>
+      </form>
     </div>
-    <form class="formulario">
-      <input type="text" placeholder="Tu nombre completo" required>
-      <input type="email" placeholder="Tu correo electrónico" required>
-      <input type="tel" placeholder="Tu número de teléfono" required>
-      <input type="password" placeholder="Tu contraseña" required>
-      
-      <!-- Botón modificado para ir directo al menú -->
-      <button class="boton" type="button" onclick="window.location.href='menu.html'">CREAR CUENTA</button>
-    </form>
-  </div>
 
-  <script>
-    function mostrar(id) {
-      document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
-      document.getElementById(id).classList.add('activa');
-    }
-  </script>
-
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
+

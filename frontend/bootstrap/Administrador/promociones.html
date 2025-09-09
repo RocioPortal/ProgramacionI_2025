@@ -4,154 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Promociones</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fff;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      padding: 10px 15px;
-      background-color: #fff;
-      border-bottom: 1px solid #ddd;
-      position: relative;
-    }
-    header h1 {
-      flex: 1;
-      text-align: center;
-      margin: 0;
-      font-size: 20px;
-      color: #FF4500;
-    }
-    .btn-back {
-      position: absolute;
-      left: 15px;
-      top: 8px;
-      background: #FF4500;
-      color: #fff;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    .btn-back:hover {
-      background: #e03d00;
-    }
-    .container { padding: 20px; }
-    .promo-card {
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #fff;
-    }
-    .promo-card h3 { margin: 0 0 10px; font-size: 16px; }
-    .promo-card button {
-      background-color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #333;
-    }
-    .promo1 { background-color: #E91E63; }
-    .promo2 { background-color: #8BC34A; color: #000; }
-    .promo-card img {
-      width: 60px;
-      height: auto;
-      margin-left: 10px;
-    }
-    .btn-main {
-      display: block;
-      width: 90%;
-      margin: 20px auto;
-      padding: 15px;
-      font-size: 16px;
-      font-weight: bold;
-      color: #fff;
-      background-color: #FF4500;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .form-container { padding: 20px; }
-    .form-container h2 {
-      text-align: center;
-      font-size: 22px;
-      color: #FF4500;
-      margin-bottom: 20px;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      border: 1px solid #FF4500;
-      font-size: 14px;
-    }
-    textarea { resize: none; height: 80px; }
-    .btn-save {
-      display: block;
-      width: 90%;
-      margin: 20px auto;
-      padding: 15px;
-      font-size: 16px;
-      font-weight: bold;
-      color: #fff;
-      background-color: #FF4500;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
   <!-- Página de Promociones -->
   <section id="page-lista">
     <header>
-      <a href="menu.html" class="btn-back">&larr; volver</a>
-      <h1>Promociones</h1>
-    </header>
+       <a href="menu.html" class="btn-back">&larr; volver</a>
+       <h2 class="titulo-promos">PROMOCIONES</h2>
+      </header>
     <div class="container">
       <div class="promo-card promo1">
         <div>
           <h3>2X1 En Gaseosas<br>¡Válido por 24 horas!</h3>
           <button>Enviar a usuarios</button>
         </div>
-        <img src="https://i.ibb.co/VYczDLm/coca.png" alt="Coca Cola">
+        <img src="img/promociones_coca.png" alt="Coca Cola">
       </div>
       <div class="promo-card promo2">
         <div>
           <h3>¡15% de descuento en “Entre panes”!</h3>
           <button>Enviar a usuarios</button>
         </div>
-        <img src="https://i.ibb.co/FVPMjVQ/sandwich.png" alt="Sandwich">
+        <img src="img/promociones_sanguches.png" alt="Sandwich">
       </div>
-      <button class="btn-main" onclick="showForm()">AGREGAR PROMOCIÓN</button>
+      <button class="btn-main" type="button" onclick="showForm()">AGREGAR PROMOCIÓN</button>
     </div>
   </section>
 
   <!-- Página Crear Promo -->
   <section id="page-form" style="display:none;">
     <header>
-      <a href="menu.html" class="btn-back">&larr; Menú</a>
+      <span class="btn-back" onclick="showList()">&larr; volver</span>
       <h1>Promociones</h1>
     </header>
     <div class="form-container">
-      <h2>Crear promo</h2>
-      <form>
-        <input type="text" placeholder="Título Promo">
-        <input type="text" placeholder="Validez">
-        <textarea placeholder="Breve descripción"></textarea>
+      <h2>CREAR PROMOCIÓN</h2>
+      <form onsubmit="guardarPromo(event)">
+        
+        <!-- Título -->
+        <div class="mb-3">
+          <label class="form-label">Título</label>
+          <input type="text" class="form-control" placeholder="Ej: 30% Disfruta esta promo imperdible" required>
+        </div>
+
+        <!-- Validez -->
+        <div class="mb-3">
+          <label class="form-label">Validez</label>
+          <input type="text" class="form-control" placeholder="dd/mm/aaaa" required>
+        </div>
+
+        <!-- Descripción -->
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" rows="3" placeholder="Añada una breve descripción" required></textarea>
+        </div>
+
+        <!-- Foto -->
+        <div class="mb-3">
+          <label class="form-label">Foto</label>
+          <input type="file" class="form-control" required>
+        </div>
+
         <button type="submit" class="btn-save">GUARDAR</button>
       </form>
     </div>
@@ -162,11 +77,18 @@
       document.getElementById('page-lista').style.display = 'none';
       document.getElementById('page-form').style.display = 'block';
     }
+
     function showList() {
       document.getElementById('page-form').style.display = 'none';
       document.getElementById('page-lista').style.display = 'block';
+    }
+
+    function guardarPromo(event) {
+      event.preventDefault(); 
+      showList(); 
     }
   </script>
 
 </body>
 </html>
+

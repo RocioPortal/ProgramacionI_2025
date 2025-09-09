@@ -1,16 +1,15 @@
-/* --------- Variables de marca --------- */
 :root{
-    --color-principal: #FF4500;   /* naranja botones/headers */
-    --color-secundario:#D32F2F;   /* rojo labios */
-    --color-texto:     #7B3F00;   /* marrón títulos */
-    --color-fondo:     #FFEBD5;   /* fondo suave crema */
-    --color-ink:       #2d2a26;   /* texto estándar */
+    --color-principal: #FF4500;   
+    --color-secundario:#D32F2F;   
+    --color-texto:     #7B3F00;   
+    --color-fondo:     #FFEBD5;   
+    --color-ink:       #2d2a26;   
     --radius-lg:       20px;
     --radius-pill:     999px;
     --shadow-soft:     0 10px 25px rgba(0,0,0,.08);
   }
   
-  /* --------- Reset suave --------- */
+
   html,body{ height:100%; }
   body{
     background-color: var(--color-fondo);
@@ -39,17 +38,17 @@
 }
 
 .btn-custom:hover{
-  background-color: #e63e00; /* un naranja más oscuro, pero sigue siendo naranja */
+  background-color: #e63e00; 
   opacity:1;
   transform: translateY(-1px);
 }
 
 .btn-custom:active{
-  background-color: #cc3700; /* aún más oscuro cuando se hace click */
+  background-color: #cc3700; 
   transform: translateY(0);
 }
   
-  /* Variante por estado (útil si no usás badges) */
+
   .btn-success-soft{ background: rgba(25,135,84,.12); color:#198754; border:1px solid rgba(25,135,84,.2); }
   .btn-warning-soft{ background: rgba(255,193,7,.15); color:#a07900; border:1px solid rgba(255,193,7,.3); }
   .btn-danger-soft { background: rgba(220,53,69,.12); color:#dc3545; border:1px solid rgba(220,53,69,.2); }
@@ -90,7 +89,7 @@
   .table{
     background:#fff;
     border-radius: 12px;
-    overflow:hidden; /* redondeo bordes */
+    overflow:hidden; 
   }
   .table thead th{
     background: #fff8f2 !important;
@@ -116,7 +115,6 @@
     border:1px solid #f7c8cf;
   }
   
-  /* Ejemplo: <span class="badge badge-confirmado">Confirmado</span> */
   
   /* --------- Enlaces --------- */
   a{ color: var(--color-principal); }
