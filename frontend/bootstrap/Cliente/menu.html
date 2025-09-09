@@ -7,106 +7,106 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
-
-  <style>
-    .categoria img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .navbar-bottom {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: white;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-around;
-      padding: 5px 0;
-    }
-    .navbar-bottom a {
-      text-align: center;
-      font-size: 14px;
-      color: #333;
-      text-decoration: none;
-    }
-    .estrella {
-      color: #FFD700;
-    }
-  </style>
 </head>
-<body class="bg-light">
+<body>
 
-<div class="container mt-3">
-  <!-- Barra de búsqueda -->
-  <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Busca tu comida favorita">
-    <button class="btn btn-danger">Buscar</button>
+<div class="container mt-3 mb-5 pb-5">
+  <div class="input-group mb-4">
+    <input type="text" class="form-control" placeholder="Busca tu comida favorita" style="border-right: 0;">
+    <button class="btn btn-naranja" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">Buscar</button>
   </div>
 
-  <!-- Mejores calificados -->
-  <h5 class="fw-bold">Mejores calificados 🔥 <a href="top.html" class="float-end small">Ver todo</a></h5>
-  <div class="card mb-3">
-    <img src="img/hamburguesa.jpg" class="card-img-top" alt="Hamburguesa">
+  <div class="d-flex justify-content-between align-items-center">
+      <h5 class="fw-bold text-marron mb-0">Mejores calificados 🔥</h5>
+      <a href="top.html" class="small text-decoration-none text-naranja">Ver todo</a>
+  </div>
+  
+  <div class="card my-3 card-mejor-calificado">
+    <img src="imagenes/menu/mejorcalificado/hamburguesa.jpg" class="card-img-top" alt="Hamburguesa">
     <div class="card-body">
-      <h6 class="card-title">Hamburguesa completa</h6>
-      <p class="card-text">“La mejor hamburguesa que probé en mi vida!”</p>
-      <span class="star">★★★★★</span>
+      <h6 class="card-title fw-bold">Hamburguesa completa</h6>
+      <p class="card-text text-muted">“La mejor hamburguesa que probé en mi vida!”</p>
+      <p class="mb-0 estrella">★★★★★ </p>
+      <img src="imagenes/top/image.png" alt="Top Sabores" class="img-fluid" style="max-height: 50px; margin-top: 10px;">
     </div>
   </div>
 
-  <!-- Categorías -->
-  <h5 class="fw-bold mt-4">Categorías <a href="todos.html" class="float-end small">Ver todos</a></h5>
-  <div class="row text-center">
-    <div class="col-4 mb-3 categoria">
-      <a href="pastas.html">
-        <img src="img/pastas.jpg" alt="Pastas"><br>
-        <span>Pastas</span>
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    <h5 class="fw-bold text-marron mb-0">Categorías</h5>
+    <a href="todos.html" class="small text-decoration-none text-naranja">Ver todos</a>
+  </div>
+
+  <div class="row g-3 mt-1">
+    <div class="col-6">
+      <a href="pastas.html" class="text-decoration-none">
+        <div class="card categoria-card">
+          <img src="imagenes/menu/pastas/ñoquis.png" class="card-img-top" alt="Pastas">
+          <div class="card-body text-center py-2">
+            <span class="fw-bold text-dark">Pastas</span>
+          </div>
+        </div>
       </a>
     </div>
-    <div class="col-4 mb-3 categoria">
-      <a href="entre_panes.html">
-        <img src="img/entre_panes.jpg" alt="Entre Panes"><br>
-        <span>Entre Panes</span>
+    <div class="col-6">
+      <a href="entre_panes.html" class="text-decoration-none">
+        <div class="card categoria-card">
+          <img src="imagenes/menu/entre_panes/logo.png" class="card-img-top" alt="Entre Panes">
+          <div class="card-body text-center py-2">
+            <span class="fw-bold text-dark">Entre Panes</span>
+          </div>
+        </div>
       </a>
     </div>
-    <div class="col-4 mb-3 categoria">
-      <a href="pizzas.html">
-        <img src="img/pizza.jpg" alt="Pizzas"><br>
-        <span>Pizzas</span>
+    <div class="col-6">
+      <a href="pizzas.html" class="text-decoration-none">
+        <div class="card categoria-card">
+          <img src="imagenes/menu/pizzas/logo.png" class="card-img-top" alt="Pizzas">
+          <div class="card-body text-center py-2">
+            <span class="fw-bold text-dark">Pizzas</span>
+          </div>
+        </div>
       </a>
     </div>
-    <div class="col-4 mb-3 categoria">
-      <a href="caserito.html">
-        <img src="img/caserito.jpg" alt="Caserito"><br>
-        <span>Caserito</span>
+    <div class="col-6">
+      <a href="caserito.html" class="text-decoration-none">
+        <div class="card categoria-card">
+          <img src="imagenes/menu/caserito/logo.png" class="card-img-top" alt="Caserito">
+          <div class="card-body text-center py-2">
+            <span class="fw-bold text-dark">Caserito</span>
+          </div>
+        </div>
       </a>
     </div>
-    <div class="col-4 mb-3 categoria">
-      <a href="empanadas.html">
-        <img src="img/empanadas.jpg" alt="Empanadas"><br>
-        <span>Empanadas</span>
+    <div class="col-6">
+      <a href="empanadas.html" class="text-decoration-none">
+        <div class="card categoria-card">
+          <img src="imagenes/menu/empanadas/logo.png" class="card-img-top" alt="Empanadas">
+          <div class="card-body text-center py-2">
+            <span class="fw-bold text-dark">Empanadas</span>
+          </div>
+        </div>
       </a>
     </div>
-    <div class="col-4 mb-3 categoria">
-      <a href="bebidas.html">
-        <img src="img/bebidas.jpg" alt="Bebidas"><br>
-        <span>Bebidas</span>
+    <div class="col-6">
+      <a href="bebidas.html" class="text-decoration-none">
+        <div class="card categoria-card">
+          <img src="imagenes/menu/bebidas/logo.png" class="card-img-top" alt="Bebidas">
+          <div class="card-body text-center py-2">
+            <span class="fw-bold text-dark">Bebidas</span>
+          </div>
+        </div>
       </a>
     </div>
   </div>
 </div>
 
-  <!-- Barra inferior botones de abajo -->
 <div class="bottom-nav">
   <a href="menu.html" class="active"><i class="bi bi-house-door-fill"></i><br>Inicio</a>
-    <a href="top.html"><i class="bi bi-star-fill"></i><br>Favoritos</a>
-    <a href="carrito.html" class="active"><i class="cart-btn bi bi-cart-fill"></i><br>Carrito</a>
-    <a href="notificaciones.html"><i class="bi bi-bell-fill"></i><br>Notif.</a>
-    <a href="perfil.html"><i class="bi bi-person-fill"></i><br>Perfil</a>
-  </div>
+  <a href="todos.html"><i class="bi bi-star-fill"></i><br>Productos</a>
+  <a href="carrito.html" class="cart-btn"><i class="bi bi-cart-fill"></i></a>
+  <a href="notificaciones.html"><i class="bi bi-bell-fill"></i><br>Notif.</a>
+  <a href="perfil.html"><i class="bi bi-person-fill"></i><br>Perfil</a>
+</div>
 
 </body>
 </html>
