@@ -4,287 +4,594 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Productos - Admin</title>
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f8f9fa;
-      font-family: Arial, sans-serif;
-    }
-    .section {
-      min-height: 100vh;
-      padding: 2rem;
-      display: none;             /* oculto por defecto */
-      flex-direction: column;
-      justify-content: center;
-    }
-    .section.active {
-      display: flex;             /* solo la sección activa se muestra */
-    }
-    .btn-orange {
-      background-color: #FF4500;
-      color: white;
-      border-radius: 25px;
-      font-weight: bold;
-    }
-    .btn-orange:hover {
-      background-color: #e03d00;
-      color: white;
-    }
-    .btn-back {
-      display: inline-block;
-      background-color: #FF4500;
-      color: #fff;
-      padding: 8px 15px;
-      border-radius: 25px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.3s ease;
-      margin-bottom: 20px;
-      cursor: pointer;
-    }
-    .btn-back:hover {
-      background-color: #e03d00;
-      color: #fff;
-    }
-    .card {
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    img.product-img {
-      max-width: 100%;
-      border-radius: 15px;
-    }
-  </style>
+  <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Pantalla 1: Todos los productos -->
-  <section id="productos" class="section active">
-    <div class="container">
-      <a href="menu.html" class="btn-back">&larr; volver</a>
+<!-- Pantalla 1: Todos los productos -->
+<section id="productos" class="section active" style="position: relative;">
+  <div class="container">
+    <a href="menu.html" class="btn-back">&larr; volver</a>
+    <h2 class="text-center mb-4">PRODUCTOS</h2>
+    <div class="row">
 
-      <h2 class="text-center mb-4">Productos</h2>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Ñoquis de Papa</h5>
-            <p>$9000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Ravioles</h5>
-            <p>$19000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Hamburguesa</h5>
-            <p>$9000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Lomo</h5>
-            <p>$19000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Lomopizza</h5>
-            <p>$19000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Choripan</h5>
-            <p>$7000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Pancho</h5>
-            <p>$2500</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Milanesa Napolitana</h5>
-            <p>$10000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Pollo al horno</h5>
-            <p>$20000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Papas Fritas</h5>
-            <p>$5500</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Pizza Muzza</h5>
-            <p>$11000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Pizza con Ananas</h5>
-            <p>$12000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Empanadas de pollo</h5>
-            <p>$750</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Empanadas de carne</h5>
-            <p>$800</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Lata Gaseosa</h5>
-            <p>$1500</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Gaseosa</h5>
-            <p>$2800</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Agua con gas</h5>
-            <p>$2100</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Agua sin gas</h5>
-            <p>$2000</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Agua saborizada</h5>
-            <p>$2200</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card p-3 mb-3">
-            <h5>Lata de cerveza</h5>
-            <p>$3700</p>
-            <a href="#producto" class="btn btn-sm btn-orange">Ver producto</a>
-          </div>
+      <!-- Ñoquis de Papa -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/noquis.png" alt="Ñoquis de Papa" class="product-img">
+          <h5>Ñoquis de Papa</h5>
+          <p>$9000</p>
+          <a href="#producto-noquis" onclick="showSection('producto-noquis')" class="btn btn-sm btn-orange">Ver producto</a>
         </div>
       </div>
 
-      <div class="text-center mt-4">
-        <button onclick="showSection('nuevo')" class="btn btn-orange">Nuevo producto</button>
+      <!-- Ravioles -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/ravioles.png" alt="Ravioles" class="product-img">
+          <h5>Ravioles</h5>
+          <p>$19000</p>
+          <a href="#producto-ravioles" onclick="showSection('producto-ravioles')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Pantalla 2: Ver producto -->
-  <section id="producto" class="section">
-    <div class="container text-center">
-      <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
-
-      <h2>Pizza Napolitana</h2>
-      <img src="https://via.placeholder.com/300" alt="Descripción" class="product-img my-3">
-      <p>Deliciosa pizza con salsa de tomate, mozzarella y albahaca fresca.</p>
-      <p><strong>Precio:</strong> $4500</p>
-      <p><strong>Cantidad:</strong> 10</p>
-      <div class="d-flex justify-content-center gap-3 mt-3">
-        <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
-        <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+      <!-- Hamburguesa -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/hamburguesa.png" alt="Hamburguesa" class="product-img">
+          <h5>Hamburguesa</h5>
+          <p>$9000</p>
+          <a href="#producto-hamburguesa" onclick="showSection('producto-hamburguesa')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
       </div>
+
+      <!-- Lomo -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/lomo.png" alt="Lomo" class="product-img">
+          <h5>Lomo</h5>
+          <p>$19000</p>
+          <a href="#producto-lomo" onclick="showSection('producto-lomo')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Lomopizza -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/lomopizza.png" alt="Lomopizza" class="product-img">
+          <h5>Lomopizza</h5>
+          <p>$19000</p>
+          <a href="#producto-lomopizza" onclick="showSection('producto-lomopizza')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Choripán -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/choripan.png" alt="Choripán" class="product-img">
+          <h5>Choripán</h5>
+          <p>$7000</p>
+          <a href="#producto-choripan" onclick="showSection('producto-choripan')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Pancho -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/pancho.png" alt="Pancho" class="product-img">
+          <h5>Pancho</h5>
+          <p>$2500</p>
+          <a href="#producto-pancho" onclick="showSection('producto-pancho')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Milanesa Napolitana -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/milanesa.png" alt="Milanesa Napolitana" class="product-img">
+          <h5>Milanesa Napolitana</h5>
+          <p>$10000</p>
+          <a href="#producto-milanesa" onclick="showSection('producto-milanesa')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Pollo al horno -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/pollo.png" alt="Pollo al horno" class="product-img">
+          <h5>Pollo al horno</h5>
+          <p>$20000</p>
+          <a href="#producto-pollo" onclick="showSection('producto-pollo')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Papas Fritas -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/papas.png" alt="Papas Fritas" class="product-img">
+          <h5>Papas Fritas</h5>
+          <p>$5500</p>
+          <a href="#producto-papas" onclick="showSection('producto-papas')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Pizza Muzza -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/muzza.png" alt="Pizza Muzza" class="product-img">
+          <h5>Pizza Muzza</h5>
+          <p>$11000</p>
+          <a href="#producto-muzza" onclick="showSection('producto-muzza')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Pizza con Ananá -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/pizzaAnana.png" alt="Pizza con Ananá" class="product-img">
+          <h5>Pizza con Ananá</h5>
+          <p>$12000</p>
+          <a href="#producto-pizzaAnana" onclick="showSection('producto-pizzaAnana')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Empanadas de Pollo -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/empPollo.png" alt="Empanadas de Pollo" class="product-img">
+          <h5>Empanadas de Pollo</h5>
+          <p>$750</p>
+          <a href="#producto-empPollo" onclick="showSection('producto-empPollo')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Empanadas de Carne -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/empanadas.png" alt="Empanadas de Carne" class="product-img">
+          <h5>Empanadas de Carne</h5>
+          <p>$800</p>
+          <a href="#producto-empCarne" onclick="showSection('producto-empCarne')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Lata Gaseosa -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/gaseosaLata.png" alt="Lata Gaseosa" class="product-img">
+          <h5>Lata Gaseosa</h5>
+          <p>$1500</p>
+          <a href="#producto-lataGaseosa" onclick="showSection('producto-lataGaseosa')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Gaseosa -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/gaseosa.png" alt="Gaseosa" class="product-img">
+          <h5>Gaseosa</h5>
+          <p>$2800</p>
+          <a href="#producto-Gaseosa" onclick="showSection('producto-Gaseosa')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Agua con gas -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/agua.png" alt="Agua con gas" class="product-img">
+          <h5>Agua con gas</h5>
+          <p>$2100</p>
+          <a href="#producto-aguaConGas" onclick="showSection('producto-aguaConGas')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Agua sin gas -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/agua.png" alt="Agua sin gas" class="product-img">
+          <h5>Agua sin gas</h5>
+          <p>$2000</p>
+          <a href="#producto-aguaSinGas" onclick="showSection('producto-aguaSinGas')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Agua saborizada -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/aguaSaborizada.png" alt="Agua saborizada" class="product-img">
+          <h5>Agua saborizada</h5>
+          <p>$2200</p>
+          <a href="#producto-aguaSaborizada" onclick="showSection('producto-aguaSaborizada')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
+      <!-- Lata de cerveza -->
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="img/cerveza.png" alt="Lata de cerveza" class="product-img">
+          <h5>Lata de cerveza</h5>
+          <p>$3700</p>
+          <a href="#producto-cerveza" onclick="showSection('producto-cerveza')" class="btn btn-sm btn-orange">Ver producto</a>
+        </div>
+      </div>
+
     </div>
-  </section>
 
-  <!-- Pantalla 3: Añadir producto -->
-  <section id="nuevo" class="section">
-    <div class="container">
-      <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
-
-      <h2 class="text-center mb-4">Añadir producto</h2>
-      <form class="card p-4">
-        <div class="mb-3">
-          <label class="form-label">Foto</label>
-          <input type="file" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Nombre</label>
-          <input type="text" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Descripción</label>
-          <textarea class="form-control" rows="3"></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Precio</label>
-          <input type="number" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Cantidad</label>
-          <input type="number" class="form-control">
-        </div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-orange">Agregar</button>
-        </div>
-      </form>
+    <div class="text-center mt-4">
+      <button onclick="showSection('nuevo')" class="btn btn-orange">Nuevo producto</button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <script>
-    function showSection(id) {
-      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+<!-- Pantalla 2: Ver producto detalles y poder editarlo -->
 
-    // 🔗 Captura clics en anclas internas (#...) y cambia de sección
-    document.addEventListener('click', function (e) {
-      const link = e.target.closest('a[href^="#"]');
-      if (!link) return;
+<!-- Ñoquis de Papa -->
+<section id="producto-noquis" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>ÑOQUIS DE PAPA</h2>
+    <img src="img/noquis.png" alt="Ñoquis de Papa" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Ñoquis caseros de papa con salsa a elección.</textarea>
+    <input type="number" class="form-control mb-2" value="9000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="10" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
 
-      const targetId = link.getAttribute('href').slice(1); // quita el '#'
-      const targetEl = document.getElementById(targetId);
-      if (targetEl && targetEl.classList.contains('section')) {
-        e.preventDefault();
-        showSection(targetId);
-      }
-    });
-  </script>
+<!-- Ravioles -->
+<section id="producto-ravioles" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>RAVIOLES</h2>
+    <img src="img/ravioles.png" alt="Ravioles" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Ravioles rellenos de carne o verdura, acompañados con salsa a elección.</textarea>
+    <input type="number" class="form-control mb-2" value="19000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="12" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<!-- Hamburguesa -->
+<section id="producto-hamburguesa" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>HAMBURGUESA</h2>
+    <img src="img/hamburguesa.png" alt="Hamburguesa" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Hamburguesa completa con carne, queso, lechuga y tomate.</textarea>
+    <input type="number" class="form-control mb-2" value="9000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="15" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Lomo -->
+<section id="producto-lomo" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>LOMO</h2>
+    <img src="img/lomo.png" alt="Lomo" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Lomo completo con jamón, queso, lechuga, tomate y huevo.</textarea>
+    <input type="number" class="form-control mb-2" value="19000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="8" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Lomopizza -->
+<section id="producto-lomopizza" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>LOMOPIZZA</h2>
+    <img src="img/lomopizza.png" alt="Lomopizza" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">El clásico lomo acompañado de una base de pizza.</textarea>
+    <input type="number" class="form-control mb-2" value="19000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="7" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Choripán -->
+<section id="producto-choripan" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>CHORIPÁN</h2>
+    <img src="img/choripan.png" alt="Choripán" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Clásico choripán con chimichurri y pan casero.</textarea>
+    <input type="number" class="form-control mb-2" value="7000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="20" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Pancho -->
+<section id="producto-pancho" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>PANCHO</h2>
+    <img src="img/pancho.png" alt="Pancho" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Pancho clásico con salsas a elección.</textarea>
+    <input type="number" class="form-control mb-2" value="2500" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="25" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Milanesa Napolitana -->
+<section id="producto-milanesa" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>MILANESA NAPOLITANA</h2>
+    <img src="img/milanesa.png" alt="Milanesa Napolitana" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Milanesa de carne con salsa de tomate, jamón y queso gratinado.</textarea>
+    <input type="number" class="form-control mb-2" value="10000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="9" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Pollo al horno -->
+<section id="producto-pollo" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>POLLO AL HORNO</h2>
+    <img src="img/pollo.png" alt="Pollo al horno" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Pollo al horno con salsa a elección.</textarea>
+    <input type="number" class="form-control mb-2" value="20000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="10" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Papas Fritas -->
+<section id="producto-papas" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>PAPAS FRITAS</h2>
+    <img src="img/papas.png" alt="Papas Fritas" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Papas fritas crocantes, acompañadas con salsas.</textarea>
+    <input type="number" class="form-control mb-2" value="5500" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="30" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Pizza Muzza -->
+<section id="producto-muzza" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>PIZZA MUZZA</h2>
+    <img src="img/muzza.png" alt="Pizza Muzza" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Pizza clásica de muzzarella con salsa de tomate y aceitunas.</textarea>
+    <input type="number" class="form-control mb-2" value="11000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="12" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Pizza con Ananá -->
+<section id="producto-pizzaAnana" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>PIZZA CON ANANÁ</h2>
+    <img src="img/pizzaAnana.png" alt="Pizza con Ananá" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Pizza especial con trozos de ananá, salsa de tomate y muzzarella.</textarea>
+    <input type="number" class="form-control mb-2" value="12000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="10" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Empanadas de Pollo -->
+<section id="producto-empPollo" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>EMPANADAS DE POLLO</h2>
+    <img src="img/empPollo.png" alt="Empanadas de Pollo" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Empanadas caseras rellenas de pollo.</textarea>
+    <input type="number" class="form-control mb-2" value="750" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="40" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Empanadas de Carne -->
+<section id="producto-empCarne" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>EMPANADAS DE CARNE</h2>
+    <img src="img/empanadas.png" alt="Empanadas de Carne" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Empanadas caseras rellenas de carne.</textarea>
+    <input type="number" class="form-control mb-2" value="750" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="40" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Lata Gaseosa -->
+<section id="producto-lataGaseosa" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>LATA GASEOSA</h2>
+    <img src="img/gaseosaLata.png" alt="Lata Gaseosa" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Gaseosa en lata, diferentes sabores disponibles.</textarea>
+    <input type="number" class="form-control mb-2" value="1500" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="30" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Gaseosa -->
+<section id="producto-Gaseosa" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>GASEOSA</h2>
+    <img src="img/gaseosa.png" alt="Gaseosa" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Botella de gaseosa 1.5L, sabores variados.</textarea>
+    <input type="number" class="form-control mb-2" value="2800" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="25" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Agua con gas -->
+<section id="producto-aguaConGas" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>AGUA CON GAS</h2>
+    <img src="img/agua.png" alt="Agua con gas" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Agua mineral con gas, botella de 500ml.</textarea>
+    <input type="number" class="form-control mb-2" value="2100" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="20" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Agua sin gas -->
+<section id="producto-aguaSinGas" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>AGUA SIN GAS</h2>
+    <img src="img/agua.png" alt="Agua sin gas" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Agua mineral sin gas, botella de 500ml.</textarea>
+    <input type="number" class="form-control mb-2" value="2000" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="18" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Agua saborizada -->
+<section id="producto-aguaSaborizada" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>AGUA SABORIZADA</h2>
+    <img src="img/aguaSaborizada.png" alt="Agua saborizada" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Agua mineral saborizada, botella de 500ml.</textarea>
+    <input type="number" class="form-control mb-2" value="2200" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="15" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>
+
+<!-- Lata de cerveza -->
+<section id="producto-cerveza" class="section">
+  <div class="container text-center">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+    <h2>LATA DE CERVEZA</h2>
+    <img src="img/cerveza.png" alt="Lata de cerveza" class="product-img my-3">
+    <textarea class="form-control mb-2" rows="2">Lata de cerveza 473ml, diferentes marcas.</textarea>
+    <input type="number" class="form-control mb-2" value="3700" placeholder="Precio">
+    <input type="number" class="form-control mb-2" value="22" placeholder="Cantidad">
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button onclick="showSection('productos')" class="btn btn-orange">Confirmar Edición</button>
+      <button onclick="showSection('productos')" class="btn btn-danger">Eliminar Producto</button>
+    </div>
+  </div>
+</section>  
+
+
+<!-- Pantalla 3: Añadir producto -->
+<section id="nuevo" class="section">
+  <div class="container">
+    <span onclick="showSection('productos')" class="btn-back">&larr; volver</span>
+
+    <h2 class="text-center mb-4">Añadir producto</h2>
+    <form class="card p-4 text-center" onsubmit="agregarProducto(event)">
+      <div class="mb-3">
+        <label class="form-label"> Insertar foto</label>
+        <input type="file" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" placeholder="Colocar nombre del nuevo producto">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-control" rows="3" placeholder="Descripción breve del producto"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Precio</label>
+        <input type="number" class="form-control" placeholder="$">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Cantidad</label>
+        <input type="number" class="form-control" placeholder="Unidades disponibles">
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-orange">Agregar</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  function agregarProducto(event) {
+    event.preventDefault(); 
+    showSection('productos'); 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
