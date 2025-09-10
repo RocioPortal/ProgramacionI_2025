@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notificaciones</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+
+ 
+</head>
+<body>
+
+  <div class="container mb-5 pb-5"> 
+    <h1 class="page-header">Notificaciones</h1>
+
+    <div class="text-align mb-3">
+      <span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis fw-medium p-2">Tu pedido</span>
+    </div>
+
+    <h6 class="text-muted fw-bold">Hoy</h6>
+    <div class="notif-card">
+      <div class="notif-title text-success">Tu pedido está listo para retirar</div>
+      <p class="mb-2">Hola! Tu pedido ya está en el local, listo para distribuir.</p>
+      <a href="calificar.html" class="btn btn-sm btn-naranja">Califica tu pedido</a>
+    </div>
+    <div class="notif-card">
+      <div class="notif-title text-warning">Pendiente</div>
+      <p class="mb-0">Estamos procesando tu pedido.</p>
+    </div>
+
+    <h6 class="text-muted fw-bold mt-4">Ayer</h6>
+    <div class="notif-card">
+      <div class="notif-title text-danger">Cancelado</div>
+      <p class="mb-0">Ups! Tu orden ha sido cancelada.</p>
+    </div>
+
+    <p class="text-center text-muted mt-4">Sin más notificaciones</p>
+
+  </div>
+
+  <div class="bottom-nav">
+    <a href="menu.html"><i class="bi bi-house-door-fill"></i><br>Inicio</a>
+    <a href="todos.html"><i class="bi bi-star-fill"></i><br>Productos</a>
+    <a href="carrito.html" class="cart-btn"><i class="bi bi-cart-fill"></i></a>
+    <a href="notificaciones.html" class="active"><i class="bi bi-bell-fill"></i><br>Notif.</a>
+    <a href="perfil.html"><i class="bi bi-person-fill"></i><br>Perfil</a>
+  </div>
+
+</body>
+</html>

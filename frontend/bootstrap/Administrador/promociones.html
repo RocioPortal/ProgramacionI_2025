@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promociones</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Página de Promociones -->
+  <section id="page-lista">
+    <header>
+       <a href="menu.html" class="btn-back">&larr; volver</a>
+       <h2 class="titulo-promos">PROMOCIONES</h2>
+      </header>
+    <div class="container">
+      <div class="promo-card promo1">
+        <div>
+          <h3>2X1 En Gaseosas<br>¡Válido por 24 horas!</h3>
+          <button>Enviar a usuarios</button>
+        </div>
+        <img src="img/promociones_coca.png" alt="Coca Cola">
+      </div>
+      <div class="promo-card promo2">
+        <div>
+          <h3>¡15% de descuento en “Entre panes”!</h3>
+          <button>Enviar a usuarios</button>
+        </div>
+        <img src="img/promociones_sanguches.png" alt="Sandwich">
+      </div>
+      <button class="btn-main" type="button" onclick="showForm()">AGREGAR PROMOCIÓN</button>
+    </div>
+  </section>
+
+  <!-- Página Crear Promo -->
+  <section id="page-form" style="display:none;">
+    <header>
+      <span class="btn-back" onclick="showList()">&larr; volver</span>
+      <h1>Promociones</h1>
+    </header>
+    <div class="form-container">
+      <h2>CREAR PROMOCIÓN</h2>
+      <form onsubmit="guardarPromo(event)">
+        
+        <!-- Título -->
+        <div class="mb-3">
+          <label class="form-label">Título</label>
+          <input type="text" class="form-control" placeholder="Ej: 30% Disfruta esta promo imperdible" required>
+        </div>
+
+        <!-- Validez -->
+        <div class="mb-3">
+          <label class="form-label">Validez</label>
+          <input type="text" class="form-control" placeholder="dd/mm/aaaa" required>
+        </div>
+
+        <!-- Descripción -->
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" rows="3" placeholder="Añada una breve descripción" required></textarea>
+        </div>
+
+        <!-- Foto -->
+        <div class="mb-3">
+          <label class="form-label">Foto</label>
+          <input type="file" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn-save">GUARDAR</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    function showForm() {
+      document.getElementById('page-lista').style.display = 'none';
+      document.getElementById('page-form').style.display = 'block';
+    }
+
+    function showList() {
+      document.getElementById('page-form').style.display = 'none';
+      document.getElementById('page-lista').style.display = 'block';
+    }
+
+    function guardarPromo(event) {
+      event.preventDefault(); 
+      showList(); 
+    }
+  </script>
+
+</body>
+</html>
+

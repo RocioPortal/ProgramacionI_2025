@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carrito</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container mt-3 mb-5 pb-5">
+    <h4 class="fw-bold text-marron mt-2">Detalles de tu orden</h4>
+
+    <div class="card my-3 p-2 d-flex flex-row align-items-center">
+      <img src="imagenes/menu/pizzas/pizzaanana.png" class="rounded me-3" alt="Pizza"
+        style="width: 100px; height: 90px;">
+      <div class="flex-grow-1">
+        <p class="mb-0 text-naranja fw-bold">$12000</p>
+        <p class="mb-0 fw-bold">Pizza con ananá</p>
+        <small class="text-muted">Con queso suizo</small>
+      </div>
+      <div class="d-flex align-items-center">
+        <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">-</button>
+        <input type="text" value="01" class="form-control text-center mx-1" style="width:50px;">
+        <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">+</button>
+      </div>
+      <button class="btn btn-link text-marron ms-2"><i class="bi bi-trash"></i></button>
+    </div>
+
+    <div class="card my-3 p-2 d-flex flex-row align-items-center">
+      <img src="imagenes/menu/bebidas/gaseosa.png" class="rounded me-3" alt="Gaseosa"
+        style="width: 100px; height: 90px;">
+      <div class="flex-grow-1">
+        <p class="mb-0 text-naranja fw-bold">$2800</p>
+        <p class="mb-0 fw-bold">Gaseosa</p>
+        <small class="text-muted">Coca cola 1,5Lt</small>
+      </div>
+      <div class="d-flex align-items-center">
+        <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">-</button>
+        <input type="text" value="01" class="form-control text-center mx-1" style="width:50px;">
+        <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">+</button>
+      </div>
+      <button class="btn btn-link text-marron ms-2"><i class="bi bi-trash"></i></button>
+    </div>
+
+    <a href="todos.html" class="btn btn-outline-secondary w-100 mt-2 border-2 fw-bold"
+      style="--bs-btn-color: var(--color-texto); --bs-btn-border-color: var(--color-texto); --bs-btn-hover-bg: var(--color-texto); --bs-btn-hover-border-color: var(--color-texto); --bs-btn-hover-color: #fff; text-decoration: none;">
+      <i class="bi bi-plus-circle"></i> Añadir producto
+    </a>
+
+    <div class="card p-3 mt-4">
+      <div class="d-flex justify-content-between">
+        <span>Subtotal</span>
+        <span>$14,800</span>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span>Código de promoción</span>
+        <span>---------</span>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between fw-bold">
+        <span>Total</span>
+        <span class="text-naranja">$14,800</span>
+      </div>
+      <a href="pedido_exitoso.html" class="btn btn-naranja w-100 mt-3">CONFIRMAR</a>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="menu.html"><i class="bi bi-house-door-fill"></i><br>Inicio</a>
+    <a href="todos.html"><i class="bi bi-star-fill"></i><br>Productos</a>
+    <a href="carrito.html" class="active cart-btn"><i class="bi bi-cart-fill"></i></a>
+    <a href="notificaciones.html"><i class="bi bi-bell-fill"></i><br>Notif.</a>
+    <a href="perfil.html"><i class="bi bi-person-fill"></i><br>Perfil</a>
+  </div>
+
+</body>
+
+</html>
