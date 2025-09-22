@@ -1,0 +1,87 @@
+:root {
+    --color-primario: #FF5722; /* Naranja */
+    --color-texto: #424242; /* Gris oscuro */
+    --color-blanco: #FFFFFF;
+}
+
+body {
+    background-color: var(--color-blanco);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.d-flex.flex-column.justify-content-center.align-items-center.vh-100 {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.logo-container {
+    margin-bottom: 2rem;
+}
+
+.logo-container img {
+    width: 120px;
+}
+
+.logo-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--color-texto);
+    margin-top: 0.5rem;
+}
+
+.d-grid.gap-3.mt-4 {
+    display: grid;
+    gap: 1.5rem; /* Separación entre botones */
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 300px;
+}
+
+app-menu-boton button {
+    background-color: var(--color-primario);
+    color: var(--color-blanco); /* Color de letra blanco */
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 25px; /* Bordes redondeados */
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+app-menu-boton button:hover {
+    background-color: #e64a19; /* Naranja más oscuro al pasar el cursor */
+}
+
+/* Estilos específicos del logo */
+.logo1-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.logo1-container img {
+    width: 120px;
+}
+
+.logo-text-large {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color-texto);
+    margin-top: 0.5rem;
+}
+
+.vh-100 {
+  height: 100vh;
+}

@@ -1,0 +1,52 @@
+<div id="pantallaPedidos" *ngIf="mostrarLista">
+    <header>
+      <app-boton-volver text="← volver" routerLink="/administrador/menu"></app-boton-volver>
+      Pedidos
+    </header>
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <td>ID Pedido</td>
+            <td>Estado</td>
+            <td>Acciones</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pedido of pedidos">
+            <td># {{ pedido.id }}</td>
+            <td><span class="status {{ pedido.estado }}">{{ pedido.estado }}</span></td>
+            <td class="acciones">
+              <app-editar-pedido (click)="verDetalle(pedido.id)"></app-editar-pedido>
+              <app-borrar-pedido></app-borrar-pedido>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div id="pantallaDetalle" *ngIf="!mostrarLista && pedidoSeleccionado">
+    <header>
+      <app-boton-volver text="← volver" (click)="volver()"></app-boton-volver>
+      Información del pedido
+    </header>
+    <div class="container">
+      <p><b>ID Pedido:</b> {{ pedidoSeleccionado.id }}</p>
+      <p><b>Nombre:</b> {{ pedidoSeleccionado.cliente }}</p>
+      <p><b>Teléfono:</b> {{ pedidoSeleccionado.telefono }}</p>
+      <p><b>Email:</b> {{ pedidoSeleccionado.email }}</p>
+      <p>
+        <b>Estado:</b>
+        <select id="estadoPedido" [(ngModel)]="pedidoSeleccionado.estado">
+          <option>Confirmado</option>
+          <option>Pendiente</option>
+          <option>Cancelado</option>
+        </select>
+      </p>
+      <div class="botones-detalle">
+        <app-cancelar-pedido (click)="cancelar()"></app-cancelar-pedido>
+        <app-confirmar-pedido (click)="confirmar()"></app-confirmar-pedido>
+      </div>
+    </div>
+  </div>
