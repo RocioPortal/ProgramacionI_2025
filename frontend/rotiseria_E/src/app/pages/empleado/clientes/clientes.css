@@ -1,0 +1,42 @@
+.screen { background:#f5f2ed; min-height:100dvh; }
+.search-wrap{
+  background:#f9f4ee;
+  border-radius: 14px;
+  padding:.6rem .8rem;
+  box-shadow: var(--shadow-soft);
+}
+.client-item{
+  display:grid;
+  grid-template-columns: 1fr auto; 
+  align-items:center;
+  background:#fff;
+  border-radius:16px;
+  padding:1rem 1rem;
+  box-shadow: var(--shadow-soft);
+  margin-bottom:.8rem;
+  font-size:1.05rem; 
+}
+.client-name{
+  font-weight:700;
+  margin-bottom:.15rem;
+}
+.client-status{
+  font-size:.85rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  opacity:.9;
+}
+.status-active{ color:#157347; }        
+.status-suspended{ color:#a39a92; }     
+
+.action-btn{
+  width: 42px; height: 42px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:50%;
+  border: 1px solid #cfe9da;
+  background:#e9f7ef;
+  color:#157347;
+  font-size:1.1rem;
+  text-decoration:none;
+}

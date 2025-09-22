@@ -1,0 +1,56 @@
+<nav class="navbar bg-brand">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold text-white" routerLink="/empleado/pedidos">← Volver</a>
+      <span class="navbar-text text-white fw-bold">Agregar Pedido</span>
+      <span></span>
+    </div>
+  </nav>
+  
+  <div class="container pt-4">
+  
+    <div class="text-center mb-3">
+      <button type="button" class="pill-tab">NUEVO PEDIDO</button>
+    </div>
+  
+    <div class="card info-card">
+      <div class="info-row">
+        <div class="info-label">Id Pedido</div>
+        <div># 5431</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Nombre</div>
+        <div>Claudia</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Teléfono</div>
+        <div>261241543</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Productos</div>
+        <div>Pizza muzza, lata stella</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Detalles</div>
+        <div>Tener en cuenta …</div>
+      </div>
+    </div>
+  
+    <div class="totals-box">
+      <div class="d-flex justify-content-between mb-2">
+        <span>Subtotal</span>
+        <input type="number" class="form-control form-control-sm" placeholder="$ Ingrese monto" style="max-width: 180px;">
+      </div>
+      <div class="d-flex justify-content-between mb-2">
+        <span>Código de promoción</span>
+        <input type="text" class="form-control form-control-sm" placeholder="$ --------" style="max-width: 180px;">
+      </div>
+      <div class="d-flex justify-content-between fw-bold mt-3">
+        <span>Total</span>
+        <span>$ 0</span>
+      </div>
+    </div>
+  
+    <div class="text-center">
+      <a routerLink="/empleado/pedidos" class="btn btn-custom btn-confirmar">Confirmar</a>
+    </div>
+  </div>

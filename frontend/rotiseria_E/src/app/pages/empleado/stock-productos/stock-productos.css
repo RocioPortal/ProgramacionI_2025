@@ -1,0 +1,52 @@
+.search-wrap{
+    background:#f9f4ee;
+    border-radius: 14px;
+    padding:.35rem .6rem;
+    box-shadow: var(--shadow-soft);
+  }
+  .stock-row{
+    display:grid;
+    grid-template-columns: 1fr auto;
+    gap:1rem;
+    align-items:center;
+    padding:.9rem 1rem;
+    border-radius:16px;
+    background:#fff;
+    box-shadow: var(--shadow-soft);
+    margin-bottom:.9rem;
+    font-size:1.05rem;
+  }
+  .stock-id{ color:#6b6460; font-weight:600; }
+  .stock-state{ font-weight:700; }
+  .state-disponible{ color:#157347; }
+  .state-agotado{ color:#b02a37; }
+  
+  .stepper{
+    display:inline-grid;
+    grid-template-columns: 46px 64px 46px;
+    align-items:center;
+    border:1px solid #e6e1da;
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .stepper button{
+    background:#f3f0ec;
+    border:0;
+    height:46px;
+    font-size:1.2rem;
+  }
+  .stepper input{
+    width:64px;
+    height:46px;
+    text-align:center;
+    border:0;
+    font-weight:700;
+    background:#fff;
+  }
+  
+  .btn-guardar{
+    min-width:280px;
+    border-radius:999px;
+    padding:.9rem 1.5rem;
+    font-weight:700;
+  }

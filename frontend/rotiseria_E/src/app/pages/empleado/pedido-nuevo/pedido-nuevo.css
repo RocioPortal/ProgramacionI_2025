@@ -1,0 +1,44 @@
+.pill-tab{
+    background: var(--color-principal);
+    color:#fff;
+    border:none;
+    border-radius: 999px;
+    padding:.6rem 1.8rem;
+    font-weight:700;
+    box-shadow: var(--shadow-soft);
+  }
+  .info-card{
+    border-radius: 20px;
+    padding: 1.25rem 1.25rem;
+    box-shadow: var(--shadow-soft);
+    font-size: 1.05rem;
+    margin-bottom:1rem;
+  }
+  .info-row{
+    display:grid;
+    grid-template-columns: 150px 1fr;
+    gap:.75rem;
+    align-items:center;
+    padding:.5rem 0;
+    border-bottom:1px dashed #eee;
+  }
+  .info-row:last-child{ border-bottom:0; }
+  .info-label{
+    color:#6b6460;
+    font-weight:600;
+  }
+  .totals-box{
+    background: var(--color-fondo);
+    border-radius: 20px;
+    padding: 1.25rem 1.25rem;
+    font-size: 1.05rem;
+    box-shadow: var(--shadow-soft);
+    margin-top:1.5rem;
+  }
+  .btn-confirmar{
+    min-width:100%;
+    border-radius:999px;
+    padding:.9rem 1.5rem;
+    font-weight:700;
+    margin-top:1.5rem;
+  }

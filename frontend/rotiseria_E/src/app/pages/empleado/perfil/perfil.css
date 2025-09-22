@@ -1,0 +1,65 @@
+.screen { background: var(--color-fondo); min-height:100dvh; }
+
+.page-title{
+  color: var(--color-principal);
+  font-weight: 800;
+  text-align: center;
+  margin: 18px 0 6px;
+  font-size: 2rem;
+}
+
+.profile-card{
+  background:#fff;
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  padding: 1.25rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.section-label{
+  color:#2f2a26;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin: 6px 0 14px;
+}
+
+.avatar{
+  width: 120px; height: 120px;
+  object-fit: cover;
+  border-radius: 18px;
+  display:block; margin: 0 auto 14px;
+  background:#fde6ef;
+}
+
+.name{
+  text-align:center;
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin-bottom: .25rem;
+}
+
+.info-line{
+  text-align:center;
+  color:#6f6a64;
+  font-weight:600;
+  margin: .15rem auto;
+  padding-bottom: .35rem;
+  max-width: 75%;
+  border-bottom:1px solid #e9e2db;
+}
+
+.role{
+  text-align:center;
+  color:#6f6a64;
+  font-weight:700;
+  margin-top:.25rem;
+}
+
+.btn-logout{
+  display:block;
+  width: min(520px, 90%);
+  margin: 28px auto 18px;
+  border-radius: 999px;
+  padding: .95rem 1.2rem;
+  font-weight: 800;
+}
