@@ -1,0 +1,19 @@
+.bienvenida-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  padding: 20px;
+}
+.bienvenida-container img {
+  width: 120px;
+  margin-bottom: 20px;
+}
+.bienvenida-container .btn-custom {
+  font-size: 0.9rem;
+  padding: .5rem 1rem;
+  max-width: 220px;
+  margin: auto;
+}

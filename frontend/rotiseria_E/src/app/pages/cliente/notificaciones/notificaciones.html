@@ -1,0 +1,45 @@
+<div class="notif-header">
+  <h1 class="header-title">Notificaciones</h1>
+</div>
+
+<div class="container mb-5 pb-5">
+  <div class="text-center my-3">
+    <span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis fw-medium p-2">Tu pedido</span>
+  </div>
+
+  <h6 class="text-muted fw-bold">Hoy</h6>
+  <div class="notif-card">
+    <div class="notif-icon-container bg-success-subtle text-success">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+    <div class="notif-content">
+      <div class="notif-title">Tu pedido está listo para retirar</div>
+      <p class="notif-body">Hola! Tu pedido ya está en el local, listo para distribuir.</p>
+      <a routerLink="/calificar" class="btn btn-sm btn-naranja mt-2">Califica tu pedido</a>
+    </div>
+  </div>
+  <div class="notif-card">
+    <div class="notif-icon-container bg-warning-subtle text-warning">
+      <i class="bi bi-hourglass-split"></i>
+    </div>
+    <div class="notif-content">
+      <div class="notif-title">Pendiente</div>
+      <p class="notif-body">Estamos procesando tu pedido.</p>
+    </div>
+  </div>
+
+  <h6 class="text-muted fw-bold mt-4">Ayer</h6>
+  <div class="notif-card">
+    <div class="notif-icon-container bg-danger-subtle text-danger">
+      <i class="bi bi-x-circle-fill"></i>
+    </div>
+    <div class="notif-content">
+      <div class="notif-title">Cancelado</div>
+      <p class="notif-body">Ups! Tu orden ha sido cancelada.</p>
+    </div>
+  </div>
+
+  <p class="text-center text-muted mt-4">Sin más notificaciones</p>
+</div>
+
+<app-navbar></app-navbar>

@@ -1,0 +1,21 @@
+.categoria-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease;
+}
+.categoria-card:hover {
+  transform: scale(1.05);
+}
+.card-mejor-calificado .card-img-top {
+  max-height: 200px;
+  object-fit: cover;
+}
+.categoria-card .card-img-top {
+  height: 110px;
+  width: 100%;
+  object-fit: cover;
+}
+.estrella {
+  color: #FFD700;
+}

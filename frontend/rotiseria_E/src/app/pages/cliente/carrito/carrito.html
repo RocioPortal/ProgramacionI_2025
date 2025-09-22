@@ -1,0 +1,58 @@
+<div class="container mt-3 mb-5 pb-5">
+  <h4 class="fw-bold text-marron mt-2">Detalles de tu orden</h4>
+
+  <div class="card my-3 p-2 d-flex flex-row align-items-center">
+    <img src="assets/imagenes/menu/pizzas/pizzaanana.png" class="rounded me-3" alt="Pizza"
+      style="width: 100px; height: 90px;">
+    <div class="flex-grow-1">
+      <p class="mb-0 text-naranja fw-bold">$12000</p>
+      <p class="mb-0 fw-bold">Pizza con ananá</p>
+      <small class="text-muted">Con queso suizo</small>
+    </div>
+    <div class="d-flex align-items-center">
+      <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">-</button>
+      <input type="text" value="01" class="form-control text-center mx-1" style="width:50px;">
+      <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">+</button>
+    </div>
+    <button class="btn btn-link text-marron ms-2"><i class="bi bi-trash"></i></button>
+  </div>
+
+  <div class="card my-3 p-2 d-flex flex-row align-items-center">
+    <img src="assets/imagenes/menu/bebidas/gaseosa.png" class="rounded me-3" alt="Gaseosa"
+      style="width: 100px; height: 90px;">
+    <div class="flex-grow-1">
+      <p class="mb-0 text-naranja fw-bold">$2800</p>
+      <p class="mb-0 fw-bold">Gaseosa</p>
+      <small class="text-muted">Coca cola 1,5Lt</small>
+    </div>
+    <div class="d-flex align-items-center">
+      <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">-</button>
+      <input type="text" value="01" class="form-control text-center mx-1" style="width:50px;">
+      <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">+</button>
+    </div>
+    <button class="btn btn-link text-marron ms-2"><i class="bi bi-trash"></i></button>
+  </div>
+
+  <a routerLink="/todos" class="btn btn-outline-secondary w-100 mt-2 border-2 fw-bold"
+    style="--bs-btn-color: var(--color-texto); --bs-btn-border-color: var(--color-texto); --bs-btn-hover-bg: var(--color-texto); --bs-btn-hover-border-color: var(--color-texto); --bs-btn-hover-color: #fff; text-decoration: none;">
+    <i class="bi bi-plus-circle"></i> Añadir producto
+  </a>
+
+  <div class="card p-3 mt-4">
+    <div class="d-flex justify-content-between">
+      <span>Subtotal</span>
+      <span>$14,800</span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span>Código de promoción</span>
+      <span>---------</span>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-between fw-bold">
+      <span>Total</span>
+      <span class="text-naranja">$14,800</span>
+    </div>
+    <a routerLink="/mensajepedido" class="btn btn-naranja w-100 mt-3">Confirmar pedido</a>
+  </div>
+</div>
+<app-navbar></app-navbar>

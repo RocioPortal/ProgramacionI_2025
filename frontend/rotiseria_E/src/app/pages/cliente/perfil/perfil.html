@@ -1,0 +1,26 @@
+<div class="container mt-4 mb-5 pb-5">
+  <h1 class="text-center page-header">Mi perfil</h1>
+  
+  <p class="text-marron text-center ms-2 mt-4">Datos personales</p>
+
+  <div class="perfil-card">
+    <img src="assets/img/avatar.png" alt="Avatar del usuario">
+    <p class="perfil-name">Lola Argenta</p>
+    <p class="perfil-info">LolaArgenta123@gmail.com</p>
+    <p class="perfil-info">+261 1234567</p>
+  </div>
+
+  <!-- 👇 Usamos routerLink en lugar de href -->
+  <a routerLink="/notificaciones" class="perfil-btn text-decoration-none">
+    <span>Mis Notificaciones</span>
+    <i class="bi bi-chevron-right"></i>
+  </a>
+
+  <!-- 👇 Cerramos sesión redirigiendo a bienvenida -->
+  <a routerLink="/bienvenida" class="btn btn-naranja cerrar-sesion text-decoration-none">
+    Cerrar Sesión
+  </a>
+</div>
+
+<!-- Reutilizamos el navbar -->
+<app-navbar></app-navbar>

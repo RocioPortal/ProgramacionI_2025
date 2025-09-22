@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-bienvenida',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './bienvenida.html',
   styleUrl: './bienvenida.css'
 })
-export class Bienvenida {
-
-}
+export class Bienvenida {}

@@ -1,0 +1,64 @@
+/* ================================
+   PÁGINA DE PERFIL
+================================ */
+.perfil-header {
+  color: var(--color-principal);
+  font-weight: bold;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 1.4rem;
+}
+.perfil-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  margin: 20px auto;
+  width: 90%;
+}
+.perfil-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+.perfil-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.perfil-info {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 2px;
+}
+.perfil-btn {
+  width: 90%;
+  margin: 10px auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: bold;
+  color: var(--color-texto);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.perfil-btn:hover {
+  background: #f2f2f2;
+}
+.cerrar-sesion {
+  display: block;
+  width: 90%;
+  margin: 20px auto;
+  border-radius: 25px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--color-principal);
+  color: #fff;
+  border: none;
+  text-align: center;
+}

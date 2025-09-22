@@ -1,0 +1,76 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: var(--color-fondo);
+}
+.header a {
+  text-decoration: none;
+  font-size: 24px;
+  margin-right: 10px;
+  color: var(--color-ink);
+}
+.title {
+  margin: 0 auto;
+  color: white;
+  background: var(--color-principal);
+  padding: 8px 15px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+.product-card {
+  width: 85%;
+  max-width: 400px;
+  margin: 0 auto 20px auto;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 0;
+  overflow: hidden;
+}
+.product-card img {
+  height: 180px;
+  width: 100%;
+  object-fit: cover;
+}
+.product-card .product-info {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-card h6 {
+  margin-bottom: 4px;
+}
+.product-card .price {
+  font-weight: bold;
+}
+.todos-header {
+  background-color: var(--color-principal); /* Fondo naranja vibrante */
+  color: white;
+  padding: 20px 15px;
+  display: flex;
+  align-items: center;
+  position: relative; /* Necesario para posicionar el botón de volver */
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 20px; /* Espacio entre el header y la lista */
+}
+
+.todos-header .back-button {
+  position: absolute; /* Posiciona el botón a la izquierda */
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem; /* Ícono más grande */
+  color: white;
+  text-decoration: none;
+}
+
+.todos-header .header-title {
+  flex-grow: 1; /* Asegura que el título ocupe todo el espacio y se centre */
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white; /* Forzamos el color blanco, ya que h1 puede tener otro color por defecto */
+}
