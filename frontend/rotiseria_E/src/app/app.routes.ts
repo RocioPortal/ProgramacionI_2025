@@ -78,7 +78,6 @@ export const routes: Routes = [
 
 
 // ADMINISTRADOR: 
-import { Routes } from '@angular/router';
 
 // Componentes de administrador
 import { MenuComponent } from './pages/administrador/menu/menu';
@@ -105,7 +104,6 @@ export const routes: Routes = [
 
 
 //EMPLEADO:
-import { Routes } from '@angular/router';
 
 import { Menu } from './pages/empleado/menu/menu';
 import { Pedidos } from './pages/empleado/pedidos/pedidos';
