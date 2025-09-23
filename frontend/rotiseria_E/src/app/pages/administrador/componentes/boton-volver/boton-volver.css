@@ -1,10 +1,8 @@
-/* Estilos para el contenedor del botón de volver */
 :host {
-  display: block; /* Asegura que el componente se comporte como un bloque */
+  display: block; 
 }
 
 a {
-  /* Apariencia del botón */
   background-color: #FF5722;
   color: #FFFFFF;
   padding: 8px 15px;
@@ -15,19 +13,16 @@ a {
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
 
-  /* Flexbox para alinear el ícono y el texto */
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-/* Efecto al pasar el ratón (hover) */
 a:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Efecto al hacer clic (active) */
 a:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

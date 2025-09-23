@@ -1,24 +1,22 @@
-/* Contenedor general */
 #pantallaPedidos .container {
   display: flex;
   justify-content: center;
   margin-top: 40px;
 }
 
-/* Tabla de pedidos */
 #pantallaPedidos table {
-  background-color: #ffffff; /* Fondo blanco */
+  background-color: #ffffff; 
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 70%; /* Más ancha */
-  font-size: 18px; /* Texto más grande */
+  width: 70%; 
+  font-size: 18px; 
   border-collapse: collapse;
   overflow: hidden;
 }
 
 /* Encabezado */
 #pantallaPedidos thead {
-  background-color: #ff7043; /* naranja fuerte */
+  background-color: #ff7043; 
   color: white;
   font-size: 20px;
 }
@@ -29,14 +27,13 @@
   text-align: center;
 }
 
-/* Filas alternadas */
 #pantallaPedidos tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
 /* Estados */
 .status.Confirmado {
-  background-color: #28a745; /* verde */
+  background-color: #28a745; 
   color: white;
   padding: 6px 12px;
   border-radius: 8px;
@@ -44,7 +41,7 @@
 }
 
 .status.Pendiente {
-  background-color: #ff9800; /* naranja */
+  background-color: #ff9800; 
   color: white;
   padding: 6px 12px;
   border-radius: 8px;
@@ -52,7 +49,7 @@
 }
 
 .status.Cancelado {
-  background-color: #f44336; /* rojo */
+  background-color: #f44336; 
   color: white;
   padding: 6px 12px;
   border-radius: 8px;
@@ -71,10 +68,6 @@
   font-weight: bold;
 }
 
-
-
-
-/*PEDIDOS PAGE*/
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -175,11 +168,6 @@ td:last-child {
   font-size: 16px;
 }
 
-
-
-
-
-
 /* === ESTILOS PARA EL ENCABEZADO Y EL BOTÓN DE VOLVER === */
 header {
   position: relative;
@@ -197,7 +185,7 @@ app-boton-volver {
 }
 
 app-boton-volver::part(button) {
-  padding: 8px 15px; /* Hace el botón más pequeño */
+  padding: 8px 15px; 
   border-radius: 25px;
   background-color: #ff4500;
   color: white;

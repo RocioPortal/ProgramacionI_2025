@@ -1,1 +1,69 @@
-<p>registro works!</p>
+<div class="d-flex justify-content-center align-items-center vh-100" style="background-color: var(--color-fondo);">
+  <div class="card shadow p-4" style="border-radius: 20px; max-width: 380px; width: 100%;">
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-3">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login">Iniciar sesión</a>
+      </li>
+      <li class="nav-item">
+        <span class="nav-link active">Registrarse</span>
+      </li>
+    </ul>
+
+    <!-- Formulario -->
+    <form (ngSubmit)="onSubmit()" novalidate>
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Tu nombre completo"
+          required
+          name="nombre"
+          [(ngModel)]="nombre">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Teléfono</label>
+        <input
+          type="tel"
+          class="form-control"
+          placeholder="Tu número de teléfono"
+          required
+          name="telefono"
+          pattern="[0-9\\s()+-]{6,}"
+          [(ngModel)]="telefono">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="admin | empleado | cliente"
+          required
+          name="email"
+          [(ngModel)]="email">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="admin | empleado | cliente"
+          required
+          minlength="4"
+          name="password"
+          [(ngModel)]="password">
+      </div>
+
+      <button type="submit" class="btn btn-custom w-100">Crear cuenta</button>
+
+      <!-- Mensaje de error -->
+      <div *ngIf="errorMsg" class="text-danger text-center mt-3" style="font-weight:600;">
+        {{ errorMsg }}
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+
+.product-card {
+  width: 85%;
+  max-width: 400px;
+  margin: 0 auto 20px auto;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 0;
+  overflow: hidden;
+}
+.product-card img {
+  height: 180px;
+  width: 100%;
+  object-fit: cover;
+}
+.product-card .product-info {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-card h6 {
+  margin-bottom: 4px;
+}
+.product-card .price {
+  font-weight: bold;
+}

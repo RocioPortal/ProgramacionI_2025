@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-// Asegúrate de que esta interfaz esté al principio para poder exportarla.
-// Se ha añadido la palabra 'export' aquí.
 export interface Usuario {
   id?: number;
   name: string;
@@ -31,7 +29,7 @@ import { EditarUsuarioComponent } from '../componentes/editar-usuario/editar-usu
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css'
 })
-export class UsuariosComponent implements OnInit {
+export class Usuarios implements OnInit {
   mostrarLista: boolean = true;
   filtroActual: string = 'cliente';
   terminoBusqueda: string = '';

@@ -23,7 +23,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* === Botón de Volver (CORREGIDO) === */
 app-boton-volver {
   position: absolute;
   left: 20px;
@@ -33,7 +32,7 @@ app-boton-volver {
 }
 
 app-boton-volver::part(button) {
-  padding: 8px 15px; /* Tamaño del botón */
+  padding: 8px 15px; 
   border-radius: 25px;
   background-color: #ff5500;
   color: white;
@@ -41,9 +40,9 @@ app-boton-volver::part(button) {
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s ease;
-  display: flex; /* Para que el contenido interno se alinee */
+  display: flex; 
   align-items: center;
-  gap: 5px; /* Espacio entre el ícono y el texto */
+  gap: 5px; 
 }
 
 app-boton-volver::part(button):hover {
@@ -53,12 +52,11 @@ app-boton-volver::part(button):hover {
 .page-title {
   text-align: center;
   font-size: 24px;
-  color: #ff5500;
+  color: #ffeaea;
   font-weight: bold;
   margin: 0;
 }
 
-/* === Caja de Búsqueda === */
 .search-box {
   display: flex;
   align-items: center;
@@ -178,7 +176,6 @@ app-boton-volver::part(button):hover {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Título del formulario (CORREGIDO) */
 .edit-user-container h2 {
   font-size: 24px;
   font-weight: bold;
@@ -213,23 +210,22 @@ app-boton-volver::part(button):hover {
   border-color: #cc4400;
 }
 
-/* === Botón Guardar (CORREGIDO) === */
 .save-btn {
-  background-color: #ff5500; /* Color de fondo naranja */
+  background-color: #ff5500; 
   color: white;
   border: none;
-  border-radius: 25px; /* Bordes redondeados */
-  padding: 12px 30px; /* Espaciado interno */
+  border-radius: 25px;
+  padding: 12px 30px; 
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: auto;
-  display: block; /* Para que ocupe todo el ancho disponible */
-  margin: 20px auto 0; /* Centra el botón horizontalmente y añade un margen superior */
+  display: block; 
+  margin: 20px auto 0; 
   text-transform: uppercase;
 }
 
 .save-btn:hover {
-  background-color: #e64a00; /* Color un poco más oscuro al pasar el cursor */
+  background-color: #e64a00; 
 }

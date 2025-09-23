@@ -1,0 +1,54 @@
+<nav class="navbar bg-brand">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold text-white" routerLink="/empleado/clientes">← Volver</a>
+      <span class="navbar-text text-white fw-bold">Modificar Cliente</span>
+      <span></span>
+    </div>
+  </nav>
+  
+  <div class="hero-curve"></div>
+  <h2 class="title-lg">Modificar Cliente</h2>
+  
+  <div class="container mt-3 mb-5" style="max-width: 720px;">
+    <div class="card card-profile">
+      <h5>Perfil</h5>
+  
+      <form>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Nombre</label>
+          <input type="text" class="form-control" value="Juana Lopez" />
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Email</label>
+          <input type="email" class="form-control" value="juanalopez@gmail.com" />
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Teléfono</label>
+          <input type="tel" class="form-control" value="261829130" />
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-semibold">ROL</label>
+          <select class="form-select">
+            <option selected>User</option>
+            <option>Admin</option>
+            <option>Encargado/Empleado</option>
+          </select>
+        </div>
+  
+        <div class="mb-2">
+          <label class="form-label fw-semibold">ESTADO</label>
+          <select class="form-select">
+            <option selected>Activo</option>
+            <option>Suspendido</option>
+          </select>
+        </div>
+  
+        <div class="text-center mt-4">
+          <a routerLink="/empleado/clientes" class="btn btn-custom btn-guardar">GUARDAR</a>
+        </div>
+      </form>
+    </div>
+  </div>

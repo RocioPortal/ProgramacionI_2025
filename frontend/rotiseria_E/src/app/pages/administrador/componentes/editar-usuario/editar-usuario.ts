@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-editar-usuario',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Quité BotonVolverComponent si no se usa
+  imports: [CommonModule, FormsModule], 
   templateUrl: './editar-usuario.html',
-  styleUrls: ['./editar-usuario.css'] // ← Corregido
+  styleUrls: ['./editar-usuario.css'] 
 })
 export class EditarUsuarioComponent {
   @Input() usuario: any;

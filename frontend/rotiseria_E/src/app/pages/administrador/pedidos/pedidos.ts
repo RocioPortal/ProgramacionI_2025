@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router'; // Cambio: Importa RouterLink
+import { RouterLink } from '@angular/router'; 
 import { FormsModule } from '@angular/forms';
 import { BotonVolverComponent } from '../componentes/boton-volver/boton-volver'; 
 import { EditarPedidoComponent } from '../componentes/editar-pedido/editar-pedido'; 
@@ -13,7 +13,7 @@ import { CancelarPedidoComponent } from '../componentes/cancelar-pedido/cancelar
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink, // Cambio: Usa RouterLink aquí
+    RouterLink, 
     FormsModule,
     BotonVolverComponent,
     EditarPedidoComponent,
@@ -24,7 +24,7 @@ import { CancelarPedidoComponent } from '../componentes/cancelar-pedido/cancelar
   templateUrl: './pedidos.html',
   styleUrl: './pedidos.css'
 })
-export class PedidosComponent {
+export class Pedidos {
   mostrarLista: boolean = true;
   idPedidoSeleccionado: string = '';
 

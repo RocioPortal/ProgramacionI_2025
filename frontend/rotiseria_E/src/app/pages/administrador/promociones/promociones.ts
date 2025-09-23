@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router'; // Cambio: Importa RouterLink
+import { RouterLink } from '@angular/router';
 import { BotonVolverComponent } from '../componentes/boton-volver/boton-volver';
 import { BotonCrearpromoComponent } from '../componentes/boton-crearpromo/boton-crearpromo';
 
@@ -9,14 +9,14 @@ import { BotonCrearpromoComponent } from '../componentes/boton-crearpromo/boton-
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink, // Cambio: Usa RouterLink aquí
+    RouterLink, 
     BotonVolverComponent,
     BotonCrearpromoComponent
   ],
   templateUrl: './promociones.html',
   styleUrl: './promociones.css'
 })
-export class PromocionesComponent {
+export class Promociones {
   mostrarLista: boolean = true;
 
   showForm() {

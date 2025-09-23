@@ -38,7 +38,7 @@ body {
 
 .d-grid.gap-3.mt-4 {
     display: grid;
-    gap: 1.5rem; /* Separación entre botones */
+    gap: 1.5rem; 
     margin-top: 2rem;
     width: 100%;
     max-width: 300px;
@@ -46,13 +46,13 @@ body {
 
 app-menu-boton button {
     background-color: var(--color-primario);
-    color: var(--color-blanco); /* Color de letra blanco */
+    color: var(--color-blanco); 
     padding: 1rem 2rem;
     border: none;
-    border-radius: 25px; /* Bordes redondeados */
+    border-radius: 25px; 
     font-size: 1.2rem;
     font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
     transition: background-color 0.3s ease;
     cursor: pointer;
     width: 100%;
@@ -60,10 +60,9 @@ app-menu-boton button {
 }
 
 app-menu-boton button:hover {
-    background-color: #e64a19; /* Naranja más oscuro al pasar el cursor */
+    background-color: #e64a19; 
 }
 
-/* Estilos específicos del logo */
 .logo1-container {
     display: flex;
     flex-direction: column;

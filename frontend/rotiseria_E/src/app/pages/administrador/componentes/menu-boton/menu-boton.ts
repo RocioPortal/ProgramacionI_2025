@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-menu-boton',
   standalone: true,
   imports: [RouterModule],
-  templateUrl: './menu-boton.html', // Aquí se enlaza el HTML
+  templateUrl: './menu-boton.html',
   styleUrl: './menu-boton.css'
 })
 export class MenuBotonComponent {
