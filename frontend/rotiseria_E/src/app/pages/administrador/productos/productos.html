@@ -1,72 +1,224 @@
 <div class="container-main">
 
-    <section id="productos-lista" *ngIf="mostrarLista">
-      <div class="header">
-        <app-boton-volver text="← volver" routerLink="/administrador/menu"></app-boton-volver>
-        <h2 class="text-center">PRODUCTOS</h2>
-      </div>
-      <div class="row">
-        <div class="col-md-6" *ngFor="let producto of productos">
-          <div class="card p-3 mb-3 text-center">
-            <img src="../imagenes/{{producto.img}}" alt="{{producto.name}}" class="product-img">
-            <h5>{{producto.name}}</h5>
-            <p>${{producto.price}}</p>
-            <app-ver-producto (click)="verDetalle(producto)"></app-ver-producto>
-          </div>
+  <section id="productos-lista" *ngIf="mostrarLista">
+    <div class="header">
+      <app-boton-volver text="← volver" routerLink="/administrador/menu"></app-boton-volver>
+      <h2 class="text-center">PRODUCTOS</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/pastas/ñoquis.png" alt="Ñoquis de Papa" class="product-img">
+          <h5>Ñoquis de Papa</h5>
+          <p>$9000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'noquis', name: 'Ñoquis de Papa', price: 9000, desc: 'Ñoquis caseros de papa con salsa a elección.', stock: 10, img: 'assets/menu/pastas/ñoquis.png' })"></app-ver-producto>
         </div>
       </div>
-      <div class="text-center mt-4">
-        <app-boton-nuevoproducto (click)="verFormulario()"></app-boton-nuevoproducto>
-      </div>
-    </section>
-  
-    <section id="producto-detalle" *ngIf="mostrarDetalle && productoSeleccionado">
-      <div class="header">
-        <app-boton-volver text="← volver" (click)="verLista()"></app-boton-volver>
-        <h2 class="text-center">{{productoSeleccionado.name | uppercase}}</h2>
-      </div>
-      <div class="container text-center">
-        <img src="../imagenes/{{productoSeleccionado.img}}" alt="{{productoSeleccionado.name}}" class="product-img my-3">
-        <textarea class="form-control mb-2" rows="2" [(ngModel)]="productoSeleccionado.desc"></textarea>
-        <input type="number" class="form-control mb-2" [(ngModel)]="productoSeleccionado.price" placeholder="Precio">
-        <input type="number" class="form-control mb-2" [(ngModel)]="productoSeleccionado.stock" placeholder="Cantidad">
-        <div class="d-flex justify-content-center gap-3 mt-3">
-          <app-confirmar-edicion (click)="guardarEdicion()"></app-confirmar-edicion>
-          <app-eliminar-producto (click)="eliminarProducto()"></app-eliminar-producto>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/pastas/ravioles.png" alt="Ravioles" class="product-img">
+          <h5>Ravioles</h5>
+          <p>$19000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'ravioles', name: 'Ravioles', price: 19000, desc: 'Ravioles rellenos de carne o verdura, acompañados con salsa a elección.', stock: 12, img: 'assets/menu/pastas/ravioles.png' })"></app-ver-producto>
         </div>
       </div>
-    </section>
-  
-    <section id="nuevo-producto" *ngIf="mostrarFormulario">
-      <div class="header">
-        <app-boton-volver text="← volver" (click)="verLista()"></app-boton-volver>
-        <h2 class="text-center">Añadir producto</h2>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/entre_panes/hamburguesa.png" alt="Hamburguesa" class="product-img">
+          <h5>Hamburguesa</h5>
+          <p>$9000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'hamburguesa', name: 'Hamburguesa', price: 9000, desc: 'Hamburguesa completa con carne, queso, lechuga y tomate.', stock: 15, img: 'assets/menu/entre_panes/hamburguesa.png' })"></app-ver-producto>
+        </div>
       </div>
-      <form class="card p-4 text-center">
-        <div class="mb-3">
-          <label class="form-label">Insertar foto</label>
-          <input type="file" class="form-control">
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/entre_panes/lomo.png" alt="Lomo" class="product-img">
+          <h5>Lomo</h5>
+          <p>$19000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'lomo', name: 'Lomo', price: 19000, desc: 'Lomo completo con jamón, queso, lechuga, tomate y huevo.', stock: 8, img: 'assets/menu/entre_panes/lomo.png' })"></app-ver-producto>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Nombre</label>
-          <input type="text" class="form-control" placeholder="Colocar nombre del nuevo producto">
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/entre_panes/lomopizza.png" alt="Lomopizza" class="product-img">
+          <h5>Lomopizza</h5>
+          <p>$19000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'lomopizza', name: 'Lomopizza', price: 19000, desc: 'El clásico lomo acompañado de una base de pizza.', stock: 7, img: 'assets/menu/entre_panes/lomopizza.png' })"></app-ver-producto>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Descripción</label>
-          <textarea class="form-control" rows="3" placeholder="Descripción breve del producto"></textarea>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/entre_panes/chori.png" alt="Choripán" class="product-img">
+          <h5>Choripán</h5>
+          <p>$7000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'choripan', name: 'Choripán', price: 7000, desc: 'Clásico choripán con chimichurri y pan casero.', stock: 20, img: 'assets/menu/entre_panes/chori.png' })"></app-ver-producto>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Precio</label>
-          <input type="number" class="form-control" placeholder="$">
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/entre_panes/pancho.png" alt="Pancho" class="product-img">
+          <h5>Pancho</h5>
+          <p>$2500</p>
+          <app-ver-producto (click)="verDetalle({ id: 'pancho', name: 'Pancho', price: 2500, desc: 'Pancho clásico con salsas a elección.', stock: 25, img: 'assets/menu/entre_panes/pancho.png' })"></app-ver-producto>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Cantidad</label>
-          <input type="number" class="form-control" placeholder="Unidades disponibles">
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/caserito/milanapo.png" alt="Milanesa Napolitana" class="product-img">
+          <h5>Milanesa Napolitana</h5>
+          <p>$10000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'milanesa', name: 'Milanesa Napolitana', price: 10000, desc: 'Milanesa de carne con salsa de tomate, jamón y queso gratinado.', stock: 9, img: 'assets/menu/caserito/milanapo.png' })"></app-ver-producto>
         </div>
-        <div class="text-center">
-          <app-agregar-producto (click)="agregarProducto()"></app-agregar-producto>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/caserito/logo.png" alt="Pollo al horno" class="product-img">
+          <h5>Pollo al horno</h5>
+          <p>$20000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'pollo', name: 'Pollo al horno', price: 20000, desc: 'Pollo al horno con salsa a elección.', stock: 10, img: 'assets/menu/caserito/logo.png' })"></app-ver-producto>
         </div>
-      </form>
-    </section>
-  
-  </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/caserito/papas.png" alt="Papas Fritas" class="product-img">
+          <h5>Papas Fritas</h5>
+          <p>$5500</p>
+          <app-ver-producto (click)="verDetalle({ id: 'papas', name: 'Papas Fritas', price: 5500, desc: 'Papas fritas crocantes, acompañadas con salsas.', stock: 30, img: 'assets/menu/caserito/papas.png' })"></app-ver-producto>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/pizzas/pizza.jpg" alt="Pizza Muzza" class="product-img">
+          <h5>Pizza Muzza</h5>
+          <p>$11000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'muzza', name: 'Pizza Muzza', price: 11000, desc: 'Pizza clásica de muzzarella con salsa de tomate y aceitunas.', stock: 12, img: 'assets/menu/pizzas/pizza.jpg' })"></app-ver-producto>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/pizzas/pizzaanana.png" alt="Pizza con Ananá" class="product-img">
+          <h5>Pizza con Ananá</h5>
+          <p>$12000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'pizzaAnana', name: 'Pizza con Ananá', price: 12000, desc: 'Pizza especial con trozos de ananá, salsa de tomate y muzzarella.', stock: 10, img: 'assets/menu/pizzas/pizzaanana.png' })"></app-ver-producto>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/empanadas/logo.png" alt="Empanadas de Pollo" class="product-img">
+          <h5>Empanadas de Pollo</h5>
+          <p>$750</p>
+          <app-ver-producto (click)="verDetalle({ id: 'empPollo', name: 'Empanadas de Pollo', price: 750, desc: 'Empanadas caseras rellenas de pollo.', stock: 40, img: 'assets/menu/empanadas/logo.png' })"></app-ver-producto>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/empanadas/decarne.png" alt="Empanadas de Carne" class="product-img">
+          <h5>Empanadas de Carne</h5>
+          <p>$800</p>
+          <app-ver-producto (click)="verDetalle({ id: 'empCarne', name: 'Empanadas de Carne', price: 800, desc: 'Empanadas caseras rellenas de carne.', stock: 40, img: 'assets/menu/empanadas/decarne.png' })"></app-ver-producto>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/bebidas/latagaseosa.png" alt="Lata Gaseosa" class="product-img">
+          <h5>Lata Gaseosa</h5>
+          <p>$1500</p>
+          <app-ver-producto (click)="verDetalle({ id: 'lataGaseosa', name: 'Lata Gaseosa', price: 1500, desc: 'Gaseosa en lata, diferentes sabores disponibles.', stock: 30, img: 'assets/menu/bebidas/latagaseosa.png' })"></app-ver-producto>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/bebidas/gaseosa.png" alt="Gaseosa" class="product-img">
+          <h5>Gaseosa</h5>
+          <p>$2800</p>
+          <app-ver-producto (click)="verDetalle({ id: 'Gaseosa', name: 'Gaseosa', price: 2800, desc: 'Botella de gaseosa 1.5L, sabores variados.', stock: 25, img: 'assets/menu/bebidas/gaseosa.png' })"></app-ver-producto>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/bebidas/aguasgas.png" alt="Agua con gas" class="product-img">
+          <h5>Agua con gas</h5>
+          <p>$2100</p>
+          <app-ver-producto (click)="verDetalle({ id: 'aguaConGas', name: 'Agua con gas', price: 2100, desc: 'Agua mineral con gas, botella de 500ml.', stock: 20, img: 'assets/menu/bebidas/aguasgas.png' })"></app-ver-producto>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/bebidas/aguasgas.png" alt="Agua sin gas" class="product-img">
+          <h5>Agua sin gas</h5>
+          <p>$2000</p>
+          <app-ver-producto (click)="verDetalle({ id: 'aguaSinGas', name: 'Agua sin gas', price: 2000, desc: 'Agua mineral sin gas, botella de 500ml.', stock: 18, img: 'assets/menu/bebidas/aguasgas.png' })"></app-ver-producto>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/bebidas/aguasaborizada.png" alt="Agua saborizada" class="product-img">
+          <h5>Agua saborizada</h5>
+          <p>$2200</p>
+          <app-ver-producto (click)="verDetalle({ id: 'aguaSaborizada', name: 'Agua saborizada', price: 2200, desc: 'Agua mineral saborizada, botella de 500ml.', stock: 15, img: 'assets/menu/bebidas/aguasaborizada.png' })"></app-ver-producto>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 text-center">
+          <img src="assets/menu/bebidas/logo.png" alt="Lata de cerveza" class="product-img">
+          <h5>Lata de cerveza</h5>
+          <p>$3700</p>
+          <app-ver-producto (click)="verDetalle({ id: 'cerveza', name: 'Lata de cerveza', price: 3700, desc: 'Lata de cerveza 473ml, diferentes marcas.', stock: 22, img: 'assets/menu/bebidas/logo.png' })"></app-ver-producto>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <app-boton-nuevoproducto (click)="verFormulario()"></app-boton-nuevoproducto>
+    </div>
+  </section>
+
+  <section id="producto-detalle" *ngIf="mostrarDetalle && productoSeleccionado">
+    <div class="header">
+      <app-boton-volver text="← volver" (click)="verLista()"></app-boton-volver>
+      <h2 class="text-center">{{productoSeleccionado.name | uppercase}}</h2>
+    </div>
+    <div class="container text-center">
+      <img [src]="productoSeleccionado.img" alt="{{productoSeleccionado.name}}" class="product-img my-3">
+      <textarea class="form-control mb-2" rows="2" [(ngModel)]="productoSeleccionado.desc"></textarea>
+      <input type="number" class="form-control mb-2" [(ngModel)]="productoSeleccionado.price" placeholder="Precio">
+      <input type="number" class="form-control mb-2" [(ngModel)]="productoSeleccionado.stock" placeholder="Cantidad">
+      <div class="d-flex justify-content-center gap-3 mt-3">
+        <app-confirmar-edicion (click)="guardarEdicion()"></app-confirmar-edicion>
+        <app-eliminar-producto (click)="eliminarProducto()"></app-eliminar-producto>
+      </div>
+    </div>
+  </section>
+
+  <section id="nuevo-producto" *ngIf="mostrarFormulario">
+    <div class="header">
+      <app-boton-volver text="← volver" (click)="verLista()"></app-boton-volver>
+      <h2 class="text-center">Añadir producto</h2>
+    </div>
+    <form class="card p-4 text-center">
+      <div class="mb-3">
+        <label class="form-label">Insertar foto</label>
+        <input type="file" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" placeholder="Colocar nombre del nuevo producto">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-control" rows="3" placeholder="Descripción breve del producto"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Precio</label>
+        <input type="number" class="form-control" placeholder="$">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Cantidad</label>
+        <input type="number" class="form-control" placeholder="Unidades disponibles">
+      </div>
+      <div class="text-center">
+        <app-agregar-producto (click)="agregarProducto()"></app-agregar-producto>
+      </div>
+    </form>
+  </section>
+
+</div>

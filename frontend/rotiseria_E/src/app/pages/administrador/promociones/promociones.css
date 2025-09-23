@@ -1,3 +1,62 @@
+/* === VARIABLES Y ESTILOS BASE === */
+:root {
+  --color-brand: #ff5722;
+  --color-brand-dark: #e64a19;
+  --color-texto: #424242;
+  --color-fondo: #fcf8f6;
+  --color-tarjeta: #ffffff;
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-promo: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background-color: var(--color-fondo);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* === ENCABEZADO Y TÍTULO === */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 1.5rem 0 2rem;
+}
+
+.titulo-promos {
+  color: var(--color-brand);
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* === BOTÓN DE VOLVER === */
+app-boton-volver {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+app-boton-volver::part(button) {
+  background-color: var(--color-brand);
+  color: #fff;
+  border-radius: 25px;
+  padding: 8px 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+app-boton-volver:hover::part(button) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* === ESTILOS DE TARJETAS Y FORMULARIO === */
 .promo-card {
   border-radius: 10px;
   padding: 15px;
@@ -5,9 +64,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #d13535;
 }
-.promo-card h3 { margin: 0 0 10px; font-size: 16px; }
+
+.promo-card h3 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
 .promo-card button {
   background-color: #fff;
   border: none;
@@ -18,13 +81,23 @@
   font-weight: bold;
   color: #333;
 }
-.promo1 { background-color: #E91E63; }
-.promo2 { background-color: #8BC34A; color: #000; }
+
+.promo1 {
+  background-color: #E91E63;
+  color: #d13535;
+}
+
+.promo2 {
+  background-color: #8BC34A;
+  color: #000;
+}
+
 .promo-card img {
   width: 60px;
   height: auto;
   margin-left: 10px;
 }
+
 .btn-main {
   display: block;
   width: 90%;
@@ -33,27 +106,38 @@
   font-size: 16px;
   font-weight: bold;
   color: #fff;
-  background-color: #FF4500;
+  background-color: var(--color-brand);
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
-.form-container { padding: 20px; }
+
+.form-container {
+  padding: 20px;
+}
+
 .form-container h2 {
   text-align: center;
   font-size: 22px;
-  color: #FF4500;
+  color: var(--color-brand);
   margin-bottom: 20px;
 }
-input, textarea {
+
+input,
+textarea {
   width: 100%;
   padding: 12px;
   margin-bottom: 15px;
   border-radius: 8px;
-  border: 1px solid #FF4500;
+  border: 1px solid var(--color-brand);
   font-size: 14px;
 }
-textarea { resize: none; height: 80px; }
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
 .btn-save {
   display: block;
   width: 90%;
@@ -66,111 +150,4 @@ textarea { resize: none; height: 80px; }
   border: none;
   border-radius: 8px;
   cursor: pointer;
-}
-.titulo-promos {
-  color: #fff;   /* blanco */
-  text-align: center;
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-
-/*PEDIDOS PAGE*/
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(to bottom, #ffe6d6, #fff);
-  color: #333;
-}  
-header {
-  background-color: #ff6b3c;
-  color: #fff;
-  text-align: center;
-  padding: 15px 10px;
-  font-size: 20px;
-  font-weight: bold;
-  position: relative;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-}  
-.container {
-  padding: 30px 20px;
-  max-width: 900px;
-  margin: auto;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  font-size: 18px;
-}  
-thead td {
-  font-weight: bold;
-  background-color: #ffb08c;
-  text-align: left;
-  padding: 12px;
-}
-td {
-  padding: 12px;
-  border-bottom: 1px solid #f0f0f0;
-}
-td:last-child {
-  text-align: right;
-}
-.status {
-  font-weight: bold;
-  padding: 5px 12px;
-  border-radius: 15px;
-  font-size: 14px;
-  color: #fff;
-}
-.status.Confirmado {
-  background-color: #4caf50;
-}
-.status.Pendiente {
-  background-color: #ff9800;
-}
-.status.Cancelado {
-  background-color: #f44336;
-}
-.acciones {
-  margin-left: 10px;
-  cursor: pointer;
-  font-size: 18px;
-  transition: 0.3s;
-}
-.acciones:hover {
-  transform: scale(1.2);
-}
-.pantalla {
-  display: none;
-  padding-bottom: 50px;
-}
-.visible {
-  display: block;
-}
-#pantallaDetalle .container p {
-  font-size: 20px;
-  margin: 12px 0;
-}
-#pantallaDetalle select {
-  font-size: 18px;
-  padding: 6px 12px;
-}
-.botones-detalle {
-  margin-top: 20px;
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-}
-#pantallaDetalle button {
-  width: 140px;
-  border-radius: 25px;
-  padding: 10px 0;
-  font-size: 16px;
 }

@@ -13,14 +13,13 @@
   font-weight: bold;
 }
 
-/* Estilo para las tarjetas de notificación */
 .notif-card {
   background-color: #fff;
   border-radius: 12px;
   padding: 15px;
   margin-bottom: 15px;
   display: flex;
-  align-items: flex-start; /* Alinea los items al inicio */
+  align-items: flex-start;
   box-shadow: var(--shadow-soft);
   border: 1px solid #f0f0f0;
 }
@@ -47,6 +46,6 @@
 
 .notif-body {
   font-size: 0.9rem;
-  color: #6c757d; /* Gris sutil de Bootstrap */
+  color: #6c757d;
   margin: 0;
 }

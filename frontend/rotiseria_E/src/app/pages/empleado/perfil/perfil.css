@@ -63,3 +63,16 @@
   padding: .95rem 1.2rem;
   font-weight: 800;
 }
+
+.bg-brand{ background-color: var(--color-principal) !important; }
+.navbar{ box-shadow: var(--shadow-soft); }
+
+.card, .profile-card{
+  border:0; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft);
+}
+
+.btn-custom, .btn-logout{
+  background-color: var(--color-principal); color:#fff !important;
+  border:none; border-radius: var(--radius-pill);
+  padding:.95rem 1.2rem; font-weight:800; box-shadow: var(--shadow-soft);
+}

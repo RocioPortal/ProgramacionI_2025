@@ -1,4 +1,3 @@
-// Inside boton-volver.ts
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -9,7 +8,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './boton-volver.html',
   styleUrl: './boton-volver.css'
 })
-export class BotonVolverComponent { // Make sure 'export' is here
+export class BotonVolverComponent {
   @Input() text: string = '';
   @Input() routerLink: string = '';
 }

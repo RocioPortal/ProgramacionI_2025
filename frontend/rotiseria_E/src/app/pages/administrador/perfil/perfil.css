@@ -28,7 +28,8 @@
   object-fit: cover;
   border-radius: 18px;
   display:block; margin: 0 auto 14px;
-  background:#fde6ef;
+  background:#8d8983;
+  ;
 }
 
 .name{
@@ -63,3 +64,56 @@
   padding: .95rem 1.2rem;
   font-weight: 800;
 }
+
+
+app-perfil-logout {
+  display: block;
+  margin: 2rem auto 0 auto;
+  text-align: center;
+}
+
+app-perfil-logout button,
+app-perfil-logout .btn, 
+app-perfil-logout button:hover,
+app-perfil-logout .btn:hover {
+  background-color: #e64a19;
+}
+
+.navbar-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff5722 !important; 
+  text-align: center;
+  flex: 1;
+}
+
+app-perfil-logout {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+app-perfil-logout button,
+app-perfil-logout .btn {
+  background-color: #ff5722 !important;
+  color: #fff !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  padding: 12px 32px !important;
+  border-radius: 30px !important;
+  border: none !important;
+  cursor: pointer !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+
+  width: auto !important;      
+  min-width: 180px !important; 
+  max-width: 250px !important; 
+  text-align: center !important;
+}
+app-perfil-logout button:hover,
+app-perfil-logout .btn:hover {
+  background-color: #e64a19 !important;
+}
+
