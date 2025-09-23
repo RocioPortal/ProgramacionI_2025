@@ -10,4 +10,4 @@ import { PerfilLogoutComponent } from '../componentes/perfil-logout/perfil-logou
   templateUrl: './perfil.html',
   styleUrl: './perfil.css'
 })
-export class PerfilComponent { }
+export class Perfil { }

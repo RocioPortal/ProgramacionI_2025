@@ -24,7 +24,7 @@ import { CancelarPedidoComponent } from '../componentes/cancelar-pedido/cancelar
   templateUrl: './pedidos.html',
   styleUrl: './pedidos.css'
 })
-export class PedidosComponent {
+export class Pedidos {
   mostrarLista: boolean = true;
   idPedidoSeleccionado: string = '';
 

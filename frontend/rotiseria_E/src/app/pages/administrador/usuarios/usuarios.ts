@@ -19,7 +19,7 @@ import { EditarUsuarioComponent } from '../componentes/editar-usuario/editar-usu
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css'
 })
-export class UsuariosComponent implements OnInit {
+export class Usuarios implements OnInit {
   mostrarLista: boolean = true;
   filtroActual: string = 'cliente';
   terminoBusqueda: string = '';

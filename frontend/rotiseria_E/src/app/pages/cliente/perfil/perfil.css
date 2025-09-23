@@ -1,13 +1,6 @@
 /* ================================
    PÁGINA DE PERFIL
 ================================ */
-.perfil-header {
-  color: var(--color-principal);
-  font-weight: bold;
-  text-align: center;
-  margin-top: 15px;
-  font-size: 1.4rem;
-}
 .perfil-card {
   background: #fff;
   border-radius: var(--radius-lg);

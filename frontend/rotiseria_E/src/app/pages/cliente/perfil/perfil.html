@@ -1,6 +1,8 @@
+<div class="page-header">
+  <h1 class="header-title">Mi perfil</h1>
+</div>
+
 <div class="container mt-4 mb-5 pb-5">
-  <h1 class="text-center page-header">Mi perfil</h1>
-  
   <p class="text-marron text-center ms-2 mt-4">Datos personales</p>
 
   <div class="perfil-card">
@@ -10,14 +12,12 @@
     <p class="perfil-info">+261 1234567</p>
   </div>
 
-  <!-- 👇 Usamos routerLink en lugar de href -->
-  <a routerLink="/notificaciones" class="perfil-btn text-decoration-none">
+  <a routerLink="/cliente/notificaciones" class="perfil-btn text-decoration-none">
     <span>Mis Notificaciones</span>
     <i class="bi bi-chevron-right"></i>
   </a>
 
-  <!-- 👇 Cerramos sesión redirigiendo a bienvenida -->
-  <a routerLink="/bienvenida" class="btn btn-naranja cerrar-sesion text-decoration-none">
+  <a routerLink="/general/bienvenida" class="btn btn-naranja cerrar-sesion text-decoration-none">
     Cerrar Sesión
   </a>
 </div>

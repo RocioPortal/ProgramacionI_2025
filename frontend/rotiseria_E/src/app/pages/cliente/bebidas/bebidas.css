@@ -1,23 +1,4 @@
-.header {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  background-color: var(--color-fondo);
-}
-.header a {
-  text-decoration: none;
-  font-size: 24px;
-  margin-right: 10px;
-  color: var(--color-ink);
-}
-.title {
-  margin: 0 auto;
-  color: white;
-  background: var(--color-principal);
-  padding: 8px 15px;
-  border-radius: 10px;
-  font-weight: bold;
-}
+
 .product-card {
   width: 85%;
   max-width: 400px;

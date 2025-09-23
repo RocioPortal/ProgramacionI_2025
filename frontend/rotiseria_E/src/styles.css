@@ -73,3 +73,35 @@ h1, h2, h3, h4 {
   border-color: var(--color-principal);
   box-shadow: 0 0 0 .25rem rgba(255,69,0,.15);
 }
+
+/* ================================
+   ENCABEZADO GENERAL DE SECCIONES
+================================ */
+.page-header {
+  background-color: var(--color-principal); /* Naranja vibrante */
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  position: relative; /* Para el botón de volver */
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.page-header .back-button {
+  position: absolute; /* Pegado a la izquierda */
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: white;
+  text-decoration: none;
+}
+
+.page-header .header-title {
+  flex-grow: 1; /* Se centra automáticamente */
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}

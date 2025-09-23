@@ -16,7 +16,7 @@ import { BotonCrearpromoComponent } from '../componentes/boton-crearpromo/boton-
   templateUrl: './promociones.html',
   styleUrl: './promociones.css'
 })
-export class PromocionesComponent {
+export class Promociones {
   mostrarLista: boolean = true;
 
   showForm() {

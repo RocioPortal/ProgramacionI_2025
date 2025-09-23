@@ -28,7 +28,7 @@ import { AgregarProductoComponent } from '../componentes/agregar-producto/agrega
   templateUrl: './productos.html',
   styleUrl: './productos.css'
 })
-export class ProductosComponent {
+export class Productos {
   mostrarLista: boolean = true;
   mostrarDetalle: boolean = false;
   mostrarFormulario: boolean = false;

@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-todos',
   imports: [
     Navbar,
-   
+    RouterLink
   ],
   templateUrl: './todos.html',
   styleUrl: './todos.css'
