@@ -48,3 +48,21 @@
     padding: .9rem 1.5rem;
     font-weight: 700;
   }
+
+.bg-brand{ background-color: var(--color-principal) !important; }
+.navbar{ box-shadow: var(--shadow-soft); }
+
+.shadow-soft{ box-shadow: var(--shadow-soft) !important; }
+
+.btn-custom{
+  background-color: var(--color-principal); color:#fff !important;
+  border:none; border-radius: var(--radius-pill);
+  padding:.75rem 1.25rem; font-weight:700; box-shadow: var(--shadow-soft);
+  transition: transform .06s ease, opacity .2s ease, background-color .2s ease;
+}
+.btn-custom:hover{ background-color:#e63e00; transform: translateY(-1px); }
+.btn-custom:active{ background-color:#cc3700; transform: translateY(0); }
+
+.badge-confirmado{ background:#e6f6ee; color:#157347; border:1px solid #cdebdc; }
+.badge-pendiente{  background:#fff6e0; color:#8a6a00; border:1px solid #ffe3a6; }
+.badge-cancelado{  background:#fde9ec; color:#b02a37; border:1px solid #f7c8cf; }

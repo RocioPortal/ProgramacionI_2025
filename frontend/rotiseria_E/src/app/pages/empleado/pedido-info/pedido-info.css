@@ -42,3 +42,22 @@
     padding:.7rem .9rem;
     font-size:1.05rem;
   }
+
+.bg-brand{ background-color: var(--color-principal) !important; }
+.navbar{ box-shadow: var(--shadow-soft); }
+
+.card{ border:0; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); }
+
+.form-select{
+  border-radius:12px; border:1px solid #e7e2db; padding:.65rem .9rem;
+}
+.form-select:focus{
+  border-color: var(--color-principal);
+  box-shadow: 0 0 0 .25rem rgba(255,69,0,.15);
+}
+
+.btn-custom{
+  background-color: var(--color-principal); color:#fff !important;
+  border:none; border-radius: var(--radius-pill);
+  padding:.75rem 1.25rem; font-weight:700; box-shadow: var(--shadow-soft);
+}

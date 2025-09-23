@@ -40,3 +40,22 @@
     font-weight: 800;
     min-width: 260px;
   }
+
+.bg-brand{ background-color: var(--color-principal) !important; }
+.navbar{ box-shadow: var(--shadow-soft); }
+
+.card{ border:0; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); }
+
+.form-control, .form-select{
+  border-radius:12px; border:1px solid #e7e2db; padding:.65rem .9rem;
+}
+.form-control:focus, .form-select:focus{
+  border-color: var(--color-principal);
+  box-shadow: 0 0 0 .25rem rgba(255,69,0,.15);
+}
+
+.btn-custom, .btn-guardar{
+  background-color: var(--color-principal); color:#fff !important;
+  border:none; border-radius: var(--radius-pill);
+  padding:.95rem 1.5rem; font-weight:800; box-shadow: var(--shadow-soft);
+}
