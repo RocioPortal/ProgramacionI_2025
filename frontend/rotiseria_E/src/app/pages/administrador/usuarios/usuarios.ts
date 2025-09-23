@@ -1,7 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router'; // Cambio: Importa RouterLink
+import { RouterLink } from '@angular/router';
+
+export interface Usuario {
+  id?: number;
+  name: string;
+  email: string;
+  phone: string;
+  role: string;
+  status: string;
+  type?: string;
+}
 
 import { BotonVolverComponent } from '../componentes/boton-volver/boton-volver';
 import { EditarUsuarioComponent } from '../componentes/editar-usuario/editar-usuario';
@@ -12,7 +22,7 @@ import { EditarUsuarioComponent } from '../componentes/editar-usuario/editar-usu
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink, // Cambio: Usa RouterLink aquí
+    RouterLink,
     BotonVolverComponent,
     EditarUsuarioComponent
   ],

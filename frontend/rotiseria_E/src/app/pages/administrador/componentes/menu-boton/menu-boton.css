@@ -1,6 +1,5 @@
 .btn-orange {
-    background-color: #ff5722; /* Color naranja de Figma */
-    color: #fff;
+    background-color: #ff5722; 
     border-radius: 8px;
     font-weight: bold;
     padding: 10px 20px;
@@ -9,6 +8,6 @@
   }
   
   .btn-orange:hover {
-    background-color: #e64a19; /* Tono más oscuro al pasar el cursor */
+    background-color: #e64a19; 
     color: #fff;
   }
