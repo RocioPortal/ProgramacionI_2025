@@ -1,0 +1,52 @@
+<section id="page-lista" *ngIf="mostrarLista">
+    <header>
+      <app-boton-volver text="← volver" routerLink="/administrador/menu"></app-boton-volver>
+      <h2 class="titulo-promos">PROMOCIONES</h2>
+    </header>
+    <div class="container">
+      <div class="promo-card promo1">
+        <div>
+          <h3>2X1 En Gaseosas<br>¡Válido por 24 horas!</h3>
+          <button>Enviar a usuarios</button>
+        </div>
+        <img src="administrador/imagenes/promociones_sanguches.png" alt="Sandwich">
+      </div>
+      <div class="promo-card promo2">
+        <div>
+          <h3>¡15% de descuento en “Entre panes”!</h3>
+          <button>Enviar a usuarios</button>
+        </div>
+        <img src="administrador/imagenes/promociones_coca.png" alt="Coca">
+      </div>
+      <app-boton-crearpromo (onClick)="showForm()"></app-boton-crearpromo>
+    </div>
+  </section>
+  
+  <section id="page-form" *ngIf="!mostrarLista">
+    <header>
+      <app-boton-volver text="← volver" routerLink="/administrador/promociones"></app-boton-volver>
+      <h1>Promociones</h1>
+    </header>
+    <div class="form-container">
+      <h2>CREAR PROMOCIÓN</h2>
+      <form>
+        <div class="mb-3">
+          <label class="form-label">Título</label>
+          <input type="text" class="form-control" placeholder="Ej: 30% Disfruta esta promo imperdible" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Validez</label>
+          <input type="text" class="form-control" placeholder="dd/mm/aaaa" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" rows="3" placeholder="Añada una breve descripción" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Foto</label>
+          <input type="file" class="form-control" required>
+        </div>
+        <button type="button" class="btn-save" (click)="showList()">GUARDAR</button>
+      </form>
+    </div>
+  </section>

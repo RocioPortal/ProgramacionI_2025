@@ -1,0 +1,9 @@
+.btn-main {
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    width: 100%;
+    font-weight: bold;
+  }

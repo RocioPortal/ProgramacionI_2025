@@ -9,3 +9,4 @@ import { RouterLink } from '@angular/router';
   styleUrl: './bienvenida.css'
 })
 export class Bienvenida {}
+

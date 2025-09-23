@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-registro',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
+
   templateUrl: './registro.html',
   styleUrl: './registro.css'
 })
@@ -43,3 +44,4 @@ export class Registro {
     return null;
   }
 }
+

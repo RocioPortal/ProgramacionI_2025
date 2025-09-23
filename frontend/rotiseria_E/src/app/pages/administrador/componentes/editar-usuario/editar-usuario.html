@@ -1,0 +1,37 @@
+<div class="modify-top">
+    <app-boton-volver text="←" (click)="onBack.emit()"></app-boton-volver>
+    <div class="modify-title fw-bold">MODIFICAR USUARIOS</div>
+  </div>
+  
+  <div class="modify-card">
+    <form (ngSubmit)="guardar()">
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input [(ngModel)]="usuario.name" name="name" required type="text" class="form-control custom" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input [(ngModel)]="usuario.email" name="email" required type="email" class="form-control custom" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Teléfono</label>
+        <input [(ngModel)]="usuario.phone" name="phone" type="tel" class="form-control custom" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">ROL</label>
+        <select [(ngModel)]="usuario.role" name="role" class="form-select custom">
+          <option value="Empleado">Empleado</option>
+          <option value="Administrador">Administrador</option>
+          <option value="Cliente">Cliente</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">ESTADO</label>
+        <select [(ngModel)]="usuario.status" name="status" class="form-select custom">
+          <option value="Activo">Activo</option>
+          <option value="Inactivo">Inactivo</option>
+        </select>
+      </div>
+      <button type="submit" class="save-btn">GUARDAR</button>
+    </form>
+  </div>
