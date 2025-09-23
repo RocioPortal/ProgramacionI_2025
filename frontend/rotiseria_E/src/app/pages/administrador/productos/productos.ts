@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router'; // Cambio: Importa RouterLink
+import { RouterLink } from '@angular/router'; 
 
 import { BotonVolverComponent } from '../componentes/boton-volver/boton-volver';
 
@@ -17,7 +17,7 @@ import { AgregarProductoComponent } from '../componentes/agregar-producto/agrega
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink, // Cambio: Usa RouterLink aquí
+    RouterLink, 
     BotonVolverComponent,
     BotonNuevoproductoComponent,
     VerProductoComponent,
@@ -59,7 +59,7 @@ export class ProductosComponent {
   ];
 
   verDetalle(producto: any) {
-    this.productoSeleccionado = { ...producto }; // Crear una copia para la edición
+    this.productoSeleccionado = { ...producto }; 
     this.mostrarLista = false;
     this.mostrarDetalle = true;
   }
@@ -76,17 +76,14 @@ export class ProductosComponent {
   }
 
   guardarEdicion() {
-    // Lógica para guardar la edición
     this.verLista();
   }
 
   eliminarProducto() {
-    // Lógica para eliminar el producto
     this.verLista();
   }
 
   agregarProducto() {
-    // Lógica para agregar el nuevo producto
     this.verLista();
   }
 }

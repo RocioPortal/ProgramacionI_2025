@@ -1,50 +1,50 @@
 <div class="container-main">
-    <div id="screen-search" *ngIf="mostrarLista">
-      <div class="page-header">
-        <app-boton-volver text="←" routerLink="/administrador/menu"></app-boton-volver>
-        <h1 class="page-title">Usuarios</h1>
-      </div>
-  
-      <div class="search-box">
-        <svg class="search-icon" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="6" stroke="#b8b8b8" stroke-width="2"/></svg>
-        <input [(ngModel)]="terminoBusqueda" (input)="filtrarUsuarios()" type="search" placeholder="Buscar usuarios" />
-        <button class="btn btn-link p-0" title="Filtros" style="color:#b7b7b7;">
-          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="#bdbdbd" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-      </div>
-  
-      <div class="pills">
-        <div [ngClass]="{'pill': true, 'active': filtroActual === 'cliente'}" (click)="cambiarTipo('cliente')">CLIENTES</div>
-        <div [ngClass]="{'pill': true, 'active': filtroActual === 'empleado'}" (click)="cambiarTipo('empleado')">EMPLEADOS</div>
-      </div>
-  
-      <div class="table-responsive">
-        <table class="table table-striped align-middle" id="userTable">
-          <thead class="table-light">
-            <tr>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Teléfono</th>
-              <th>Rol</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let usuario of usuariosFiltrados">
-              <td>{{ usuario.name }}</td>
-              <td>{{ usuario.email }}</td>
-              <td>{{ usuario.phone }}</td>
-              <td>{{ usuario.role }}</td>
-              <td>{{ usuario.status }}</td>
-              <td><button class="edit-btn" (click)="editarUsuario(usuario)">✎</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div id="screen-search" *ngIf="mostrarLista">
+    <div class="page-header">
+      <app-boton-volver text="← Volver" routerLink="/administrador/menu"></app-boton-volver>
+      <h1 class="page-title">USUARIOS</h1>
     </div>
-  
-    <div *ngIf="!mostrarLista">
-      <app-editar-usuario [usuario]="usuarioSeleccionado" (onSave)="guardarCambios($event)" (onBack)="volverALista()"></app-editar-usuario>
+
+    <div class="search-box">
+      <svg class="search-icon" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="6" stroke="#b8b8d8" stroke-width="2"/></svg>
+      <input [(ngModel)]="terminoBusqueda" (input)="filtrarUsuarios()" type="search" placeholder="Buscar usuarios" />
+      <button class="btn btn-link p-0" title="Filtros" style="color:#b7b7b7;">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="#bdbdbd" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="pills">
+      <div [ngClass]="{'pill': true, 'active': filtroActual === 'cliente'}" (click)="cambiarTipo('cliente')">CLIENTES</div>
+      <div [ngClass]="{'pill': true, 'active': filtroActual === 'empleado'}" (click)="cambiarTipo('empleado')">EMPLEADOS</div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped align-middle" id="userTable">
+        <thead class="table-light">
+          <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuariosFiltrados">
+            <td>{{ usuario.name }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.phone }}</td>
+            <td>{{ usuario.role }}</td>
+            <td>{{ usuario.status }}</td>
+            <td><button class="edit-btn" (click)="editarUsuario(usuario)">✎</button></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+
+  <div *ngIf="!mostrarLista">
+    <app-editar-usuario [usuario]="usuarioSeleccionado" (onSave)="guardarCambios($event)" (onBack)="volverALista()"></app-editar-usuario>
+  </div>
+</div>

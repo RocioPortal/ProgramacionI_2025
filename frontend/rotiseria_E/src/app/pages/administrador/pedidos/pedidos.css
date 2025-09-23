@@ -70,3 +70,142 @@
   text-align: center;
   font-weight: bold;
 }
+
+
+
+
+/*PEDIDOS PAGE*/
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #ffe6d6, #fff);
+  color: #333;
+}  
+header {
+  background-color: #ff6b3c;
+  color: #fff;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}  
+.container {
+  padding: 30px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  font-size: 18px;
+}  
+thead td {
+  font-weight: bold;
+  background-color: #ffb08c;
+  text-align: left;
+  padding: 12px;
+}
+td {
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+td:last-child {
+  text-align: right;
+}
+.status {
+  font-weight: bold;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  color: #fff;
+}
+.status.Confirmado {
+  background-color: #4caf50;
+}
+.status.Pendiente {
+  background-color: #ff9800;
+}
+.status.Cancelado {
+  background-color: #f44336;
+}
+.acciones {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+}
+.acciones:hover {
+  transform: scale(1.2);
+}
+.pantalla {
+  display: none;
+  padding-bottom: 50px;
+}
+.visible {
+  display: block;
+}
+#pantallaDetalle .container p {
+  font-size: 20px;
+  margin: 12px 0;
+}
+#pantallaDetalle select {
+  font-size: 18px;
+  padding: 6px 12px;
+}
+.botones-detalle {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+#pantallaDetalle button {
+  width: 14px;
+  border-radius: 25px;
+  padding: 10px 0;
+  font-size: 16px;
+}
+
+
+
+
+
+
+/* === ESTILOS PARA EL ENCABEZADO Y EL BOTÓN DE VOLVER === */
+header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+app-boton-volver {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+app-boton-volver::part(button) {
+  padding: 8px 15px; /* Hace el botón más pequeño */
+  border-radius: 25px;
+  background-color: #ff4500;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+app-boton-volver::part(button):hover {
+  background-color: #e63e00;
+}
