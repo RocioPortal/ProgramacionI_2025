@@ -1,0 +1,52 @@
+/* Estilo para el encabezado de la página */
+.notif-header {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  padding: 20px 15px;
+  text-align: center;
+  border-bottom: 1px solid #e0d1bf;
+}
+
+.notif-header .header-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* Estilo para las tarjetas de notificación */
+.notif-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start; /* Alinea los items al inicio */
+  box-shadow: var(--shadow-soft);
+  border: 1px solid #f0f0f0;
+}
+
+.notif-icon-container {
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 50%;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-content {
+  flex-grow: 1;
+}
+
+.notif-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--color-ink);
+}
+
+.notif-body {
+  font-size: 0.9rem;
+  color: #6c757d; /* Gris sutil de Bootstrap */
+  margin: 0;
+}

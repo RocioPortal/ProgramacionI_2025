@@ -1,0 +1,73 @@
+<nav class="navbar bg-brand">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-white" routerLink="/empleado/menu">← Volver</a>
+    <span class="navbar-text text-white fw-bold">Pedido</span>
+    <span></span>
+  </div>
+</nav>
+
+<div class="container pt-4">
+  <div class="text-center mb-3">
+    <button type="button" class="btn btn-pedidos-pill">PEDIDOS</button>
+  </div>
+
+  <hr class="mt-4">
+
+  <h5 class="mt-3 mb-3" style="color:#2f2a26;">Id Pedidos</h5>
+
+  <div class="pedido-item">
+    <div class="pedido-id"># 5430</div>
+    <div class="pedido-estado estado-confirmado">Confirmado</div>
+    <div class="d-flex gap-2">
+      <button class="action-btn action-delete" title="Eliminar">
+        <i class="bi bi-trash"></i>
+      </button>
+      <a class="action-btn action-edit" routerLink="/empleado/pedido-info" title="Editar">
+        <i class="bi bi-pencil-square"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="pedido-item">
+    <div class="pedido-id"># 1942</div>
+    <div class="pedido-estado estado-pendiente">Pendiente</div>
+    <div class="d-flex gap-2">
+      <button class="action-btn action-delete" title="Eliminar">
+        <i class="bi bi-trash"></i>
+      </button>
+      <a class="action-btn action-edit" routerLink="/empleado/pedido-info" title="Editar">
+        <i class="bi bi-pencil-square"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="pedido-item">
+    <div class="pedido-id"># 3492</div>
+    <div class="pedido-estado estado-cancelado">Cancelado</div>
+    <div class="d-flex gap-2">
+      <button class="action-btn action-delete" title="Eliminar">
+        <i class="bi bi-trash"></i>
+      </button>
+      <a class="action-btn action-edit" routerLink="/empleado/pedido-info" title="Editar">
+        <i class="bi bi-pencil-square"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="pedido-item">
+    <div class="pedido-id"># 6853</div>
+    <div class="pedido-estado estado-pendiente">Pendiente</div>
+    <div class="d-flex gap-2">
+      <button class="action-btn action-delete" title="Eliminar">
+        <i class="bi bi-trash"></i>
+      </button>
+      <a class="action-btn action-edit" routerLink="/empleado/pedido-info" title="Editar">
+        <i class="bi bi-pencil-square"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="text-center my-4 py-2">
+    <a routerLink="/empleado/pedido-nuevo" class="btn btn-custom btn-agregar">Agregar pedido</a>
+  </div>
+</div>

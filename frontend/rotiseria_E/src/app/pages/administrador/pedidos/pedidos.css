@@ -1,0 +1,72 @@
+/* Contenedor general */
+#pantallaPedidos .container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+/* Tabla de pedidos */
+#pantallaPedidos table {
+  background-color: #ffffff; /* Fondo blanco */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 70%; /* Más ancha */
+  font-size: 18px; /* Texto más grande */
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+/* Encabezado */
+#pantallaPedidos thead {
+  background-color: #ff7043; /* naranja fuerte */
+  color: white;
+  font-size: 20px;
+}
+
+#pantallaPedidos th, 
+#pantallaPedidos td {
+  padding: 15px;
+  text-align: center;
+}
+
+/* Filas alternadas */
+#pantallaPedidos tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Estados */
+.status.Confirmado {
+  background-color: #28a745; /* verde */
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.status.Pendiente {
+  background-color: #ff9800; /* naranja */
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.status.Cancelado {
+  background-color: #f44336; /* rojo */
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+/* Acciones */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#pantallaPedidos thead td {
+  text-align: center;
+  font-weight: bold;
+}
