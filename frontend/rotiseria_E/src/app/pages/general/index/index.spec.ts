@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Volver } from './volver';
+import { Index } from './index';
 
-describe('Volver', () => {
-  let component: Volver;
-  let fixture: ComponentFixture<Volver>;
+describe('Index', () => {
+  let component: Index;
+  let fixture: ComponentFixture<Index>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Volver]
+      imports: [Index]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Volver);
+    fixture = TestBed.createComponent(Index);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

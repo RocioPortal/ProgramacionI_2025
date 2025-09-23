@@ -8,9 +8,9 @@ import { Routes } from '@angular/router';
 import { Registro } from './pages/general/registro/registro';
 import { Login } from './pages/general/login/login';
 import { Bienvenida } from './pages/general/bienvenida/bienvenida';
+import { Index } from './pages/general/index';
 
 // --- Vistas de Cliente ---
-// (Usamos "as" para renombrar y evitar conflictos)
 import { Menu as ClienteMenu } from './pages/cliente/menu/menu';
 import { Carrito } from './pages/cliente/carrito/carrito';
 import { Perfil as ClientePerfil } from './pages/cliente/perfil/perfil';
@@ -26,6 +26,9 @@ import { Empanadas } from './pages/cliente/empanadas/empanadas';
 import { Bebidas } from './pages/cliente/bebidas/bebidas';
 import { Pizzas } from './pages/cliente/pizzas/pizzas';
 import { Caserito } from './pages/cliente/caserito/caserito';
+import { Bienvenida2 } from './pages/cliente/bienvenida2/bienvenida2';
+import { Bienvenida3 } from './pages/cliente/bienvenida3/bienvenida3';
+import { Bienvenida1 } from './pages/cliente/bienvenida1/bienvenida1';
 
 // --- Vistas de Administrador ---
 import { Menu as AdminMenu } from './pages/administrador/menu/menu';
@@ -55,6 +58,7 @@ export const routes: Routes = [
   { path: 'bienvenida', component: Bienvenida },
   { path: 'login', component: Login },
   { path: 'registro', component: Registro },
+  { path: 'index', component: Index },
 
   // --- Rutas de Cliente ---
   { path: 'cliente/menu', component: ClienteMenu },
@@ -72,6 +76,9 @@ export const routes: Routes = [
   { path: 'cliente/bebidas', component: Bebidas },
   { path: 'cliente/pizzas', component: Pizzas },
   { path: 'cliente/caserito', component: Caserito },
+  { path: 'cliente/bienvenida2', component: Bienvenida2 },
+  { path: 'cliente/bienvenida3', component: Bienvenida3 },
+  { path: 'cliente/bienvenida1', component: Bienvenida1 },
 
   // --- Rutas de Administrador ---
   { path: 'administrador/menu', component: AdminMenu },
@@ -92,9 +99,8 @@ export const routes: Routes = [
   { path: 'empleado/modificar-cliente', component: ModificarCliente },
   { path: 'empleado/perfil', component: EmpleadoPerfil },
   
-  // --- Ruta por defecto y comodín ---
   // Si la URL está vacía, redirige a la bienvenida
-  { path: '', redirectTo: 'bienvenida', pathMatch: 'full' },
+  { path: '', redirectTo: 'index', pathMatch: 'full' },
   // Si la URL no coincide con ninguna ruta, redirige a la bienvenida
   { path: '**', redirectTo: 'bienvenida' }
 ];

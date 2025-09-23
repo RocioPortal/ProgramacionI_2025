@@ -1,0 +1,19 @@
+.bienvenida-screen {
+    min-height: 100vh;
+    background-color: var(--color-fondo);
+  }
+  
+  .logo {
+    width: 160px;
+  }
+  
+  .titulo {
+    font-size: 2rem;
+    color: var(--color-texto);
+  }
+  
+  .btn-custom {
+    font-size: 1.1rem;
+    padding: 0.9rem;
+    border-radius: var(--radius-pill);
+  }
