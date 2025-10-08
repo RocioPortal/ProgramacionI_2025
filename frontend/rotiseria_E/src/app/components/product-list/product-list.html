@@ -1,0 +1,37 @@
+<div class="product-list">
+  <div [ngClass]="listStyle === 'card' ? 'row justify-content-center' : ''">
+
+    <div *ngFor="let product of products" [ngClass]="listStyle === 'card' ? 'col-12 col-sm-6 col-lg-4' : 'col-12'">
+
+      <div *ngIf="listStyle === 'card'" class="card product-card-item">
+        <img [src]="product.img" [alt]="product.name" class="product-img">
+        <h5>{{ product.name }}</h5>
+        <p class="price">${{ product.price }}</p>
+        
+        <button *ngIf="userRole === 'admin'" class="btn btn-outline-primary btn-sm" (click)="onProductClick(product)">
+          Ver Producto
+        </button>
+        <a *ngIf="userRole === 'cliente'" routerLink="/cliente/carrito" class="add-button">
+          <button class="btn-naranja rounded-circle p-0">+</button>
+        </a>
+      </div>
+
+      <div *ngIf="listStyle === 'row'" class="product-row-item">
+        <img [src]="product.img" [alt]="product.name" />
+        <div class="info-container">
+          <h6>{{ product.name }}</h6>
+          <p class="price">${{ product.price }}</p>
+        </div>
+
+        <a *ngIf="userRole === 'cliente'" routerLink="/cliente/carrito" class="add-button">
+          <button class="btn-naranja rounded-circle p-0">+</button>
+        </a>
+
+        <div *ngIf="userRole === 'empleado'" class="prod-id">
+          #{{ product.id }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

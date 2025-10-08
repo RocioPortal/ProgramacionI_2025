@@ -1,0 +1,72 @@
+.profile-container {
+  padding: 1rem;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 1.25rem;
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+}
+.section-label {
+  color: var(--color-texto);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+.avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0 auto 1rem auto;
+  border: 4px solid white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.name {
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin-bottom: 0.25rem;
+}
+.info-line {
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+.role {
+  color: #6c757d;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* Botón "Mis Notificaciones" del Cliente */
+.profile-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 520px;
+  margin: 1.5rem auto 1rem auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  font-weight: bold;
+  color: var(--color-texto);
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Botón de Cerrar Sesión */
+.btn-logout {
+  display: block;
+  width: 90%;
+  max-width: 520px;
+  margin: 1.5rem auto;
+  border-radius: 999px;
+  padding: .8rem 1.2rem;
+  font-weight: 700;
+}

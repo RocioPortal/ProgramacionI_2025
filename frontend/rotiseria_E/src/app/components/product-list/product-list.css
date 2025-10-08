@@ -1,0 +1,141 @@
+/* --- ESTILOS PARA VISTA DE TARJETA ('card') --- */
+.product-card-item {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  margin-bottom: 1.5rem;
+}
+.product-card-item .product-img {
+  max-height: 150px;
+  width: 100%;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+.product-card-item h5 {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+.product-card-item .price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-principal);
+  margin-bottom: 1rem;
+}
+.product-card-item .add-button button {
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+}
+/* --- VISTA EN FILA (cliente/empleado) --- */
+.product-row-item {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.8rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-row-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen del producto */
+.product-row-item img {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+/* Contenedor de información */
+.product-row-item .info-container {
+  flex-grow: 1;
+  text-align: left;
+}
+
+/* Nombre del producto */
+.product-row-item h6 {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #3a2e2e;
+  margin-bottom: 4px;
+}
+
+/* Precio */
+.product-row-item .price {
+  color: #ff4c00;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+/* Botón agregar */
+.product-row-item .add-button button {
+  background-color: #ff4c00;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.product-row-item .add-button button:hover {
+  background-color: #e64000;
+}
+
+/* --- ENCABEZADOS DE CATEGORÍAS --- */
+.category-title {
+  background-color: #ffe0c2;
+  color: #7a3e00;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  margin-top: 1.2rem;
+  border-radius: 8px;
+}
+
+/* --- CONTENEDOR GENERAL --- */
+.product-list {
+  background-color: #FFEBD5;
+  padding: 1rem;
+  border-radius: 10px;
+}
+/* --- ESTILOS PARA VISTA DE FILA DEL EMPLEADO ('row') --- */
+.prod-card {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: .9rem;
+  background: #fff;
+  border-radius: 14px;
+  padding: .6rem .8rem;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: .65rem;
+}
+.prod-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.prod-name { font-weight: 700; margin-bottom: .2rem; }
+.prod-price { color: var(--color-principal); font-weight: 700; font-size: .85rem; }
+.prod-id {
+  background: #f3f1ee;
+  color: #9a8f86;
+  border-radius: 12px;
+  padding: .25rem .55rem;
+  font-weight: 700;
+  font-size: .8rem;
+  text-align: center;
+  border: 1px solid #e8e2db;
+}
