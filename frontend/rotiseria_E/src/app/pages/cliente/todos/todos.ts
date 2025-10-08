@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../../services/product.service';
 
-// --- IMPORTACIONES QUE FALTABAN ---
 import { ProductListComponent } from '../../../components/product-list/product-list';
 import { Navbar } from '../../../components/navbar/navbar';
 
@@ -11,8 +10,8 @@ import { Navbar } from '../../../components/navbar/navbar';
   standalone: true,
   imports: [
     CommonModule,
-    ProductListComponent, // <-- Añadido
-    Navbar              // <-- Añadido
+    ProductListComponent, 
+    Navbar              
   ],
   templateUrl: './todos.html',
   styleUrl: './todos.css'

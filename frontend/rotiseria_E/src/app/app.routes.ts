@@ -14,10 +14,9 @@ import { Perfil as ClientePerfil } from './pages/cliente/perfil/perfil';
 import { Notificaciones } from './pages/cliente/notificaciones/notificaciones';
 import { Top } from './pages/cliente/top/top';
 import { Calificar } from './pages/cliente/calificar/calificar';
-import { Mensajepedido } from './pages/cliente/mensajepedido/mensajepedido';
-import { Mensajecalificar } from './pages/cliente/mensajecalificar/mensajecalificar';
 import { CategoryPage } from './components/category-page/category-page';
 import { TodosPage } from './pages/cliente/todos/todos';
+import { MensajePage } from './pages/cliente/mensaje/mensaje'; 
 
 // --- Vistas de Administrador ---
 import { Menu as AdminMenu } from './pages/administrador/menu/menu';
@@ -25,7 +24,7 @@ import { Pedidos as AdminPedidos } from './pages/administrador/pedidos/pedidos';
 import { Usuarios } from './pages/administrador/usuarios/usuarios';
 import { Promociones } from './pages/administrador/promociones/promociones';
 import { Perfil as AdminPerfil } from './pages/administrador/perfil/perfil';
-import { Productos } from './pages/administrador/productos/productos'; // <-- CORREGIDO
+import { Productos } from './pages/administrador/productos/productos'; 
 
 // --- Vistas de Empleado ---
 import { Menu as EmpleadoMenu } from './pages/empleado/menu/menu';
@@ -36,7 +35,7 @@ import { StockProductos } from './pages/empleado/stock-productos/stock-productos
 import { Clientes } from './pages/empleado/clientes/clientes';
 import { ModificarCliente } from './pages/empleado/modificar-cliente/modificar-cliente';
 import { Perfil as EmpleadoPerfil } from './pages/empleado/perfil/perfil';
-import { Stock } from './pages/empleado/stock/stock'; // <-- CORREGIDO
+import { Stock } from './pages/empleado/stock/stock'; 
 
 export const routes: Routes = [
   // --- Rutas Generales ---
@@ -44,8 +43,7 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'registro', component: Registro },
   { path: 'index', component: Index },
-  { path: 'bienvenida/:step', component: BienvenidaPage }, // <-- Ruta dinámica para la nueva página
-
+  { path: 'bienvenida/:step', component: BienvenidaPage }, 
 
   // --- Rutas de Cliente ---
   { path: 'cliente/menu', component: ClienteMenu },
@@ -54,10 +52,9 @@ export const routes: Routes = [
   { path: 'cliente/notificaciones', component: Notificaciones },
   { path: 'cliente/top', component: Top },
   { path: 'cliente/calificar', component: Calificar },
-  { path: 'cliente/mensajepedido', component: Mensajepedido },
-  { path: 'cliente/mensajecalificar', component: Mensajecalificar },
-  { path: 'cliente/todos', component: TodosPage },
+  { path: 'cliente/mensaje/:type', component: MensajePage },
   { path: 'cliente/categoria/:id', component: CategoryPage },
+  { path: 'cliente/todos', component: TodosPage }, 
   { path: 'bienvenida/:step', component: BienvenidaPage },
 
   // --- Rutas de Administrador ---
@@ -65,7 +62,7 @@ export const routes: Routes = [
   { path: 'administrador/pedidos', component: AdminPedidos },
   { path: 'administrador/usuarios', component: Usuarios },
   { path: 'administrador/promociones', component: Promociones },
-  { path: 'administrador/productos', component: Productos }, // <-- CORREGIDO
+  { path: 'administrador/productos', component: Productos }, 
   { path: 'administrador/perfil', component: AdminPerfil },
   
   // --- Rutas de Empleado ---
