@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 import os
 #Importar Flask mail
 from flask_mail import Mail
+from flask_cors import CORS 
+
 
 api = Api()
 db = SQLAlchemy()
@@ -17,6 +19,7 @@ mailsender = Mail()
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     load_dotenv()
 
     if not os.path.exists(os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME')):
@@ -26,7 +29,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.getenv('DATABASE_PATH') + os.getenv('DATABASE_NAME')
 
     db.init_app(app)
-    migrate.init_app(app, db)  # ← AQUÍ es donde debe estar
+    migrate.init_app(app, db) 
 
     # Configurar JWT
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')

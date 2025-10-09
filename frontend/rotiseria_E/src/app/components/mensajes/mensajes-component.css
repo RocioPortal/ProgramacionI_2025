@@ -1,0 +1,55 @@
+:host {
+  display: block;
+  min-height: 80vh; 
+  background-color: #fcece0; 
+  padding-top: 50px; 
+}
+
+.text-naranja {
+  color: #ff6622; 
+  font-size: 1.8rem;
+}
+
+.text-marron {
+  color: #5d4037; 
+  font-size: 1.8rem;
+}
+
+.text-secondary-message {
+  color: #5d4037; 
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.status-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  background-color: #ff6622; 
+  border-radius: 50%;
+  margin-bottom: 2rem;
+}
+
+.check-icon {
+  font-size: 50px; 
+  color: white; 
+  font-weight: 900;
+}
+
+.btn-naranja {
+  background-color: #ff6622;
+  border-color: #ff6622;
+  color: white;
+  padding: 12px 40px;
+  border-radius: 50px; 
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+}
+.btn-naranja:hover {
+  background-color: #e0551d;
+  border-color: #e0551d;
+}

@@ -1,6 +1,5 @@
 <div class="d-flex justify-content-center align-items-center vh-100" style="background-color: var(--color-fondo);">
   <div class="card shadow p-4" style="border-radius: 20px; max-width: 380px; width: 100%;">
-    <!-- Tabs -->
     <ul class="nav nav-tabs mb-3">
       <li class="nav-item">
         <span class="nav-link active">Iniciar sesión</span>
@@ -10,17 +9,18 @@
       </li>
     </ul>
 
-    <!-- Formulario -->
-    <form (ngSubmit)="onSubmit()" novalidate>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
       <div class="mb-3">
         <label class="form-label">Email</label>
         <input
-          type="text"
+          type="email"
           class="form-control"
-          placeholder="admin | empleado | cliente"
+          placeholder="Tu email"
           required
-          name="email"
-          [(ngModel)]="email">
+          formControlName="email"> <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger small mt-1">
+          <div *ngIf="email?.errors?.['required']">El email es requerido.</div>
+          <div *ngIf="email?.errors?.['email']">El formato del email no es válido.</div>
+        </div>
       </div>
 
       <div class="mb-3">
@@ -28,11 +28,11 @@
         <input
           type="password"
           class="form-control"
-          placeholder="admin | empleado | cliente"
+          placeholder="Tu contraseña"
           required
-          minlength="4"
-          name="password"
-          [(ngModel)]="password">
+          formControlName="password"> <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger small mt-1">
+          <div *ngIf="password?.errors?.['required']">La contraseña es requerida.</div>
+        </div>
       </div>
 
       <div class="d-flex justify-content-between align-items-center mb-3">
@@ -45,13 +45,11 @@
         </a>
       </div>
 
-      <button type="submit" class="btn btn-custom w-100">Acceso</button>
+      <button type="submit" class="btn btn-custom w-100" [disabled]="loginForm.invalid">Acceso</button>
 
-      <!-- Mensaje de error -->
       <div *ngIf="errorMsg" class="text-danger text-center mt-3" style="font-weight:600;">
         {{ errorMsg }}
       </div>
     </form>
   </div>
 </div>
-

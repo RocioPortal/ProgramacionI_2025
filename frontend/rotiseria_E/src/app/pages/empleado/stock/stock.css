@@ -1,59 +1,16 @@
-.btn-consultar{
-    background: var(--color-principal);
-    color:#fff;
-    border:none;
-    border-radius: 12px;
-    padding:.65rem 1rem;
-    font-weight:700;
-    width: 180px;
-  }
-  .section-title{
-    color:#c65f2a;
-    font-weight:700;
-    font-size:.95rem;
-    margin: 1.1rem 0 .6rem;
-  }
-  .prod-card{
-    display:grid;
-    grid-template-columns: 56px 1fr auto;
-    align-items:center;
-    gap:.9rem;
-    background:#fff;
-    border-radius:14px;
-    padding:.6rem .8rem;
-    box-shadow: var(--shadow-soft);
-    margin-bottom:.65rem;
-  }
-  .prod-thumb{
-    width:56px; height:56px; border-radius:50%;
-    object-fit:cover; background:#f2eee8;
-  }
-  .prod-name{ font-weight:700; margin-bottom:.2rem; }
-  .prod-price{ color: var(--color-principal); font-weight:700; font-size:.85rem; opacity:.9; }
-  .prod-id{
-    background:#f3f1ee; color:#9a8f86;
-    border-radius:12px;
-    padding:.25rem .55rem;
-    font-weight:700;
-    font-size:.8rem;
-    min-width:52px; text-align:center;
-    border:1px solid #e8e2db;
-  }
-  .screen{
-    background:#f5f2ed;
-    min-height:100dvh;
-  }
-  .page-padding{ padding: 14px 14px 28px; }
-
-.bg-brand{ background-color: var(--color-principal) !important; }
-.navbar{ box-shadow: var(--shadow-soft); }
-
-.card, .shadow-soft{ box-shadow: var(--shadow-soft); border-radius: var(--radius-lg); }
-
-.btn-custom, .btn-consultar{
-  background-color: var(--color-principal); color:#fff !important;
-  border:none; border-radius:12px;
-  padding:.65rem 1rem; font-weight:700; box-shadow: var(--shadow-soft);
+.btn-consultar {
+  background: var(--color-principal);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: .65rem 1rem;
+  font-weight: 700;
+  width: 180px;
 }
-
-.bg-cream{ background: var(--color-fondo) !important; }
+.screen {
+  background: #f5f2ed;
+  min-height: 100dvh;
+}
+.page-padding { padding: 14px 14px 28px; }
+.bg-brand { background-color: var(--color-principal) !important; }
+.navbar { box-shadow: var(--shadow-soft); }

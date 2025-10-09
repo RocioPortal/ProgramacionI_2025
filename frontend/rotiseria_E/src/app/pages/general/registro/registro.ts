@@ -1,47 +1,60 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
-
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink
+  ],
   templateUrl: './registro.html',
-  styleUrl: './registro.css'
+  styleUrls: ['./registro.css']
 })
 export class Registro {
-  nombre = '';
-  telefono = '';
-  email = '';
-  password = '';
-  errorMsg = ''; // <- necesario para el *ngIf en el HTML
+  registerForm: FormGroup;
+  errorMsg: string = '';
+  successMsg: string = '';
 
-  constructor(private router: Router) {}
-
-  onSubmit() {
-    this.errorMsg = '';
-
-    const role = this.inferRole(this.email, this.password);
-    if (role) {
-      this.router.navigate([`/${role}/menu`]);
-    } else {
-      this.errorMsg = 'Registro inválido. Usá admin/admin, empleado/empleado o cliente/cliente como prueba.';
-    }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.registerForm = this.fb.group({
+      nombre: ['', Validators.required],
+      telefono: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
-  private inferRole(
-    email: string,
-    password: string
-  ): 'administrador' | 'empleado' | 'cliente' | null {
-    const e = (email || '').toLowerCase().trim();
-    const p = (password || '').toLowerCase().trim();
+  onSubmit(): void {
+    this.errorMsg = '';
+    this.successMsg = '';
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
 
-    if (e === 'admin' && p === 'admin') return 'administrador';
-    if (e === 'empleado' && p === 'empleado') return 'empleado';
-    if (e === 'cliente' && p === 'cliente') return 'cliente';
-    return null;
+    this.authService.register(this.registerForm.value).subscribe({
+      next: (res) => {
+        console.log('Registro exitoso!', res);
+        this.successMsg = '¡Te has registrado con éxito! Serás redirigido al login...';
+        // Espera 2 segundos y redirige al login
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 2000);
+      },
+      error: (err) => {
+        console.error('Error de registro:', err);
+        // El backend puede enviar un mensaje de error específico
+        this.errorMsg = err.error?.mensaje || 'Ocurrió un error durante el registro.';
+      }
+    });
   }
 }
-

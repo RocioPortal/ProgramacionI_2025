@@ -1,15 +1,10 @@
-<div class="d-flex flex-column justify-content-center align-items-center vh-100">
-  <div class="text-center">
-    <img src="assets/logoprincipal.png" alt="Logo Sabores de Mamás" width="120">
-    <h2 class="mt-3 fw-bold" style="color: var(--color-texto);">
-      Sabores de Mamás
-    </h2>
-    <div class="d-grid gap-3 mt-4">
-      <app-menu-boton text="Menú" routerLink="/administrador/productos"></app-menu-boton>
-      <app-menu-boton text="Pedidos" routerLink="/administrador/pedidos"></app-menu-boton>
-      <app-menu-boton text="Usuarios" routerLink="/administrador/usuarios"></app-menu-boton>
-      <app-menu-boton text="Promociones" routerLink="/administrador/promociones"></app-menu-boton>
-      <app-menu-boton text="Mi perfil" routerLink="/administrador/perfil"></app-menu-boton>
-    </div>
-  </div>
-</div>
+<app-menu-base 
+  [basePath]="'/administrador'" 
+  [items]="[
+    { text: 'Menú', link: 'productos' },
+    { text: 'Pedidos', link: 'pedidos' },
+    { text: 'Usuarios', link: 'usuarios' },
+    { text: 'Promociones', link: 'promociones' },
+    { text: 'Mi perfil', link: 'perfil' }
+  ]">
+</app-menu-base>

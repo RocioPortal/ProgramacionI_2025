@@ -1,0 +1,12 @@
+<div class="container text-center py-5 background-color-pale">
+  
+  <div class="status-icon-wrapper mx-auto"> 
+    <i class="bi bi-check-lg check-icon"></i>
+  </div>
+
+  <h3 class="fw-bold mt-3" [ngClass]="titleColorClass">{{ title }}</h3>
+  
+  <p *ngIf="message" class="text-secondary-message">{{ message }}</p>
+
+  <a [routerLink]="buttonLink" class="btn btn-naranja mt-4">{{ buttonText }}</a>
+</div>
