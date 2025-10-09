@@ -1,44 +1,62 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule, 
+    RouterLink
+  ],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrls: ['./login.css']
 })
 export class Login {
-  email = '';
-  password = '';
-  errorMsg = ''; // <- necesario para el *ngIf en el HTML
+  loginForm: FormGroup;
+  errorMsg: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
+  }
 
-  onSubmit() {
-    this.errorMsg = '';
-
-    const role = this.inferRole(this.email, this.password);
-    if (role) {
-      this.router.navigate([`/${role}/menu`]);
-    } else {
-      this.errorMsg = 'Credenciales inválidas. Usá admin/admin, empleado/empleado o cliente/cliente.';
+  onSubmit(): void {
+    this.errorMsg = ''; 
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched(); 
+      return;
     }
+
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login(email, password).subscribe({
+      next: (res) => {
+        console.log('Login exitoso!', res);
+        if (res.role === 'ADMIN') { 
+          this.router.navigate(['/administrador/menu']);
+        } else if (res.role === 'EMPLEADO') { 
+          this.router.navigate(['/empleado/menu']);
+        } else {
+          this.router.navigate(['/cliente/menu']);
+        }
+      },
+      error: (err) => {
+        console.error('Error de login:', err);
+        this.errorMsg = 'Email o contraseña incorrectos.';
+      }
+    });
   }
 
-  private inferRole(
-    email: string,
-    password: string
-  ): 'administrador' | 'empleado' | 'cliente' | null {
-    const e = (email || '').toLowerCase().trim();
-    const p = (password || '').toLowerCase().trim();
-
-    if (e === 'admin' && p === 'admin') return 'administrador';
-    if (e === 'empleado' && p === 'empleado') return 'empleado';
-    if (e === 'cliente' && p === 'cliente') return 'cliente';
-    return null;
-  }
+  get email() { return this.loginForm.get('email'); }
+  get password() { return this.loginForm.get('password'); }
 }
-

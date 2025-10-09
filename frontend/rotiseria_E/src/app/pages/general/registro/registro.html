@@ -1,6 +1,5 @@
 <div class="d-flex justify-content-center align-items-center vh-100" style="background-color: var(--color-fondo);">
   <div class="card shadow p-4" style="border-radius: 20px; max-width: 380px; width: 100%;">
-    <!-- Tabs -->
     <ul class="nav nav-tabs mb-3">
       <li class="nav-item">
         <a class="nav-link" routerLink="/login">Iniciar sesión</a>
@@ -10,8 +9,7 @@
       </li>
     </ul>
 
-    <!-- Formulario -->
-    <form (ngSubmit)="onSubmit()" novalidate>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
       <div class="mb-3">
         <label class="form-label">Nombre</label>
         <input
@@ -19,8 +17,9 @@
           class="form-control"
           placeholder="Tu nombre completo"
           required
-          name="nombre"
-          [(ngModel)]="nombre">
+          formControlName="nombre"> <div *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched" class="text-danger small mt-1">
+          El nombre es requerido.
+        </div>
       </div>
 
       <div class="mb-3">
@@ -30,20 +29,22 @@
           class="form-control"
           placeholder="Tu número de teléfono"
           required
-          name="telefono"
-          pattern="[0-9\\s()+-]{6,}"
-          [(ngModel)]="telefono">
+          formControlName="telefono"> <div *ngIf="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched" class="text-danger small mt-1">
+          El teléfono es requerido.
+        </div>
       </div>
 
       <div class="mb-3">
         <label class="form-label">Email</label>
         <input
-          type="text"
+          type="email"
           class="form-control"
-          placeholder="admin | empleado | cliente"
+          placeholder="Tu email"
           required
-          name="email"
-          [(ngModel)]="email">
+          formControlName="email"> <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger small mt-1">
+          <div *ngIf="registerForm.get('email')?.errors?.['required']">El email es requerido.</div>
+          <div *ngIf="registerForm.get('email')?.errors?.['email']">El formato no es válido.</div>
+        </div>
       </div>
 
       <div class="mb-3">
@@ -51,19 +52,18 @@
         <input
           type="password"
           class="form-control"
-          placeholder="admin | empleado | cliente"
+          placeholder="Mínimo 6 caracteres"
           required
-          minlength="4"
-          name="password"
-          [(ngModel)]="password">
+          formControlName="password"> <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger small mt-1">
+          <div *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es requerida.</div>
+          <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Debe tener al menos 6 caracteres.</div>
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-custom w-100">Crear cuenta</button>
+      <button type="submit" class="btn btn-custom w-100" [disabled]="registerForm.invalid">Crear cuenta</button>
 
-      <!-- Mensaje de error -->
-      <div *ngIf="errorMsg" class="text-danger text-center mt-3" style="font-weight:600;">
-        {{ errorMsg }}
-      </div>
+      <div *ngIf="errorMsg" class="text-danger text-center mt-3" style="font-weight:600;">{{ errorMsg }}</div>
+      <div *ngIf="successMsg" class="text-success text-center mt-3" style="font-weight:600;">{{ successMsg }}</div>
     </form>
   </div>
 </div>

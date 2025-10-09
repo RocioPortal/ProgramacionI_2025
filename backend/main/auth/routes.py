@@ -23,7 +23,8 @@ def login():
     return {
         'mensaje': 'Login exitoso',
         'token': access_token,
-        'usuario': {
+        'role': usuario.rol,
+        'user': {
             'id_user': usuario.id_user,
             'email': usuario.email
         }
