@@ -1,0 +1,9 @@
+<div *ngIf="messageData">
+    <app-mensajes
+        [title]="messageData.title"
+        [message]="messageData.message"
+        [buttonText]="messageData.buttonText"
+        [buttonLink]="messageData.buttonLink"
+        [titleColorClass]="messageData.titleColorClass">
+    </app-mensajes>
+</div>
