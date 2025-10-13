@@ -10,7 +10,7 @@ import { ProductListComponent } from '../../../components/product-list/product-l
   imports: [
     CommonModule,
     RouterLink,
-    ProductListComponent // <-- Lo importamos para poder usarlo en el HTML
+    ProductListComponent 
   ],
   templateUrl: './stock.html',
   styleUrl: './stock.css'

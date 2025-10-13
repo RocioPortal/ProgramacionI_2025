@@ -15,12 +15,11 @@ interface OnboardingStep {
   selector: 'app-bienvenida-page',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './bienvenida-page.html', // <-- CORREGIDO
-  styleUrls: ['./bienvenida-page.css']   // <-- CORREGIDO
+  templateUrl: './bienvenida-page.html', 
+  styleUrls: ['./bienvenida-page.css'] 
 })
 export class BienvenidaPage implements OnInit {
 
-  // ... (el resto del código no cambia) ...
   currentStep: OnboardingStep | undefined;
   private allSteps: OnboardingStep[] = [
     {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-// Interfaz para definir la estructura de un producto
 interface Product {
   name: string;
   description: string;
@@ -10,7 +9,6 @@ interface Product {
   image: string;
 }
 
-// Interfaz para definir la estructura de los datos de una categoría
 interface CategoryData {
   title: string;
   products: Product[];
@@ -28,7 +26,6 @@ export class CategoryPage implements OnInit {
   categoryTitle: string = '';
   products: Product[] = [];
 
-  // CORRECCIÓN: Le decimos a TypeScript que este objeto puede ser accedido con cualquier string como llave
   private allData: { [key: string]: CategoryData } = {
     pizzas: {
       title: 'Pizzas',
@@ -77,7 +74,6 @@ export class CategoryPage implements OnInit {
         { name: 'Lata de Cerveza', description: 'Andes, Quilmes, Stella, Corona, 473 ml.', price: '$3.700', image: 'assets/menu/bebidas/logo.png' }
       ]
     }
-    // ...Añade aquí las demás categorías (bebidas, empanadas, etc.)
   };
 
   constructor(private route: ActivatedRoute) { }

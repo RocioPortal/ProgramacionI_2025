@@ -43,7 +43,6 @@
   font-style: italic;
 }
 
-/* Botón "Mis Notificaciones" del Cliente */
 .profile-btn {
   display: flex;
   justify-content: space-between;
@@ -60,7 +59,6 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Botón de Cerrar Sesión */
 .btn-logout {
   display: block;
   width: 90%;
