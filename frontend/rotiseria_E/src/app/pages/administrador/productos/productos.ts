@@ -3,11 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ProductService, Product } from '../../../services/product.service';
-
-// --- Importa el componente de lista (que está en la carpeta compartida) ---
 import { ProductListComponent } from '../../../components/product-list/product-list';
-
-// --- RUTAS CORREGIDAS: Apuntan a la carpeta 'componentes' dentro de 'administrador' ---
 import { BotonVolverComponent } from '../componentes/boton-volver/boton-volver';
 import { BotonNuevoproductoComponent } from '../componentes/boton-nuevoproducto/boton-nuevoproducto';
 import { ConfirmarEdicionComponent } from '../componentes/confirmar-edicion/confirmar-edicion';
@@ -32,7 +28,6 @@ import { AgregarProductoComponent } from '../componentes/agregar-producto/agrega
   styleUrl: './productos.css'
 })
 export class Productos {
-  // --- El resto de tu código permanece igual ---
   mostrarLista: boolean = true;
   mostrarDetalle: boolean = false;
   mostrarFormulario: boolean = false;

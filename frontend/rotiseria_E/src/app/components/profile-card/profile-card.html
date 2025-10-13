@@ -1,7 +1,5 @@
-<!-- Usamos un *ngIf para no mostrar nada si no hay datos de usuario -->
 <div *ngIf="user" class="profile-container">
 
-  <!-- La tarjeta de perfil unificada -->
   <div class="card profile-card">
     <p class="section-label">Datos personales</p>
     <img [src]="user.avatar" alt="Avatar del usuario" class="avatar">
@@ -9,21 +7,16 @@
     <p class="info-line">{{ user.email }}</p>
     <p class="info-line">{{ user.phone }}</p>
     
-    <!-- Mostramos el rol SOLO si no es un cliente -->
     <p *ngIf="user.role !== 'cliente'" class="role">
       Rol: {{ user.role | titlecase }}
     </p>
   </div>
 
-  <!-- Botones condicionales -->
-
-  <!-- Este botón se muestra SOLO si es un cliente -->
   <a *ngIf="user.role === 'cliente'" routerLink="/cliente/notificaciones" class="profile-btn">
     <span>Mis Notificaciones</span>
     <i class="bi bi-chevron-right"></i>
   </a>
 
-  <!-- Botón de Cerrar Sesión (unificado) -->
   <a routerLink="/bienvenida" class="btn btn-naranja btn-logout">
     Cerrar Sesión
   </a>

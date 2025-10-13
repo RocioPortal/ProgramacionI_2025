@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   padding: 1rem;
-  background-color: var(--color-principal); /* O el color que uses para tu header */
+  background-color: var(--color-principal); 
   color: white;
   position: sticky;
   top: 0;
@@ -24,66 +24,64 @@
   margin: 0;
   font-size: 1.3rem;
   font-weight: bold;
-  flex-grow: 1; /* Para que el título ocupe el espacio restante */
-  text-align: center; /* Centrar el título si lo deseas */
+  flex-grow: 1; 
+  text-align: center; 
 }
 
-/* --- Estilo de la nueva tarjeta con imagen superior --- */
 .product-full-image-card {
-  border-radius: 15px; /* Bordes redondeados para la tarjeta */
-  overflow: hidden; /* Asegura que la imagen no se salga de los bordes */
-  margin: 0 auto 15px auto; /* Centrar y margen inferior */
-  width: 95%; /* Ocupa casi todo el ancho */
-  max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  border-radius: 15px; 
+  overflow: hidden; 
+  margin: 0 auto 15px auto; 
+  width: 95%; 
+  max-width: 500px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
 }
 
 .product-full-image-card .card-img-top {
-  width: 100%; /* La imagen ocupa todo el ancho de la tarjeta */
-  height: 180px; /* Altura fija para la imagen */
-  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+  width: 100%; 
+  height: 180px;
+  object-fit: cover; 
 }
 
 .card-body-custom {
-  display: flex; /* Usamos flexbox para alinear el texto y el botón */
-  align-items: center; /* Alineación vertical al centro */
+  display: flex; 
+  align-items: center; 
   padding: 15px;
-  background-color: #fff; /* Fondo blanco para el cuerpo de la tarjeta */
+  background-color: #fff; 
 }
 
 .info-container-custom {
-  flex-grow: 1; /* El contenedor de información toma el espacio restante */
+  flex-grow: 1; 
 }
 
 .info-container-custom h6 {
   font-weight: 600;
   margin-bottom: 5px;
-  color: #333; /* Color de texto oscuro */
+  color: #333; 
 }
 
 .info-container-custom .text-muted.small {
   font-size: 0.85rem;
-  color: #666 !important; /* Color de descripción */
+  color: #666 !important;
   margin-bottom: 8px;
 }
 
 .info-container-custom .price {
   font-weight: bold;
-  color: var(--color-principal); /* Usa tu color principal para el precio */
+  color: var(--color-principal); 
   font-size: 1.1rem;
 }
 
 .add-button {
-  margin-left: 20px; /* Espacio entre la información y el botón */
-  flex-shrink: 0; /* Evita que el botón se encoja */
+  margin-left: 20px; 
+  flex-shrink: 0; 
 }
 
-/* Botón naranja (ajusta si tienes una clase global) */
 .btn-naranja {
   background-color: var(--color-principal);
   color: white;
   border: none;
-  display: flex; /* Para centrar el '+' */
+  display: flex; 
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -91,5 +89,5 @@
 }
 
 .btn-naranja:hover {
-  background-color: #e64000; /* Un tono más oscuro al pasar el mouse */
+  background-color: #e64000; 
 }

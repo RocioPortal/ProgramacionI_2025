@@ -24,62 +24,12 @@
   </div>
 
   <div class="row g-3 mt-1">
-    <div class="col-6">
-      <a routerLink="/cliente/categoria/pastas" class="text-decoration-none">
+    <div *ngFor="let category of categories" class="col-6">
+      <a [routerLink]="['/cliente/categoria', category.id]" class="text-decoration-none">
         <div class="card categoria-card">
-          <img src="assets/menu/pastas/ñoquis.png" class="card-img-top" alt="Pastas">
+          <img [src]="category.imageUrl" class="card-img-top" [alt]="category.name">
           <div class="card-body text-center py-2">
-            <span class="fw-bold text-dark">Pastas</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-6">
-      <a routerLink="/cliente/categoria/entre-panes" class="text-decoration-none">
-        <div class="card categoria-card">
-          <img src="assets/menu/entre_panes/logo.png" class="card-img-top" alt="Entre Panes">
-          <div class="card-body text-center py-2">
-            <span class="fw-bold text-dark">Entre Panes</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-6">
-      <a routerLink="/cliente/categoria/pizzas" class="text-decoration-none">
-        <div class="card categoria-card">
-          <img src="assets/menu/pizzas/logo.png" class="card-img-top" alt="Pizzas">
-          <div class="card-body text-center py-2">
-            <span class="fw-bold text-dark">Pizzas</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-6">
-      <a routerLink="/cliente/categoria/caserito" class="text-decoration-none">
-        <div class="card categoria-card">
-          <img src="assets/menu/caserito/logo.png" class="card-img-top" alt="Caserito">
-          <div class="card-body text-center py-2">
-            <span class="fw-bold text-dark">Caserito</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-6">
-      <a routerLink="/cliente/categoria/empanadas" class="text-decoration-none">
-        <div class="card categoria-card">
-          <img src="assets/menu/empanadas/logo.png" class="card-img-top" alt="Empanadas">
-          <div class="card-body text-center py-2">
-            <span class="fw-bold text-dark">Empanadas</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-6">
-      <a routerLink="/cliente/categoria/bebidas" class="text-decoration-none">
-        <div class="card categoria-card">
-          <img src="assets/menu/bebidas/logo.png" class="card-img-top" alt="Bebidas">
-          <div class="card-body text-center py-2">
-            <span class="fw-bold text-dark">Bebidas</span>
+            <span class="fw-bold text-dark">{{ category.name }}</span>
           </div>
         </div>
       </a>

@@ -1,25 +1,23 @@
-/* --- Estilo para la tarjeta de "Mejores Calificados" --- */
 .card-mejor-calificado {
-  max-width: 1500px; /* Limita el ancho de la tarjeta en pantallas grandes */
+  max-width: 1500px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .card-mejor-calificado .card-img-top {
-  max-height: 300px; /* <-- CORRECCIÓN: Se limita la altura de la imagen grande */
-  object-fit: cover;   /* Asegura que la imagen cubra el espacio sin deformarse */
+  max-height: 300px;
+  object-fit: cover;  
 }
 
 .card-mejor-calificado .estrella {
-  color: #FFC107; /* Color amarillo para las estrellas */
+  color: #FFC107; 
 }
 
 
-/* --- Estilos para las tarjetas de Categorías --- */
 .categoria-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   overflow: hidden;
-  height: 100%; /* Ayuda a que todas las tarjetas en una fila tengan la misma altura */
+  height: 100%; 
 }
 
 .categoria-card:hover {
@@ -28,6 +26,6 @@
 }
 
 .categoria-card .card-img-top {
-  height: 170px; /* <-- CORRECCIÓN: Aumentamos la altura de las imágenes pequeñas */
+  height: 170px; 
   object-fit: cover;
 }

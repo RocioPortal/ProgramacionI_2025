@@ -3,34 +3,33 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-export interface AuthResponse {
-  message: string;
-  token: string;
-  role: string;
-  user: {
-    email: string;
-    id_user: number;
-  };
-}
+import { LoginRequest } from '../interfaces/login-request';
+import { LoginResponse } from '../interfaces/login-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:5001/auth/login';
+  private apiUrl = 'http://127.0.0.1:5000/auth'; 
 
   constructor(private http: HttpClient) { }
 
-  login(email: string, password: string): Observable<AuthResponse> {
-    const body = { email, password };
-
-    return this.http.post<AuthResponse>(this.apiUrl, body).pipe(
+  /**
+   * @param credentials 
+   */
+  login(credentials: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
         this.saveSession(response.token, response.role);
       })
     );
   }
 
+ 
+  register(userData: any): Observable<any> { 
+    return this.http.post(`${this.apiUrl}/register`, userData);
+  }
+  
   private saveSession(token: string, role: string): void {
     localStorage.setItem('auth_token', token);
     localStorage.setItem('user_role', role);
@@ -51,9 +50,5 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_role');
-  }
-  register(userData: any): Observable<any> {
-    const registerUrl = 'http://127.0.0.1:5001/auth/register';
-    return this.http.post(registerUrl, userData);
   }
 }
