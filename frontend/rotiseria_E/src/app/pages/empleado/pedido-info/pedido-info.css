@@ -61,3 +61,41 @@
   border:none; border-radius: var(--radius-pill);
   padding:.75rem 1.25rem; font-weight:700; box-shadow: var(--shadow-soft);
 }
+.order-item-img {
+  width: 80px;  /* Ajusta este valor al tamaño que desees, por ejemplo, 60px o 80px */
+  height: 80px; /* Asegura que la altura sea igual para mantener la proporción */
+  object-fit: cover; /* Para que la imagen cubra el espacio sin distorsionarse */
+  border-radius: 8px; /* Opcional: para esquinas ligeramente redondeadas */
+  margin-right: 15px; /* Espacio a la derecha de la imagen */
+}
+
+/* Puedes ajustar también el contenedor si es necesario */
+.order-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee; /* Separador entre productos */
+}
+
+.order-item:last-child {
+  border-bottom: none; /* No poner separador en el último item */
+}
+
+.order-item-info {
+  display: flex;
+  flex-direction: column; /* Esto apila los elementos verticalmente */
+  justify-content: center;
+  flex-grow: 1; /* Ocupa el espacio disponible */
+}
+
+/* Estilos para el nombre del producto */
+.order-item-info .fw-bold {
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+/* Estilos para "Cantidad" y "Notas" */
+.order-item-info small {
+  font-size: 0.85rem;
+  line-height: 1.3;
+}

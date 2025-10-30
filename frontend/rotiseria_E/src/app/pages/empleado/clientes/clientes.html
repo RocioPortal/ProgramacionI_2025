@@ -8,80 +8,57 @@
     </nav>
   
     <div class="container pt-3 pb-4">
+      
       <div class="search-wrap d-flex align-items-center gap-2 mb-3">
         <i class="bi bi-search ms-1"></i>
-        <input type="text" class="form-control border-0 bg-transparent" placeholder="Buscar clientes">
+        <input type="text" class="form-control border-0 bg-transparent" 
+               placeholder="Buscar clientes por nombre..."
+               [(ngModel)]="terminoBusqueda" 
+               (input)="loadClientes()">
         <button class="btn btn-light rounded-3"><i class="bi bi-sliders"></i></button>
       </div>
   
-      <div class="client-item">
-        <div>
-          <div class="client-name">Melina Gomez</div>
-          <div class="client-status status-active">ACTIVO</div>
+      <div *ngIf="users.length > 0; else noClientes">
+        <div *ngFor="let user of users" class="client-item">
+          <div>
+            <div class="client-name">{{ user.nombre | uppercase }}</div>
+            <div class="client-status" [ngClass]="user.estado === 'activo' ? 'status-active' : 'status-suspended'">
+              {{ user.estado | uppercase }}
+            </div>
+          </div>
+
+          <div>
+            <button *ngIf="user.estado === 'activo'" (click)="toggleEstado(user)" class="action-btn btn-suspend" title="Suspender Cliente">
+              <i class="bi bi-person-x"></i>
+            </button>
+            
+            <button *ngIf="user.estado !== 'activo'" (click)="toggleEstado(user)" class="action-btn btn-activate" title="Reactivar Cliente">
+              <i class="bi bi-person-check"></i>
+            </button>
+          </div>
+          
         </div>
-        <a routerLink="/empleado/modificar-cliente" class="action-btn" title="Editar">
-          <i class="bi bi-pencil-square"></i>
-        </a>
       </div>
+
+      <ng-template #noClientes>
+        <div class="alert alert-info text-center mt-3">
+          No se encontraron clientes.
+        </div>
+      </ng-template>
   
-      <div class="client-item">
-        <div>
-          <div class="client-name">Marina Rivadeniera</div>
-          <div class="client-status status-suspended">SUSPENDIDO</div>
-        </div>
-        <a routerLink="/empleado/modificar-cliente" class="action-btn" title="Editar">
-          <i class="bi bi-pencil-square"></i>
-        </a>
-      </div>
-  
-      <div class="client-item">
-        <div>
-          <div class="client-name">EBI ROKKU MAKI</div>
-          <div class="client-status status-active">ACTIVO</div>
-        </div>
-        <a routerLink="/empleado/modificar-cliente" class="action-btn" title="Editar">
-          <i class="bi bi-pencil-square"></i>
-        </a>
-      </div>
-  
-      <div class="client-item">
-        <div>
-          <div class="client-name">KAZAN MAKI</div>
-          <div class="client-status status-active">ACTIVO</div>
-        </div>
-        <a routerLink="/empleado/modificar-cliente" class="action-btn" title="Editar">
-          <i class="bi bi-pencil-square"></i>
-        </a>
-      </div>
-  
-      <div class="client-item">
-        <div>
-          <div class="client-name">DRAGON MAKI</div>
-          <div class="client-status status-active">ACTIVO</div>
-        </div>
-        <a routerLink="/empleado/modificar-cliente" class="action-btn" title="Editar">
-          <i class="bi bi-pencil-square"></i>
-        </a>
-      </div>
-  
-      <div class="client-item">
-        <div>
-          <div class="client-name">ABOKADO MAKI</div>
-          <div class="client-status status-active">ACTIVO</div>
-        </div>
-        <a routerLink="/empleado/modificar-cliente" class="action-btn" title="Editar">
-          <i class="bi bi-pencil-square"></i>
-        </a>
-      </div>
-  
-      <div class="client-item">
-        <div>
-          <div class="client-name">CRISP KINOKO MAKI</div>
-          <div class="client-status status-suspended">SUSPENDIDO</div>
-        </div>
-        <a routerLink="/empleado/modificar-cliente" class="action-btn" title="Editar">
-          <i class="bi bi-pencil-square"></i>
-        </a>
-      </div>
+      <nav *ngIf="totalPages > 1" class="d-flex justify-content-center mt-4">
+        <ul class="pagination pagination-sm">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="javascript:void(0)" (click)="goToPage(currentPage - 1)">&laquo;</a>
+          </li>
+          <li *ngFor="let pageNum of getPageNumbers()" class="page-item" [class.active]="currentPage === pageNum">
+            <a class="page-link" href="javascript:void(0)" (click)="goToPage(pageNum)">{{ pageNum }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" href="javascript:void(0)" (click)="goToPage(currentPage + 1)">&raquo;</a>
+          </li>
+        </ul>
+      </nav>
+
     </div>
-  </div>
+</div>

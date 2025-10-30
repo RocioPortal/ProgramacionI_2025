@@ -1,16 +1,90 @@
-.btn-consultar {
-  background: var(--color-principal);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: .65rem 1rem;
-  font-weight: 700;
-  width: 180px;
+.search-wrap{
+    background:#f9f4ee;
+    border-radius: 14px;
+    padding:.35rem .6rem;
+    box-shadow: var(--shadow-soft);
+  }
+/* Reemplaza el .stock-row existente por este */
+  .stock-row {
+    display: grid;
+    /* Define 3 columnas: 60px para la imagen, 1fr para el texto, auto para el switch */
+    grid-template-columns: 60px 1fr auto; 
+    gap: 1rem;
+    align-items: center;
+    padding: .9rem 1rem;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: .9rem;
+    font-size: 1.05rem;
+  }
+  .stock-id{ color:#6b6460; font-weight:600; }
+  .stock-state{ font-weight:700; }
+  .state-disponible{ color:#157347; }
+  .state-agotado{ color:#b02a37; }
+  
+  .stepper{
+    display:inline-grid;
+    grid-template-columns: 46px 64px 46px;
+    align-items:center;
+    border:1px solid #e6e1da;
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .stepper button{
+    background:#f3f0ec;
+    border:0;
+    height:46px;
+    font-size:1.2rem;
+  }
+  .stepper input{
+    width:64px;
+    height:46px;
+    text-align:center;
+    border:0;
+    font-weight:700;
+    background:#fff;
+  }
+  
+  .btn-guardar{
+    min-width:280px;
+    border-radius:999px;
+    padding:.9rem 1.5rem;
+    font-weight:700;
+  }
+
+.bg-brand{ background-color: var(--color-principal) !important; }
+.navbar{ box-shadow: var(--shadow-soft); }
+
+.shadow-soft{ box-shadow: var(--shadow-soft) !important; }
+.card{ border:0; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); }
+
+.form-control{
+  border-radius:12px; border:1px solid #e7e2db; padding:.65rem .9rem;
 }
-.screen {
-  background: #f5f2ed;
-  min-height: 100dvh;
+.form-control:focus{
+  border-color: var(--color-principal);
+  box-shadow: 0 0 0 .25rem rgba(255,69,0,.15);
 }
-.page-padding { padding: 14px 14px 28px; }
-.bg-brand { background-color: var(--color-principal) !important; }
-.navbar { box-shadow: var(--shadow-soft); }
+
+.btn-custom, .btn-guardar{
+  background-color: var(--color-principal); color:#fff !important;
+  border:none; border-radius: var(--radius-pill);
+  padding:.9rem 1.4rem; font-weight:700; box-shadow: var(--shadow-soft);
+}
+
+/* Estilo para la nueva imagen */
+.stock-product-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 12px; /* Un poco redondeada */
+  background-color: #f0f0f0; /* Fondo por si no carga */
+}
+
+/* Contenedor para el texto (para que se alinee bien) */
+.stock-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

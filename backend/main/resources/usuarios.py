@@ -8,7 +8,7 @@ from main.auth.decorators import role_required
 from flask_jwt_extended import get_jwt_identity
 
 class Usuario(Resource):
-    @role_required(['USER', 'ADMIN', 'ENCARGADO'])
+    @role_required(['USER', 'ADMIN', 'EMPLEADO'])
     def get(self, id_user):
         # id del usuario autenticado
         usuario_actual_id = get_jwt_identity()
@@ -23,7 +23,7 @@ class Usuario(Resource):
             return usuario.to_json_complete(), 200
         return {'message': 'El usuario no existe'}, 404
 
-    @role_required(['ADMIN'])
+    @role_required(['ADMIN', 'EMPLEADO'])
     def put(self, id_user):
         usuario = db.session.query(UsuarioModel).get(id_user)
         if not usuario:
@@ -54,7 +54,7 @@ class Usuario(Resource):
         db.session.commit()
         return 'Usuario editado con éxito', 200
 
-    @role_required(['ADMIN', 'ENCARGADO', 'USER'])
+    @role_required(['ADMIN', 'EMPLEADO'])
     def delete(self, id_user):
         # Obtener el ID del usuario autenticado
         usuario_actual_id = get_jwt_identity()
@@ -62,7 +62,7 @@ class Usuario(Resource):
         # comparación 
         if str(usuario_actual_id) != str(id_user):
             usuario_actual = db.session.query(UsuarioModel).get(usuario_actual_id)
-            if not usuario_actual or usuario_actual.rol not in ['ADMIN', 'ENCARGADO']:
+            if not usuario_actual or usuario_actual.rol not in ['ADMIN', 'EMPLEADO']:
                 return {'message': 'No tienes permiso para eliminar este usuario'}, 403
 
         # Buscar el usuario a eliminar
@@ -84,7 +84,7 @@ class Usuario(Resource):
         }, 200
 
 class Usuarios(Resource):
-    @role_required(['ADMIN', 'ENCARGADO'])
+    @role_required(['ADMIN', 'EMPLEADO'])
     def get(self):
         page = 1
         per_page = 10

@@ -47,3 +47,19 @@
 .shadow-soft{ box-shadow: var(--shadow-soft) !important; }
 
 .action-btn{ border:1px solid #cfe9da; background:#e9f7ef; color:#157347; }
+
+/* ... (Tu CSS existente) ... */
+
+/* Botón de Suspender (Rojo) */
+.btn-suspend {
+  background-color: #ffebeb;
+  color: #dc3545;
+  border: 1px solid #f6c6cc;
+}
+
+/* Botón de Reactivar (Verde) */
+.btn-activate {
+  background-color: #e9f7ef;
+  color: #157347;
+  border: 1px solid #cfe9da;
+}

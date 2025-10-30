@@ -1,51 +1,83 @@
 <div id="pantallaPedidos" *ngIf="mostrarLista">
-    <header>
-      <app-boton-volver text="← volver" routerLink="/administrador/menu"></app-boton-volver>
-      Pedidos
-    </header>
-    <div class="container">
-      <table>
-        <thead>
-          <tr>
-            <td>ID Pedido</td>
-            <td>Estado</td>
-            <td>Acciones</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let pedido of pedidos">
-            <td># {{ pedido.id }}</td>
-            <td><span class="status {{ pedido.estado }}">{{ pedido.estado }}</span></td>
-            <td class="acciones">
-              <app-editar-pedido (click)="verDetalle(pedido.id)"></app-editar-pedido>
-              <app-borrar-pedido></app-borrar-pedido>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <header>
+    <app-boton-volver text="← volver" routerLink="/administrador/menu"></app-boton-volver>
+    Pedidos
+  </header>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <td>ID Pedido</td>
+          <td>Nombre Cliente</td> <td>Estado</td>
+          <td>Acciones</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidos">
+          <td># {{ pedido.id_pedido }}</td>
+          <td>{{ pedido.nombre }}</td> <td>
+            <span class="status {{ pedido.estado | titlecase }}">{{ pedido.estado | titlecase }}</span>
+          </td>
+          <td class="acciones">
+            <button class="accion-editar" (click)="verDetalle(pedido)" title="Editar">✎</button>
+            <button class="accion-borrar" (click)="eliminarPedido(pedido.id_pedido)" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <nav *ngIf="totalPages > 1" class="d-flex justify-content-center mt-4">
+      <ul class="pagination pagination-sm">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" href="javascript:void(0)" (click)="goToPage(currentPage - 1)">&laquo;</a>
+        </li>
+        <li *ngFor="let pageNum of getPageNumbers()" class="page-item" [class.active]="currentPage === pageNum">
+          <a class="page-link" href="javascript:void(0)" (click)="goToPage(pageNum)">{{ pageNum }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" href="javascript:void(0)" (click)="goToPage(currentPage + 1)">&raquo;</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<div id="pantallaDetalle" *ngIf="!mostrarLista && pedidoSeleccionado">
+  <header>
+    <button (click)="cancelar()" class="btn btn-outline-light" style="width: 90px; position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%);">← volver</button>
+    Información del pedido
+  </header>
+  <div class="container">
+    <p><b>ID Pedido:</b> {{ pedidoSeleccionado.id_pedido }}</p>
+    <p><b>Nombre:</b> {{ pedidoSeleccionado.nombre }}</p>
+    <p><b>Teléfono:</b> {{ pedidoSeleccionado.telefono }}</p>
+    <p><b>Email:</b> {{ pedidoSeleccionado.usuario?.email || 'No especificado' }}</p>
+    <p>
+      <b>Estado:</b>
+      <select id="estadoPedido" [(ngModel)]="pedidoSeleccionado.estado">
+        <option value="pendiente">Pendiente</option>
+        <option value="confirmado">Confirmado</option>
+        <option value="cancelado">Cancelado</option>
+      </select>
+    </p>
+
+    <h5>Productos en este pedido</h5>
+    <ul class="list-group list-group-flush mb-3">
+      <li *ngFor="let item of pedidoSeleccionado.ordenes" class="list-group-item d-flex justify-content-between">
+        <span>{{ item.cantidad }}x {{ item.producto.nombre }}</span>
+        <span>{{ item.precio_total | currency }}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between fw-bold">
+        <span>TOTAL</span>
+        <span>{{ pedidoSeleccionado.total | currency }}</span>
+      </li>
+    </ul>
+
+    <div class="botones-detalle">
+      <button class="btn btn-success" (click)="guardarCambios()">Confirmar Cambios</button>
+      <button class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
     </div>
   </div>
-  
-  <div id="pantallaDetalle" *ngIf="!mostrarLista && pedidoSeleccionado">
-    <header>
-      Información del pedido
-    </header>
-    <div class="container">
-      <p><b>ID Pedido:</b> {{ pedidoSeleccionado.id }}</p>
-      <p><b>Nombre:</b> {{ pedidoSeleccionado.cliente }}</p>
-      <p><b>Teléfono:</b> {{ pedidoSeleccionado.telefono }}</p>
-      <p><b>Email:</b> {{ pedidoSeleccionado.email }}</p>
-      <p>
-        <b>Estado:</b>
-        <select id="estadoPedido" [(ngModel)]="pedidoSeleccionado.estado">
-          <option>Confirmado</option>
-          <option>Pendiente</option>
-          <option>Cancelado</option>
-        </select>
-      </p>
-      <div class="botones-detalle">
-        <app-cancelar-pedido (click)="cancelar()"></app-cancelar-pedido>
-        <app-confirmar-pedido (click)="confirmar()"></app-confirmar-pedido>
-      </div>
-    </div>
-  </div>
+</div>

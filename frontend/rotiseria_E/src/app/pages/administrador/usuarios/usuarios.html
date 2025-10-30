@@ -1,4 +1,5 @@
 <div class="container-main">
+  
   <div id="screen-search" *ngIf="mostrarLista">
     <div class="page-header">
       <app-boton-volver text="← Volver" routerLink="/administrador/menu"></app-boton-volver>
@@ -7,15 +8,13 @@
 
     <div class="search-box">
       <svg class="search-icon" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="6" stroke="#b8b8d8" stroke-width="2"/></svg>
-      <input [(ngModel)]="terminoBusqueda" (input)="filtrarUsuarios()" type="search" placeholder="Buscar usuarios" />
-      <button class="btn btn-link p-0" title="Filtros" style="color:#b7b7b7;">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="#bdbdbd" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-    </div>
+      <input [(ngModel)]="terminoBusqueda" (input)="filtrarUsuarios()" type="search" placeholder="Buscar por nombre..." />
+      </div>
 
     <div class="pills">
-      <div [ngClass]="{'pill': true, 'active': filtroActual === 'cliente'}" (click)="cambiarTipo('cliente')">CLIENTES</div>
-      <div [ngClass]="{'pill': true, 'active': filtroActual === 'empleado'}" (click)="cambiarTipo('empleado')">EMPLEADOS</div>
+      <div [ngClass]="{'pill': true, 'active': filtroActual === 'USER'}" (click)="cambiarTipo('USER')">CLIENTES</div>
+      <div [ngClass]="{'pill': true, 'active': filtroActual === 'EMPLEADO'}" (click)="cambiarTipo('EMPLEADO')">EMPLEADOS</div>
+      <div [ngClass]="{'pill': true, 'active': filtroActual === 'ADMIN'}" (click)="cambiarTipo('ADMIN')">ADMINS</div>
     </div>
 
     <div class="table-responsive">
@@ -31,20 +30,92 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let usuario of usuariosFiltrados">
-            <td>{{ usuario.name }}</td>
+          <tr *ngFor="let usuario of users">
+            <td>{{ usuario.nombre }}</td>
             <td>{{ usuario.email }}</td>
-            <td>{{ usuario.phone }}</td>
-            <td>{{ usuario.role }}</td>
-            <td>{{ usuario.status }}</td>
-            <td><button class="edit-btn" (click)="editarUsuario(usuario)">✎</button></td>
+            <td>{{ usuario.telefono }}</td>
+            <td>{{ usuario.rol | titlecase }}</td>
+            <td>
+              <span class="badge" [ngClass]="usuario.estado === 'activo' ? 'bg-success' : 'bg-danger'">
+                {{ usuario.estado | titlecase }}
+              </span>
+            </td>
+            <td>
+              <button class="edit-btn" (click)="editarUsuario(usuario)" title="Editar">✎</button>
+              <button class="delete-btn" (click)="eliminarUsuario(usuario.id_user, usuario.nombre)" title="Eliminar">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+    
+    <nav *ngIf="totalPages > 1" class="d-flex justify-content-center mt-4">
+      <ul class="pagination pagination-sm">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" href="javascript:void(0)" (click)="goToPage(currentPage - 1)">&laquo;</a>
+        </li>
+        <li *ngFor="let pageNum of getPageNumbers()" class="page-item" [class.active]="currentPage === pageNum">
+          <a class="page-link" href="javascript:void(0)" (click)="goToPage(pageNum)">{{ pageNum }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" href="javascript:void(0)" (click)="goToPage(currentPage + 1)">&raquo;</a>
+        </li>
+      </ul>
+    </nav>
+
   </div>
 
-  <div *ngIf="!mostrarLista">
-    <app-editar-usuario [usuario]="usuarioSeleccionado" (onSave)="guardarCambios($event)" (onBack)="volverALista()"></app-editar-usuario>
+  <div *ngIf="!mostrarLista && usuarioSeleccionado">
+    <div class="page-header">
+      <button (click)="cancelarEdicion()" class="btn btn-outline-naranja" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%);">← Volver</button>
+      <h1 class="page-title">EDITAR USUARIO</h1>
+    </div>
+
+    <div class="edit-user-container">
+      <h2 class="text-naranja">Editando a {{ usuarioSeleccionado.nombre }}</h2>
+      <form [formGroup]="userForm" (ngSubmit)="guardarCambios()">
+        
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" formControlName="nombre">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" formControlName="email">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Teléfono</label>
+          <input type="tel" class="form-control" formControlName="telefono">
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Rol</label>
+            <select class="form-select" formControlName="rol">
+              <option value="USER">Cliente</option>
+              <option value="EMPLEADO">Empleado</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Estado</label>
+            <select class="form-select" formControlName="estado">
+              <option value="activo">Activo</option>
+              <option value="suspendido">Suspendido</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3 mt-3">
+          <button type="submit" class="btn btn-success" [disabled]="userForm.invalid">Guardar Cambios</button>
+          <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+        </div>
+      </form>
+    </div>
   </div>
+
 </div>

@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../../services/cart'; // <-- 1. IMPORTAMOS EL CARRITO
+import { Product as RealProduct } from '../../interfaces/product.interfaces'; // <-- 2. IMPORTAMOS LA INTERFAZ "REAL"
 
+// 3. ACTUALIZAMOS LA INTERFAZ LOCAL
 interface Product {
+  id_prod: number; // <-- Añadido ID
   name: string;
   description: string;
-  price: string;
+  price: number; // <-- Cambiado a number
   image: string;
 }
 
@@ -26,66 +30,88 @@ export class CategoryPage implements OnInit {
   categoryTitle: string = '';
   products: Product[] = [];
 
+  // 4. ACTUALIZAMOS LOS DATOS DE PRUEBA (con id_prod y precio como número)
   private allData: { [key: string]: CategoryData } = {
     pizzas: {
       title: 'Pizzas',
       products: [
-        { name: 'Pizza Muzzarella', description: 'Clásica pizza con muzzarella fresca y orégano.', price: '$11.000', image: 'assets/menu/pizzas/pizza.jpg' },
-        { name: 'Pizza con Ananá', description: 'Combinación dulce y salada con trozos de ananá.', price: '$12.000', image: 'assets/menu/pizzas/pizzaanana.png' }
+        { id_prod: 101, name: 'Pizza Muzzarella', description: 'Clásica pizza con muzzarella fresca y orégano.', price: 11000, image: 'assets/menu/pizzas/pizza.jpg' },
+        { id_prod: 102, name: 'Pizza con Ananá', description: 'Combinación dulce y salada con trozos de ananá.', price: 12000, image: 'assets/menu/pizzas/pizzaanana.png' }
       ]
     },
     pastas: {
       title: 'Pastas',
       products: [
-        { name: 'Ñoquis de Papa', description: 'Suaves ñoquis caseros con salsa a elección.', price: '$9.000', image: 'assets/todos/ñoquis.jpg' },
-        { name: 'Ravioles', description: 'Ravioles de verdura y ricota con tuco casero.', price: '$9.500', image: 'assets/todos/ravioles.png' }
+        { id_prod: 8, name: 'Ñoquis de Papa', description: 'Suaves ñoquis caseros con salsa a elección.', price: 9000, image: 'assets/menu/pastas/ñoquis.png' },
+        { id_prod: 20, name: 'Ravioles', description: 'Ravioles rellenos de carne o verdura.', price: 9500, image: 'assets/menu/pastas/ravioles.png' }
       ]
     },
     'entre-panes': {
       title: 'Entre Panes',
       products: [
-        { name: 'Hamburguesa', description: 'Hamburguesa completa con queso, lechuga y tomate.', price: '$9.000', image: 'assets/todos/hamburguesa.png' },
-        { name: 'Lomo', description: 'Sándwich de lomo completo con jamón y huevo.', price: '$19.000', image: 'assets/todos/lomo.png' }
+        { id_prod: 1, name: 'Hamburguesa', description: 'Completa con carne, queso, lechuga y tomate.', price: 9000, image: 'assets/menu/entre_panes/hamburguesa.png' },
+        { id_prod: 7, name: 'Lomo', description: 'Completo con jamón, queso, lechuga, tomate y huevo.', price: 19000, image: 'assets/menu/entre_panes/lomo.png' },
+        { id_prod: 18, name: 'Lomopizza', description: 'Clásico lomo con base de pizza.', price: 19000, image: 'assets/menu/entre_panes/lomopizza.png' }
       ]
     },
-    'caserito': {
-      title: 'Caserito',
-      products: [
-        { name: 'Milanesa Napolitana', description: 'Milanesa de pollo o carne, frita o al horno, napolitana.', price: '$10.000', image: 'assets/menu/caserito/milanapo.png' },
-        { name: 'Pollo al horno', description: 'Pollo entero trozado, al horno. Sin guarnición.', price: '$20.000', image: 'assets/menu/caserito/logo.png' },
-        { name: 'Papas Fritas', description: 'Fritas, porción grande y cortadas gruesas.', price: '$5.500', image: 'assets/menu/caserito/papas.png' }
-      ]
-    },
-    'empanadas': {
+    empanadas: {
       title: 'Empanadas',
       products: [
-        { name: 'Empanadas de carne', description: 'El clásico relleno criollo en masa dorada y artesanal.', price: '$800', image: 'assets/menu/empanadas/decarne.png' },
-        { name: 'Empanadas de pollo', description: 'Pollo sazonado y horneado en masa crujiente.', price: '$750', image: 'assets/menu/empanadas/logo.png' }
+        { id_prod: 4, name: 'Empanadas de Carne', description: 'Rellenas de carne cortada a cuchillo.', price: 800, image: 'assets/menu/empanadas/decarne.png' },
+        { id_prod: 5, name: 'Empanadas de Pollo', description: 'Pollo sazonado y horneado.', price: 750, image: 'assets/menu/empanadas/logo.png' }
       ]
     },
-    'bebidas': {
+    bebidas: {
       title: 'Bebidas',
       products: [
-        { name: 'Lata de Gaseosa', description: 'Línea Coca, 310 ml.', price: '$1.500', image: 'assets/menu/bebidas/latagaseosa.png' },
-        { name: 'Gaseosa', description: 'Línea Coca 1,5 lt.', price: '$2.800', image: 'assets/menu/bebidas/gaseosa.png' },
-        { name: 'Agua con gas', description: '500 ml.', price: '$2.100', image: 'assets/menu/bebidas/aguacgas.png' },
-        { name: 'Agua sin gas', description: '500 ml.', price: '$2.100', image: 'assets/menu/bebidas/aguasgas.png' },
-        { name: 'Agua Saborizada', description: 'Pomelo, Naranja, Manzana, 500 ml.', price: '$2.200', image: 'assets/menu/bebidas/aguasaborizada.png' },
-        { name: 'Lata de Cerveza', description: 'Andes, Quilmes, Stella, Corona, 473 ml.', price: '$3.700', image: 'assets/menu/bebidas/logo.png' }
+        { id_prod: 12, name: 'Lata de Gaseosa', description: 'Línea Coca, 310 ml.', price: 1500, image: 'assets/menu/bebidas/latagaseosa.png' },
+        { id_prod: 13, name: 'Gaseosa', description: 'Línea Coca 1,5 lt.', price: 2800, image: 'assets/menu/bebidas/gaseosa.png' },
+        { id_prod: 11, name: 'Agua saborizada', description: '500ml de pomelo, naranja, manzana .', price: 2200, image: 'assets/menu/bebidas/aguasaborizada.png' },
+        { id_prod: 15, name: 'Agua sin gas ', description: '500 ml.', price: 1000, image: 'assets/menu/bebidas/limon.png' }, 
+        { id_prod: 16, name: 'Agua con gas ', description: '500 ml.', price: 1000, image: 'assets/menu/bebidas/limon.png' },
+      ]
+    },
+    caserito: {
+      title: 'Caserito',
+      products: [
+        {id_prod: 10 , name: 'Pollo al horno', description: 'pollo entero cocido al horno', price: 20000, image: 'assets/menu/caserito/logo.png'},
+        {id_prod: 9 , name: 'Papas fritas', description: 'grandes, cortadas y fritas', price: 5500, image: 'assets/menu/caserito/papas.png'},
+        {id_prod: 14 , name: 'Milanesa', description: 'Napolitana.', price: 10000, image: 'assets/menu/caserito/milanapo.png'},
+
       ]
     }
   };
 
-  constructor(private route: ActivatedRoute) { }
+  // 5. INYECTAMOS EL CART SERVICE
+  constructor(
+    private route: ActivatedRoute,
+    private cartService: CartService
+  ) { }
 
-  ngOnInit(): void {
-    const categoryId = this.route.snapshot.paramMap.get('id');
-
-    if (categoryId && this.allData[categoryId]) {
-      this.categoryTitle = this.allData[categoryId].title;
-      this.products = this.allData[categoryId].products;
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id && this.allData[id]) {
+      this.categoryTitle = this.allData[id].title;
+      this.products = this.allData[id].products;
     } else {
       this.categoryTitle = 'Categoría no encontrada';
+      this.products = [];
     }
+  }
+
+  // 6. CREAMOS LA FUNCIÓN 'addToCart'
+  addToCart(product: Product) {
+    // Transformamos el producto de "prueba" a un producto "real"
+    // que el CartService pueda entender
+    const productToAdd: RealProduct = {
+      id_prod: product.id_prod,
+      nombre: product.name,
+      descripcion: product.description,
+      precio: product.price,
+      disponible: true // Asumimos que está disponible
+    };
+
+    this.cartService.addProduct(productToAdd);
+    alert(`${product.name} añadido al carrito!`);
   }
 }

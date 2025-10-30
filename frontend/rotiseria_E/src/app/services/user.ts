@@ -1,17 +1,16 @@
-// Ruta: src/app/services/product.service.ts
+// Ruta: src/app/services/user.service.ts
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth';
-import { PaginatedProducts, Product } from '../interfaces/product.interfaces';
+import { User, PaginatedUsers } from '../interfaces/user.interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class UserService {
   private apiUrl = 'http://127.0.0.1:5000'; 
-
   constructor(
     private http: HttpClient,
     private authService: AuthService
@@ -24,7 +23,7 @@ export class ProductService {
     });
   }
 
-  getProducts(page: number, perPage: number, filters: any = {}): Observable<PaginatedProducts> {
+  getUsers(page: number, perPage: number, filters: any = {}): Observable<PaginatedUsers> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('per_page', perPage.toString());
@@ -35,32 +34,32 @@ export class ProductService {
       }
     }
 
-    return this.http.get<PaginatedProducts>(`${this.apiUrl}/productos`, {
+    return this.http.get<PaginatedUsers>(`${this.apiUrl}/usuarios`, {
       headers: this.getAuthHeaders(),
       params: params
     });
   }
 
-  getProductById(id: number): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/producto/${id}`, {
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/usuario/${id}`, {
       headers: this.getAuthHeaders()
     });
   }
 
-  createProduct(productData: Partial<Product>): Observable<Product> {
-    return this.http.post<Product>(`${this.apiUrl}/productos`, productData, {
+  createUser(userData: Partial<User>): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/usuarios`, userData, {
       headers: this.getAuthHeaders()
     });
   }
 
-  updateProduct(id: number, productData: Partial<Product>): Observable<any> {
-    return this.http.put(`${this.apiUrl}/producto/${id}`, productData, {
+  updateUser(id: number, userData: Partial<User>): Observable<any> {
+    return this.http.put(`${this.apiUrl}/usuario/${id}`, userData, {
       headers: this.getAuthHeaders()
     });
   }
 
-  deleteProduct(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/producto/${id}`, {
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/usuario/${id}`, {
       headers: this.getAuthHeaders()
     });
   }
