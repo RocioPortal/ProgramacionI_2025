@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router'; 
 import { FormsModule } from '@angular/forms'; 
 import { BotonVolverComponent } from '../componentes/boton-volver/boton-volver'; 
-
 import { PedidoService } from '../../../services/pedido';
-import { Pedido } from '../../../interfaces/pedido.interfaces';
+import { Pedido, PaginatedPedidos } from '../../../interfaces/pedido.interfaces';
 import { forkJoin } from 'rxjs'; 
 
 @Component({
@@ -29,6 +28,8 @@ export class Pedidos implements OnInit {
   totalPages: number = 1;
   perPage: number = 10;
 
+  estadoFiltro: string | null = null;
+
   constructor(private pedidoService: PedidoService) {}
 
   ngOnInit(): void {
@@ -36,11 +37,24 @@ export class Pedidos implements OnInit {
   }
 
   loadPedidos(): void {
-    this.pedidoService.getPedidos(this.currentPage, this.perPage).subscribe(response => {
-      this.pedidos = response.pedidos;
-      this.totalPages = response.pages;
-    });
+    this.pedidoService.getPedidos(this.currentPage, this.perPage, this.estadoFiltro)
+      .subscribe((response: PaginatedPedidos) => { // Especificamos el tipo de response
+        this.pedidos = response.pedidos;
+        this.totalPages = response.pages;
+      });
   }
+
+  filtrarPendientes(): void {
+    if (this.estadoFiltro === 'Pendiente') {
+      this.estadoFiltro = null;
+    } else {
+      this.estadoFiltro = 'Pendiente';
+    }
+    
+    this.currentPage = 1;
+    this.loadPedidos();
+  }
+
 
   verDetalle(pedido: Pedido): void {
     
@@ -75,7 +89,7 @@ export class Pedidos implements OnInit {
       next: () => {
         alert('Estado actualizado con éxito.');
         this.cancelar();
-        this.loadPedidos(); // Recargamos la lista
+        this.loadPedidos();
       },
       error: (err) => alert('Error al guardar los cambios.')
     });
@@ -96,7 +110,7 @@ export class Pedidos implements OnInit {
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
-      this.loadPedidos();
+      this.loadPedidos(); 
     }
   }
 
@@ -104,3 +118,4 @@ export class Pedidos implements OnInit {
     return Array(this.totalPages).fill(0).map((x, i) => i + 1);
   }
 }
+

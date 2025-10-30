@@ -22,10 +22,14 @@ export class PedidoService {
     });
   }
 
-  getPedidos(page: number, perPage: number): Observable<PaginatedPedidos> {
+  getPedidos(page: number, perPage: number, estado: string | null): Observable<PaginatedPedidos> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('per_page', perPage.toString());
+
+    if (estado) {
+      params = params.set('estado', estado);
+    }
 
     return this.http.get<PaginatedPedidos>(`${this.apiUrl}/pedidos`, {
       headers: this.getAuthHeaders(),
@@ -66,4 +70,3 @@ export class PedidoService {
     });
   }
 }
-

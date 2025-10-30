@@ -1,8 +1,23 @@
+.btn-pedidos-pill{
+  background: var(--color-principal);
+  color:#fff;
+  border:none;
+  border-radius: 999px;
+  padding:.7rem 2.2rem;
+  font-weight:700;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sombra suave */
+  transition: background-color 0.2s ease, box-shadow 0.2s ease; 
+}
+
+.btn-pedidos-pill.active {
+  background-color: #e63e00; 
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); 
+}
+
 /* --- VISTA DE LISTA --- */
 #pantallaPedidos .container {
   display: flex;
-  flex-direction: column; /* Para que la paginación se ponga debajo */
-  align-items: center;
+  flex-direction: column; 
   margin-top: 40px;
 }
 
@@ -45,10 +60,6 @@
 .status.Confirmado { background-color: #198754; }
 .status.Pendiente { background-color: #ffc107; color: #333; }
 .status.Cancelado { background-color: #dc3545; }
-.status.En_preparacion { background-color: #0dcaf0; }
-.status.Enviado { background-color: #0d6efd; }
-.status.Entregado { background-color: #6c757d; }
-
 
 /* --- Acciones (Botones) --- */
 .acciones {
@@ -95,7 +106,6 @@
   gap: 1rem;
 }
 
-/* --- Header genérico --- */
 header {
   background-color: var(--color-principal);
   color: white;

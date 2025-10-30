@@ -1,14 +1,20 @@
 <nav class="navbar bg-brand">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold text-white" routerLink="/empleado/menu">← Volver</a>
-    <span class="navbar-text text-white fw-bold">Pedidos</span>
+    <span class="navbar-text text-white fw-bold" text-align="center">Pedidos</span>
     <span></span>
   </div>
 </nav>
 
 <div class="container pt-4">
   <div class="text-center mb-3">
-    <button type="button" class="btn btn-pedidos-pill">PEDIDOS PENDIENTES</button>
+    <button 
+      type="button" 
+      class="btn btn-pedidos-pill"
+      [class.active]="estadoFiltro === 'Pendiente'" 
+      (click)="filtrarPendientes()">
+      {{ estadoFiltro === 'Pendiente' ? 'MOSTRAR TODOS' : 'PEDIDOS PENDIENTES' }}
+    </button>
   </div>
 
   <hr class="mt-4">

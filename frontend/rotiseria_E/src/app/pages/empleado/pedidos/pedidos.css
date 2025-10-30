@@ -6,8 +6,14 @@
     padding:.7rem 2.2rem;
     font-weight:700;
     box-shadow: var(--shadow-soft);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease; 
   }
-  
+
+.btn-pedidos-pill.active {
+  background-color: #e63e00; 
+  box-shadow: var(--shadow-soft), inset 0 2px 4px rgba(0,0,0,0.2); 
+}
+
   .pedido-item{
     display: grid;
     grid-template-columns: 1fr auto auto;
@@ -15,7 +21,7 @@
     align-items: center;
     background: #fff;
     border-radius: 16px;
-    padding: 1rem 1rem;
+    padding: 1rem 1.25rem; 
     margin-bottom: .8rem;
     box-shadow: var(--shadow-soft);
     font-size: 1.05rem;
@@ -26,6 +32,7 @@
   }
   .pedido-estado{
     font-weight:700;
+    font-size: 0.95rem; /* Hice el estado un poco más pequeño */
   }
   
   .estado-confirmado{ color:#157347; }
