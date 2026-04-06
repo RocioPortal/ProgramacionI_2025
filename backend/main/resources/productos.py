@@ -8,7 +8,7 @@ from main.auth.decorators import role_required
 
 class Producto(Resource):
     @jwt_required()
-    @role_required(['USER', 'ADMIN', 'ENCARGADO'])
+    @role_required(['USER', 'ADMIN', 'EMPLEADO'])
     def get(self, id):
         producto = db.session.get(ProductoModel, id)
         if producto:
@@ -16,7 +16,7 @@ class Producto(Resource):
         return {'message': 'Producto no encontrado'}, 404
 
     @jwt_required()
-    @role_required(['ADMIN', 'ENCARGADO'])
+    @role_required(['ADMIN', 'EMPLEADO'])
     def put(self, id):
         producto = db.session.get(ProductoModel, id)
         if not producto:
@@ -45,7 +45,7 @@ class Producto(Resource):
 
 class Productos(Resource):
     @jwt_required()
-    @role_required(['USER', 'ADMIN', 'ENCARGADO'])
+    @role_required(['USER', 'ADMIN', 'EMPLEADO'])
     def get(self):
         page = int(request.args.get('page', 1))
         per_page = int(request.args.get('per_page', 10))

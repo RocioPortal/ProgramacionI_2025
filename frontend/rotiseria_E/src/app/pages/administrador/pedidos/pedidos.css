@@ -1,6 +1,23 @@
+.btn-pedidos-pill{
+  background: var(--color-principal);
+  color:#fff;
+  border:none;
+  border-radius: 999px;
+  padding:.7rem 2.2rem;
+  font-weight:700;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sombra suave */
+  transition: background-color 0.2s ease, box-shadow 0.2s ease; 
+}
+
+.btn-pedidos-pill.active {
+  background-color: #e63e00; 
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); 
+}
+
+/* --- VISTA DE LISTA --- */
 #pantallaPedidos .container {
   display: flex;
-  justify-content: center;
+  flex-direction: column; 
   margin-top: 40px;
 }
 
@@ -8,192 +25,101 @@
   background-color: #ffffff; 
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 70%; 
-  font-size: 18px; 
+  width: 90%; /* Más ancho */
+  font-size: 16px; /* Más legible */
   border-collapse: collapse;
   overflow: hidden;
 }
 
-/* Encabezado */
 #pantallaPedidos thead {
-  background-color: #ff7043; 
+  background-color: var(--color-principal); 
   color: white;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 #pantallaPedidos th, 
 #pantallaPedidos td {
   padding: 15px;
-  text-align: center;
+  text-align: left; 
+  border-bottom: 1px solid #f0f0f0;
 }
 
 #pantallaPedidos tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* Estados */
-.status.Confirmado {
-  background-color: #28a745; 
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.status.Pendiente {
-  background-color: #ff9800; 
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.status.Cancelado {
-  background-color: #f44336; 
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-/* Acciones */
-.acciones {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-#pantallaPedidos thead td {
-  text-align: center;
-  font-weight: bold;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(to bottom, #ffe6d6, #fff);
-  color: #333;
-}  
-header {
-  background-color: #ff6b3c;
-  color: #fff;
-  text-align: center;
-  padding: 15px 10px;
-  font-size: 20px;
-  font-weight: bold;
-  position: relative;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-}  
-.container {
-  padding: 30px 20px;
-  max-width: 900px;
-  margin: auto;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  font-size: 18px;
-}  
-thead td {
-  font-weight: bold;
-  background-color: #ffb08c;
-  text-align: left;
-  padding: 12px;
-}
-td {
-  padding: 12px;
-  border-bottom: 1px solid #f0f0f0;
-}
-td:last-child {
-  text-align: right;
-}
+/* --- Estados (Clases dinámicas) --- */
 .status {
   font-weight: bold;
   padding: 5px 12px;
   border-radius: 15px;
   font-size: 14px;
   color: #fff;
+  text-transform: capitalize;
 }
-.status.Confirmado {
-  background-color: #4caf50;
-}
-.status.Pendiente {
-  background-color: #ff9800;
-}
-.status.Cancelado {
-  background-color: #f44336;
-}
+.status.Confirmado { background-color: #198754; }
+.status.Pendiente { background-color: #ffc107; color: #333; }
+.status.Cancelado { background-color: #dc3545; }
+
+/* --- Acciones (Botones) --- */
 .acciones {
-  margin-left: 10px;
+  text-align: center; 
+}
+.accion-editar, .accion-borrar {
+  width: 38px; height: 38px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:50%;
+  border: none;
+  font-size: 1.1rem;
+  margin: 0 4px;
   cursor: pointer;
-  font-size: 18px;
-  transition: 0.3s;
+  transition: all 0.2s ease;
 }
-.acciones:hover {
-  transform: scale(1.2);
-}
-.pantalla {
-  display: none;
-  padding-bottom: 50px;
-}
-.visible {
-  display: block;
+.accion-borrar{ background:#ffebeb; color:#dc3545; border:1px solid #f6c6cc; }
+.accion-borrar:hover { background: #dc3545; color: white; }
+.accion-editar { background:#e9f7ef; color:#157347; border:1px solid #cfe9da; }
+.accion-editar:hover { background: #157347; color: white; }
+
+
+/* --- VISTA DE DETALLE --- */
+#pantallaDetalle .container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 #pantallaDetalle .container p {
-  font-size: 20px;
+  font-size: 1.1rem;
   margin: 12px 0;
 }
 #pantallaDetalle select {
-  font-size: 18px;
-  padding: 6px 12px;
+  font-size: 1.1rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
 }
 .botones-detalle {
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
-  gap: 20px;
-  justify-content: center;
-}
-#pantallaDetalle button {
-  width: 14px;
-  border-radius: 25px;
-  padding: 10px 0;
-  font-size: 16px;
+  gap: 1rem;
 }
 
-/* === ESTILOS PARA EL ENCABEZADO Y EL BOTÓN DE VOLVER === */
 header {
-  position: relative;
+  background-color: var(--color-principal);
+  color: white;
+  padding: 1rem 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
   display: flex;
-  justify-content: center;
   align-items: center;
+  position: relative;
+  justify-content: center;
 }
-
-app-boton-volver {
+header app-boton-volver {
   position: absolute;
-  left: 20px;
+  left: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10;
-}
-
-app-boton-volver::part(button) {
-  padding: 8px 15px; 
-  border-radius: 25px;
-  background-color: #ff4500;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-app-boton-volver::part(button):hover {
-  background-color: #e63e00;
 }

@@ -3,36 +3,38 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+// --- CAMBIO: Importamos desde tus archivos separados ---
 import { LoginRequest } from '../interfaces/login-request';
 import { LoginResponse } from '../interfaces/login-response';
+// (Si tienes RegisterRequest, impórtalo también)
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:5000/auth'; 
+  private apiUrl = 'http://127.0.0.1:5000/auth';
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * @param credentials 
-   */
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
-        this.saveSession(response.token, response.role);
+        // Asumimos que tu LoginResponse tiene la estructura { user: { id_user: ... } }
+        this.saveSession(response.token, response.role, response.user.id_user.toString());
       })
     );
   }
 
- 
+  // (Tu método register)
   register(userData: any): Observable<any> { 
     return this.http.post(`${this.apiUrl}/register`, userData);
   }
-  
-  private saveSession(token: string, role: string): void {
+
+  // --- CAMBIO: Ahora acepta 3 argumentos ---
+  private saveSession(token: string, role: string, userId: string): void {
     localStorage.setItem('auth_token', token);
     localStorage.setItem('user_role', role);
+    localStorage.setItem('user_id', userId); // <-- GUARDAMOS EL ID
   }
 
   getToken(): string | null {
@@ -43,6 +45,11 @@ export class AuthService {
     return localStorage.getItem('user_role');
   }
 
+  // --- ¡NUEVO MÉTODO! ---
+  getUserId(): string | null {
+    return localStorage.getItem('user_id');
+  }
+
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
@@ -50,5 +57,6 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_role');
+    localStorage.removeItem('user_id'); // <-- LIMPIAMOS EL ID
   }
 }

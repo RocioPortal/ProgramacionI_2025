@@ -1,51 +1,72 @@
 <nav class="navbar bg-brand">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold text-white" routerLink="/empleado/pedidos">← Volver</a>
-      <span class="navbar-text text-white fw-bold">Información del pedido</span>
-      <span></span>
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-white" routerLink="/empleado/pedidos">← Volver</a>
+    <span class="navbar-text text-white fw-bold">Información del pedido</span>
+    <span></span>
+  </div>
+</nav>
+
+<div class="container pt-4" *ngIf="pedido; else cargando">
+  
+  <div class="text-center mb-3">
+    <button type="button" class="pill-tab">DATOS</button>
+  </div>
+  <div class="card info-card">
+    <div class="d-flex justify-content-between mb-2">
+      <span class="fw-semibold text-muted">Id Pedido</span>
+      <span class="fw-bold"># {{ pedido.id_pedido }}</span>
     </div>
-  </nav>
-  
-  <div class="container pt-4">
-    <div class="text-center mb-3">
-      <button type="button" class="pill-tab">DATOS</button>
+    <div class="info-row">
+      <div class="info-label">Nombre</div>
+      <div class="fw-semibold">{{ pedido.nombre }}</div>
     </div>
-  
-    <div class="card info-card">
-      <div class="d-flex justify-content-between mb-2">
-        <span class="fw-semibold text-muted">Id Pedido</span>
-        <span class="fw-bold"># 5430</span>
+    <div class="info-row">
+      <div class="info-label">Teléfono</div>
+      <div class="fw-semibold">{{ pedido.telefono }}</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Email</div>
+      <div class="fw-semibold">{{ pedido.usuario?.email || 'No especificado' }}</div>
+    </div>
+    <div class="info-row"> 
+      <div class="info-label">Estado</div>
+      <div>
+        <select class="form-select select-lg" [(ngModel)]="selectedStatus">
+          <option *ngFor="let estado of posiblesEstados" [value]="estado">
+            {{ estado | titlecase }}
+          </option>
+        </select>
       </div>
-  
-      <div class="info-row">
-        <div class="info-label">Nombre</div>
-        <div class="fw-semibold">Lola Argenta</div>
-      </div>
-  
-      <div class="info-row">
-        <div class="info-label">Teléfono</div>
-        <div class="fw-semibold">261 31931319</div>
-      </div>
-  
-      <div class="info-row">
-        <div class="info-label">Email</div>
-        <div class="fw-semibold">lolaargenta123@gmail.com</div>
-      </div>
-  
-      <div class="info-row">
-        <div class="info-label">Estado</div>
-        <div>
-          <select class="form-select select-lg">
-            <option selected>Confirmado</option>
-            <option>Pendiente</option>
-            <option>Cancelado</option>
-          </select>
-        </div>
-      </div>
-  
-      <div class="d-flex gap-3 justify-content-between justify-content-sm-end mt-4">
-        <a routerLink="/empleado/pedidos" class="btn btn-cancel btn-wide">Cancelar</a>
-        <a routerLink="/empleado/pedidos" class="btn btn-custom btn-wide">Confirmar</a>
-      </div>
+    </div>
+    <div class="d-flex gap-3 justify-content-center mt-4">
+      <button type="button" class="btn btn-success" (click)="guardarEstado()">Guardar</button>
     </div>
   </div>
+
+  <h5 class="mt-4 mb-3">Productos en este pedido</h5>
+  <div class="card info-card">
+    
+    <div *ngFor="let item of ordenes" class="order-item">
+      <img [src]="getProductImage(item.producto.nombre)" [alt]="item.producto.nombre" class="order-item-img">
+      <div class="order-item-info">
+        <span class="fw-bold">{{ item.producto.nombre }}</span>
+        <small class="text-muted">Cantidad: {{ item.cantidad }}</small>
+        <small class="text-muted" *ngIf="item.especificaciones">Notas: {{ item.especificaciones }}</small>
+      </div>
+      <span class="fw-bold">{{ item.precio_total | currency }}</span>
+    </div>
+
+    <hr *ngIf="ordenes && ordenes.length > 0">
+
+    <div class="d-flex justify-content-between fs-5 fw-bold mt-2">
+      <span>Total del Pedido:</span>
+      <span>{{ totalPedido | currency }}</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #cargando>
+  <div class="container pt-4 text-center">
+    <p>Cargando datos del pedido...</p>
+  </div>
+</ng-template>

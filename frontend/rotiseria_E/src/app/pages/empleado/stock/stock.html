@@ -1,21 +1,58 @@
 <nav class="navbar bg-brand">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold text-white" routerLink="/empleado/menu">← Volver</a>
-    <span class="navbar-text text-white fw-bold">Stock</span>
+    <span class="navbar-text text-white fw-bold">Gestionar Stock</span>
     <span></span>
   </div>
 </nav>
 
-<div class="screen page-padding">
-  
-  <div class="d-flex justify-content-start my-2">
-    <a routerLink="/empleado/stock-productos" class="btn btn-consultar">CONSULTAR</a>
+<div class="container pt-4">
+
+  <div class="search-wrap d-flex align-items-center gap-2 mb-3">
+    <i class="bi bi-search ms-2"></i>
+    <input type="text" class="form-control border-0 bg-transparent" placeholder="Buscar productos...">
+    <button class="btn btn-light rounded-3"><i class="bi bi-sliders"></i></button>
   </div>
-  
-  <app-product-list 
-    [products]="products" 
-    listStyle="row" 
-    userRole="empleado">
-  </app-product-list>
+
+  <hr>
+
+  <div *ngIf="products.length > 0; else noProducts">
+    <div *ngFor="let product of products" class="stock-row">
+
+      <img [src]="getProductImage(product.nombre)" [alt]="product.nombre" class="stock-product-img">
+
+      <div class="stock-info">
+        <div class="stock-id fw-bold">{{ product.nombre | titlecase }}</div>
+        <div class="stock-state" [ngClass]="product.disponible ? 'state-disponible' : 'state-agotado'">
+          {{ product.disponible ? 'Disponible' : 'Agotado' }}
+        </div>
+      </div>
+
+      <div class="form-check form-switch fs-4">
+        <input class="form-check-input" type="checkbox" role="switch" 
+              [id]="'switch-' + product.id_prod"
+              [checked]="product.disponible"
+              (change)="updateDisponibilidad(product, $event)">
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noProducts>
+    <div class="alert alert-info">Cargando productos...</div>
+  </ng-template>
+
+  <nav *ngIf="totalPages > 1" class="d-flex justify-content-center mt-4">
+    <ul class="pagination pagination-sm">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" href="javascript:void(0)" (click)="goToPage(currentPage - 1)">&laquo;</a>
+      </li>
+      <li *ngFor="let pageNum of getPageNumbers()" class="page-item" [class.active]="currentPage === pageNum">
+        <a class="page-link" href="javascript:void(0)" (click)="goToPage(pageNum)">{{ pageNum }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" href="javascript:void(0)" (click)="goToPage(currentPage + 1)">&raquo;</a>
+      </li>
+    </ul>
+  </nav>
 
 </div>

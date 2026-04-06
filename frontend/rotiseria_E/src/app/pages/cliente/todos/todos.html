@@ -3,10 +3,27 @@
 </div>
 
 <div class="container mt-3 mb-5 pb-5">
+  
   <app-product-list 
-  [products]="products" 
-  listStyle="row"  userRole="cliente">
-</app-product-list>
+    [products]="products" 
+    listStyle="row"  
+    userRole="cliente">
+  </app-product-list>
+
+  <nav *ngIf="totalPages > 1" class="d-flex justify-content-center mt-4">
+    <ul class="pagination pagination-sm">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" href="javascript:void(0)" (click)="goToPage(currentPage - 1)">&laquo;</a>
+      </li>
+      <li *ngFor="let pageNum of getPageNumbers()" class="page-item" [class.active]="currentPage === pageNum">
+        <a class="page-link" href="javascript:void(0)" (click)="goToPage(pageNum)">{{ pageNum }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" href="javascript:void(0)" (click)="goToPage(currentPage + 1)">&raquo;</a>
+      </li>
+    </ul>
+  </nav>
+  
 </div>
 
 <app-navbar></app-navbar>

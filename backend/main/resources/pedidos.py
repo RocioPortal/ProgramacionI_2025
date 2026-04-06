@@ -7,7 +7,7 @@ from main.auth.decorators import role_required
 
 class Pedido(Resource):
     @jwt_required()
-    @role_required(['USER', 'ADMIN', 'ENCARGADO'])
+    @role_required(['USER', 'ADMIN', 'EMPLEADO'])
     def get(self, id):
         pedido = db.session.get(PedidoModel, id)
         if not pedido:
@@ -15,7 +15,7 @@ class Pedido(Resource):
         return pedido.to_json_complete(), 200
 
     @jwt_required()
-    @role_required(['ADMIN'])
+    @role_required(['ADMIN', 'EMPLEADO'])
     def delete(self, id):
         pedido = db.session.get(PedidoModel, id)
         if not pedido:
@@ -26,7 +26,11 @@ class Pedido(Resource):
         return {"mensaje": f"Pedido con ID {id} eliminado con éxito"}, 200
 
     @jwt_required()
+<<<<<<< HEAD
     @role_required(['USER', 'ADMIN', 'ENCARGADO']) 
+=======
+    @role_required(['USER', 'ADMIN', 'EMPLEADO'])
+>>>>>>> 518d98bf89ccbed7de7c38f1500aff56d85f3105
     def put(self, id):
         pedido = db.session.get(PedidoModel, id)
         if not pedido:
@@ -46,7 +50,7 @@ class Pedido(Resource):
 
 class Pedidos(Resource):
     @jwt_required()
-    @role_required(['ADMIN', 'ENCARGADO'])
+    @role_required(['ADMIN', 'EMPLEADO'])
     def get(self):
         page = int(request.args.get('page', 1))
         per_page = int(request.args.get('per_page', 10))
@@ -63,10 +67,18 @@ class Pedidos(Resource):
             pedidos_query = pedidos_query.filter(PedidoModel.nombre.ilike(f"%{nombre}%"))
 
         # Ordenamientos
+        sort_applied = False 
+
         if request.args.get('sortby_estado'):
             pedidos_query = pedidos_query.order_by(PedidoModel.estado)
+            sort_applied = True 
+            
         if request.args.get('sortby_nombre'):
             pedidos_query = pedidos_query.order_by(PedidoModel.nombre)
+            sort_applied = True 
+
+        if not sort_applied:
+            pedidos_query = pedidos_query.order_by(PedidoModel.id_pedido.desc())
 
         pedidos_paginados = pedidos_query.paginate(page=page, per_page=per_page, error_out=False)
 
@@ -78,7 +90,7 @@ class Pedidos(Resource):
         })
 
     @jwt_required()
-    @role_required(['USER', 'ADMIN', 'ENCARGADO'])
+    @role_required(['USER', 'ADMIN', 'EMPLEADO'])
     def post(self):
         data = request.get_json()
 
@@ -88,7 +100,7 @@ class Pedidos(Resource):
 
         nuevo_pedido = PedidoModel.from_json(data)
         db.session.add(nuevo_pedido)
-        db.session.flush()  # Para obtener el id generado
+        db.session.flush()  
 
         if productos:
             for prod in productos:

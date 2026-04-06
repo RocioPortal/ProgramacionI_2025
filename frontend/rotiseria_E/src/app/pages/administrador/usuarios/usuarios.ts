@@ -1,20 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importamos ReactiveFormsModule
 import { RouterLink } from '@angular/router';
 
-export interface Usuario {
-  id?: number;
-  name: string;
-  email: string;
-  phone: string;
-  role: string;
-  status: string;
-  type?: string;
-}
-
+import { UserService } from '../../../services/user'; // <-- Servicio real
+import { User } from '../../../interfaces/user.interfaces';    // <-- Interfaz real
 import { BotonVolverComponent } from '../componentes/boton-volver/boton-volver';
-import { EditarUsuarioComponent } from '../componentes/editar-usuario/editar-usuario';
 
 @Component({
   selector: 'app-usuarios',
@@ -22,59 +13,116 @@ import { EditarUsuarioComponent } from '../componentes/editar-usuario/editar-usu
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule, 
     RouterLink,
-    BotonVolverComponent,
-    EditarUsuarioComponent
+    BotonVolverComponent
   ],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css'
 })
 export class Usuarios implements OnInit {
   mostrarLista: boolean = true;
-  filtroActual: string = 'cliente';
+
+  users: User[] = [];
+  currentPage: number = 1;
+  totalPages: number = 1;
+  perPage: number = 10; 
+
+  filtroActual: 'USER' | 'EMPLEADO' | 'ADMIN' = 'USER'; 
   terminoBusqueda: string = '';
 
-  usuarios = [
-    { name: "Juan Pérez", email: "juan@gmail.com", phone: "123456", role: "Cliente", status: "Activo", type: "cliente" },
-    { name: "María López", email: "maria@gmail.com", phone: "987654", role: "Empleado", status: "Activo", type: "empleado" },
-    { name: "Carlos Gómez", email: "carlos@gmail.com", phone: "456789", role: "Cliente", status: "Inactivo", type: "cliente" }
-  ];
+  userForm: FormGroup;
+  usuarioSeleccionado: User | null = null;
 
-  usuariosFiltrados: any[] = [];
-  usuarioSeleccionado: any = null;
-
-  ngOnInit() {
-    this.filtrarUsuarios();
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder
+  ) {
+    this.userForm = this.fb.group({
+      id_user: [null],
+      nombre: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      telefono: ['', Validators.required],
+      rol: ['USER', Validators.required],
+      estado: ['activo', Validators.required]
+    });
   }
 
-  cambiarTipo(tipo: string) {
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  loadUsers() {
+    const filters = {
+      rol: this.filtroActual,
+      nombre: this.terminoBusqueda
+    };
+
+    this.userService.getUsers(this.currentPage, this.perPage, filters).subscribe(response => {
+      this.users = response.usuarios;
+      this.totalPages = response.pages;
+    });
+  }
+
+  cambiarTipo(tipo: 'USER' | 'EMPLEADO' | 'ADMIN') {
     this.filtroActual = tipo;
-    this.filtrarUsuarios();
+    this.currentPage = 1; 
+    this.loadUsers();
   }
 
   filtrarUsuarios() {
-    this.usuariosFiltrados = this.usuarios.filter(usuario =>
-      usuario.type === this.filtroActual &&
-      (usuario.name.toLowerCase().includes(this.terminoBusqueda.toLowerCase()) ||
-        usuario.email.toLowerCase().includes(this.terminoBusqueda.toLowerCase()))
-    );
+    this.currentPage = 1;
+    this.loadUsers();
   }
 
-  editarUsuario(usuario: any) {
+  editarUsuario(usuario: User) {
     this.usuarioSeleccionado = usuario;
+    this.userForm.patchValue(usuario); 
     this.mostrarLista = false;
   }
 
-  guardarCambios(usuarioModificado: any) {
-    const index = this.usuarios.findIndex(u => u.email === usuarioModificado.email);
-    if (index !== -1) {
-      this.usuarios[index] = usuarioModificado;
-    }
-    this.volverALista();
+  guardarCambios() {
+    if (this.userForm.invalid || !this.usuarioSeleccionado) return;
+
+    const id = this.usuarioSeleccionado.id_user;
+    const userData = this.userForm.value;
+
+    this.userService.updateUser(id, userData).subscribe({
+      next: () => {
+        alert('Usuario actualizado con éxito.');
+        this.cancelarEdicion();
+        this.loadUsers();
+      },
+      error: (err) => alert('Error al actualizar el usuario.')
+    });
   }
 
-  volverALista() {
+  cancelarEdicion() {
     this.mostrarLista = true;
-    this.filtrarUsuarios();
+    this.usuarioSeleccionado = null;
+    this.userForm.reset();
+  }
+  
+  eliminarUsuario(id: number, nombre: string) {
+    if (confirm(`¿Estás seguro de que deseas eliminar a ${nombre}? Esta acción no se puede deshacer.`)) {
+      this.userService.deleteUser(id).subscribe({
+        next: () => {
+          alert('Usuario eliminado con éxito.');
+          this.loadUsers();
+        },
+        error: (err) => alert('Error al eliminar el usuario.')
+      });
+    }
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadUsers();
+    }
+  }
+
+  getPageNumbers(): number[] {
+    return Array(this.totalPages).fill(0).map((x, i) => i + 1);
   }
 }

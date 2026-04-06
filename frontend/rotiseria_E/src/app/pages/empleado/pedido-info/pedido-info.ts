@@ -1,15 +1,78 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { PedidoService } from '../../../services/pedido';
+import { Pedido, OrdenItem } from '../../../interfaces/pedido.interfaces';
+import { getProductImage } from '../../../utils/image-helper';
+import { forkJoin } from 'rxjs'; 
+import { RouterLink } from '@angular/router'; 
 
 @Component({
   selector: 'app-pedido-info',
   standalone: true,
-  imports: [
-    RouterLink
-  ],
+  imports: [ CommonModule, FormsModule, RouterLink ],
   templateUrl: './pedido-info.html',
   styleUrl: './pedido-info.css'
-})
-export class PedidoInfo {
 
+})
+export class PedidoInfo implements OnInit {
+
+  pedido: Pedido | null = null;
+  ordenes: OrdenItem[] = []; 
+  totalPedido: number = 0;  
+  
+  selectedStatus: string = '';
+  public getProductImage = getProductImage;
+
+  posiblesEstados = [
+    'pendiente', 'confirmado', 'cancelado'
+  ];
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private pedidoService: PedidoService
+  ) { }
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.loadPedidoData(+id);
+    }
+  }
+
+  loadPedidoData(id: number): void {
+    forkJoin({
+      pedido: this.pedidoService.getPedidoById(id),
+      ordenesResponse: this.pedidoService.getOrdenesByPedidoId(id)
+    }).subscribe({
+      next: ({ pedido, ordenesResponse }) => {
+        this.pedido = pedido;
+        this.ordenes = ordenesResponse.ordenes;
+        this.selectedStatus = pedido.estado;
+        
+        this.totalPedido = this.ordenes.reduce((sum, item) => sum + item.precio_total, 0);
+      },
+      error: (err) => {
+        console.error('Error al cargar datos del pedido', err);
+        alert('No se pudo encontrar el pedido o sus productos.');
+        this.router.navigate(['/empleado/pedidos']);
+      }
+    });
+  }
+
+  guardarEstado(): void {
+    if (!this.pedido) return;
+    this.pedidoService.updatePedidoStatus(this.pedido.id_pedido, this.selectedStatus).subscribe({
+      next: () => {
+        alert('Estado del pedido actualizado con éxito.');
+        this.router.navigate(['/empleado/pedidos']);
+      },
+      error: (err) => {
+        console.error('Error al actualizar el estado', err);
+        alert('Hubo un error al guardar los cambios.');
+      }
+    });
+  }
 }

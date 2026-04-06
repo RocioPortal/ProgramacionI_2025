@@ -4,58 +4,72 @@
 
 <div class="container mt-3 mb-5 pb-5">
 
-  <div class="card my-3 p-2 d-flex flex-row align-items-center">
-    <img src="assets/menu/pizzas/pizzaanana.png" class="rounded me-3" alt="Pizza"
-      style="width: 100px; height: 90px;">
-    <div class="flex-grow-1">
-      <p class="mb-0 text-naranja fw-bold">$12000</p>
-      <p class="mb-0 fw-bold">Pizza con ananá</p>
-      <small class="text-muted">Con queso suizo</small>
+  <div *ngIf="(cartItems$ | async) as items; else carritoVacio">
+    
+    <div *ngIf="items.length > 0; else carritoVacio">
+      
+      <div *ngFor="let item of items" class="card my-3 p-2 d-flex flex-row align-items-center">
+        <img [src]="item.img" class="rounded me-3" [alt]="item.nombre" style="width: 100px; height: 90px;">
+        
+        <div class="flex-grow-1">
+          <p class="mb-0 text-naranja fw-bold">{{ item.precio | currency }}</p>
+          <p class="mb-0 fw-bold">{{ item.nombre }}</p>
+          <input type="text" [(ngModel)]="item.especificaciones" class="form-control form-control-sm mt-1" placeholder="Notas (ej: sin cebolla)">
+        </div>
+        
+        <div class="d-flex align-items-center">
+          <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;" (click)="updateQuantity(item.id_prod, item.cantidad - 1)">-</button>
+          
+          <input type="number" [value]="item.cantidad" (change)="updateQuantity(item.id_prod, +$event.target.value)" class="form-control text-center mx-1" style="width: 60px;">
+          
+          <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;" (click)="updateQuantity(item.id_prod, item.cantidad + 1)">+</button>
+        </div>
+        
+        <button class="btn btn-link text-marron ms-2" (click)="removeItem(item.id_prod)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+
     </div>
-    <div class="d-flex align-items-center">
-      <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">-</button>
-      <input type="text" value="01" class="form-control text-center mx-1" style="width:50px;">
-      <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">+</button>
-    </div>
-    <button class="btn btn-link text-marron ms-2"><i class="bi bi-trash"></i></button>
   </div>
 
-  <div class="card my-3 p-2 d-flex flex-row align-items-center">
-    <img src="assets/menu/bebidas/gaseosa.png" class="rounded me-3" alt="Gaseosa"
-      style="width: 100px; height: 90px;">
-    <div class="flex-grow-1">
-      <p class="mb-0 text-naranja fw-bold">$2800</p>
-      <p class="mb-0 fw-bold">Gaseosa</p>
-      <small class="text-muted">Coca cola 1,5Lt</small>
+  <ng-template #carritoVacio>
+    <div class="alert alert-secondary text-center">
+      Tu carrito está vacío.
     </div>
-    <div class="d-flex align-items-center">
-      <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">-</button>
-      <input type="text" value="01" class="form-control text-center mx-1" style="width:50px;">
-      <button class="btn btn-sm btn-naranja rounded-circle p-0" style="width: 28px; height: 28px;">+</button>
-    </div>
-    <button class="btn btn-link text-marron ms-2"><i class="bi bi-trash"></i></button>
-  </div>
+  </ng-template>
 
-  <a routerLink="/cliente/todos" class="btn btn-outline-secondary w-100 mt-2 border-2 fw-bold"
-    style="--bs-btn-color: var(--color-texto); --bs-btn-border-color: var(--color-texto); --bs-btn-hover-bg: var(--color-texto); --bs-btn-hover-border-color: var(--color-texto); --bs-btn-hover-color: #fff; text-decoration: none;">
-    <i class="bi bi-plus-circle"></i> Añadir producto
+  <a routerLink="/cliente/todos" class="btn btn-outline-secondary w-100 mt-2 border-2 fw-bold" style="--bs-btn-color: var(--color-texto); --bs-btn-border-color: var(--color-texto); --bs-btn-hover-bg: var(--color-texto); --bs-btn-hover-border-color: var(--color-texto); --bs-btn-hover-color: #fff; text-decoration: none;">
+    <i class="bi bi-plus-circle"></i> Añadir más productos
   </a>
 
   <div class="card p-3 mt-4">
-    <div class="d-flex justify-content-between">
-      <span>Subtotal</span>
-      <span>$14,800</span>
+    <div class="mb-3">
+      <label class="form-label fw-bold">Nombre</label>
+      <input type="text" class="form-control" [(ngModel)]="nombreCliente" placeholder="Tu nombre para el pedido">
     </div>
-    <div class="d-flex justify-content-between">
-      <span>Código de promoción</span>
-      <span>---------</span>
+    <div class="mb-3">
+      <label class="form-label fw-bold">Teléfono</label>
+      <input type="tel" class="form-control" [(ngModel)]="telefonoCliente" placeholder="Tu teléfono de contacto">
     </div>
     <hr>
-    <div class="d-flex justify-content-between fw-bold">
+    <div class="d-flex justify-content-between">
+      <span>Subtotal</span>
+      <span>{{ subtotal | currency }}</span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span>Descuento</span>
+      <span>$0</span>
+    </div>
+    <div class="d-flex justify-content-between fw-bold mt-3 fs-5">
       <span>Total</span>
-      <span class="text-naranja">$14,800</span>
+      <span>{{ subtotal | currency }}</span>
     </div>
-    <a [routerLink]="['/cliente/mensaje', 'pedido']" class="btn btn-naranja w-100 mt-3">Confirmar pedido</a>
-    </div>
+  </div>
+
+  <button class="btn btn-naranja w-100 btn-lg mt-3 fw-bold" (click)="confirmarPedido()">
+    Confirmar Pedido
+  </button>
 </div>
+
 <app-navbar></app-navbar>

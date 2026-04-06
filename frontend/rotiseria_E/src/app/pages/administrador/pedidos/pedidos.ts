@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router'; 
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'; 
 import { BotonVolverComponent } from '../componentes/boton-volver/boton-volver'; 
-import { EditarPedidoComponent } from '../componentes/editar-pedido/editar-pedido'; 
-import { BorrarPedidoComponent } from '../componentes/borrar-pedido/borrar-pedido'; 
-import { ConfirmarPedidoComponent } from '../componentes/confirmar-pedido/confirmar-pedido'; 
-import { CancelarPedidoComponent } from '../componentes/cancelar-pedido/cancelar-pedido'; 
+import { PedidoService } from '../../../services/pedido';
+import { Pedido, PaginatedPedidos } from '../../../interfaces/pedido.interfaces';
+import { forkJoin } from 'rxjs'; 
 
 @Component({
   selector: 'app-pedidos',
@@ -16,42 +15,107 @@ import { CancelarPedidoComponent } from '../componentes/cancelar-pedido/cancelar
     RouterLink, 
     FormsModule,
     BotonVolverComponent,
-    EditarPedidoComponent,
-    BorrarPedidoComponent,
-    ConfirmarPedidoComponent,
-    CancelarPedidoComponent
   ],
   templateUrl: './pedidos.html',
   styleUrl: './pedidos.css'
 })
-export class Pedidos {
+export class Pedidos implements OnInit {
   mostrarLista: boolean = true;
-  idPedidoSeleccionado: string = '';
+  pedidoSeleccionado: Pedido | null = null;
 
-  pedidos = [
-    { id: '5430', estado: 'Confirmado', cliente: 'Lola Argenta', telefono: '26131931319', email: 'lolaargenta123@gmail.com' },
-    { id: '1942', estado: 'Pendiente', cliente: 'Juan Gomez', telefono: '2614567890', email: 'juan.gomez@example.com' },
-    { id: '7851', estado: 'Cancelado', cliente: 'Maria Fernández', telefono: '2611234567', email: 'maria.f@example.com' },
-    { id: '4834', estado: 'Pendiente', cliente: 'Pedro Suárez', telefono: '2619876543', email: 'pedro.s@example.com' }
-  ];
-  
-  pedidoSeleccionado: any = null;
+  pedidos: Pedido[] = [];
+  currentPage: number = 1;
+  totalPages: number = 1;
+  perPage: number = 10;
 
-  verDetalle(id: string) {
-    this.pedidoSeleccionado = this.pedidos.find(p => p.id === id);
-    this.mostrarLista = false;
+  estadoFiltro: string | null = null;
+
+  constructor(private pedidoService: PedidoService) {}
+
+  ngOnInit(): void {
+    this.loadPedidos();
   }
 
-  volver() {
+  loadPedidos(): void {
+    this.pedidoService.getPedidos(this.currentPage, this.perPage, this.estadoFiltro)
+      .subscribe((response: PaginatedPedidos) => { // Especificamos el tipo de response
+        this.pedidos = response.pedidos;
+        this.totalPages = response.pages;
+      });
+  }
+
+  filtrarPendientes(): void {
+    if (this.estadoFiltro === 'Pendiente') {
+      this.estadoFiltro = null;
+    } else {
+      this.estadoFiltro = 'Pendiente';
+    }
+    
+    this.currentPage = 1;
+    this.loadPedidos();
+  }
+
+
+  verDetalle(pedido: Pedido): void {
+    
+    forkJoin({
+      pedido: this.pedidoService.getPedidoById(pedido.id_pedido),
+      ordenesResponse: this.pedidoService.getOrdenesByPedidoId(pedido.id_pedido)
+    }).subscribe({
+      next: ({ pedido, ordenesResponse }) => {
+        // Combinamos la info
+        pedido.ordenes = ordenesResponse.ordenes; 
+        pedido.total = ordenesResponse.ordenes.reduce((sum: number, item: any) => sum + item.precio_total, 0);
+        
+        this.pedidoSeleccionado = pedido;
+        this.mostrarLista = false;
+      },
+      error: (err) => alert('Error al cargar el detalle del pedido.')
+    });
+  }
+
+  cancelar(): void {
     this.mostrarLista = true;
+    this.pedidoSeleccionado = null;
   }
 
-  confirmar() {
-    alert("Pedido confirmado!");
-    this.volver();
+  guardarCambios(): void {
+    if (!this.pedidoSeleccionado) return;
+
+    const id = this.pedidoSeleccionado.id_pedido;
+    const nuevoEstado = this.pedidoSeleccionado.estado;
+
+    this.pedidoService.updatePedidoStatus(id, nuevoEstado).subscribe({
+      next: () => {
+        alert('Estado actualizado con éxito.');
+        this.cancelar();
+        this.loadPedidos();
+      },
+      error: (err) => alert('Error al guardar los cambios.')
+    });
   }
 
-  cancelar() {
-    this.volver();
+  eliminarPedido(id: number): void {
+    if (confirm('¿Estás seguro de eliminar este pedido?')) {
+      this.pedidoService.deletePedido(id).subscribe({
+        next: () => {
+          alert('Pedido eliminado con éxito.');
+          this.loadPedidos();
+        },
+        error: (err) => alert('Error al eliminar el pedido.')
+      });
+    }
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadPedidos(); 
+    }
+  }
+
+  getPageNumbers(): number[] {
+    return Array(this.totalPages).fill(0).map((x, i) => i + 1);
   }
 }
+
