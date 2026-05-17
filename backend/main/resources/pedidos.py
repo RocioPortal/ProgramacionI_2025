@@ -122,12 +122,21 @@ class Pedidos(Resource):
                     db.session.rollback()
                     return {"mensaje": f"Producto con ID {id_prod} no encontrado"}, 404
 
+                # 1. Obtenemos el descuento (si no tiene, asumimos 0)
+                descuento = getattr(producto, 'descuento', 0)
+                
+                # 2. Calculamos el precio real rebajado
+                precio_rebajado = producto.precio - (producto.precio * descuento / 100)
+                
+                # 3. Lo multiplicamos por la cantidad y lo guardamos
+                precio_final = precio_rebajado * cantidad
+
                 orden = OrdenModel(
                     id_pedido=nuevo_pedido.id_pedido,
                     id_prod=id_prod,
                     cantidad=cantidad,
                     especificaciones=prod.get("especificaciones", ""),
-                    precio_total=producto.precio * cantidad
+                    precio_total=precio_final
                 )
                 db.session.add(orden)
 

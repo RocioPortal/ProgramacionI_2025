@@ -50,6 +50,7 @@ export interface CartItem {
   img: string; 
   cantidad: number;
   especificaciones: string;
+  descuento?: number; 
 }
 
 export interface PaginatedOrdenes {

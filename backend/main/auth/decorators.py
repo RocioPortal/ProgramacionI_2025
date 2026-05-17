@@ -1,6 +1,6 @@
 from .. import jwt
 from flask_jwt_extended import verify_jwt_in_request, get_jwt
-from functools import wraps
+from functools import wraps          #herramienta nativa de Python obligatoria para construir decoradores
 from main.models.usuarios import Usuario
 from .. import db
 
@@ -9,10 +9,10 @@ def role_required(roles):
     def decorator(fn):
         @wraps(fn)
         def wrapper(*args, **kwargs):
-            verify_jwt_in_request()
-            claims = get_jwt()
-            if claims['rol'] in roles:
-                return fn(*args, **kwargs)
+            verify_jwt_in_request()                    #exige ver el token JWT
+            claims = get_jwt()                          #lee payload 
+            if claims['rol'] in roles:                  #verficica el rol
+                return fn(*args, **kwargs)       #ejecuta la función original si el rol es correcto
             return {"msg": "No autorizado"}, 403
         return wrapper
     return decorator

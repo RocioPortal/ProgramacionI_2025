@@ -26,6 +26,9 @@ export class Carrito implements OnInit {
   cartItems$: Observable<CartItem[]>;
   
   subtotal: number = 0;
+  descuentoTotal: number = 0;
+  totalFinal: number = 0;
+
   nombreCliente: string = '';
   telefonoCliente: string = '';
 
@@ -39,8 +42,18 @@ export class Carrito implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cartItems$.subscribe(() => {
-      this.subtotal = this.cartService.getSubtotal();
+    this.cartItems$.subscribe((items) => {
+      // Calculamos el subtotal original
+      this.subtotal = items.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+      
+      // Calculamos cuánto ahorra 
+      this.descuentoTotal = items.reduce((acc, item) => {
+        const desc = (item as any).descuento || 0;
+        return acc + ((item.precio * desc / 100) * item.cantidad);
+      }, 0);
+
+      // Total real a pagar
+      this.totalFinal = this.subtotal - this.descuentoTotal;
     });
   }
 

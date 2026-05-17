@@ -8,10 +8,9 @@ class Producto(db.Model):
     descripcion = db.Column(db.String(200))
     precio = db.Column(db.Float, nullable=False)
     disponible = db.Column(db.Boolean, default=True)
+    descuento = db.Column(db.Float, default=0.0) 
     
     valoraciones = db.relationship('Valoracion', back_populates='producto', cascade="all, delete", single_parent=True)
-    
-    # Relación con tabla intermedia Orden
     ordenes = db.relationship('Orden',back_populates='producto',cascade='all, delete-orphan',lazy='select')
     
     def to_json(self):
@@ -20,7 +19,8 @@ class Producto(db.Model):
             'nombre': self.nombre,
             'descripcion': self.descripcion,
             'precio': self.precio,
-            'disponible': self.disponible
+            'disponible': self.disponible,
+            'descuento': self.descuento 
         }
 
     @staticmethod
@@ -30,5 +30,6 @@ class Producto(db.Model):
             nombre=producto_json.get('nombre'),
             descripcion=producto_json.get('descripcion'),
             precio=producto_json.get('precio'),
-            disponible=producto_json.get('disponible', True)
+            disponible=producto_json.get('disponible', True),
+            descuento=producto_json.get('descuento', 0.0) # 3. Lo recibimos de Angular
         )
