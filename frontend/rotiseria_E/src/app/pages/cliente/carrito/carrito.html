@@ -9,10 +9,15 @@
     <div *ngIf="items.length > 0; else carritoVacio">
       
       <div *ngFor="let item of items" class="card my-3 p-2 d-flex flex-row align-items-center">
-        <img [src]="item.img" class="rounded me-3" [alt]="item.nombre" style="width: 100px; height: 90px;">
+        <img [src]="item.img" class="rounded me-3" [alt]="item.nombre" style="width: 100px; height: 90px; object-fit: cover;">
         
         <div class="flex-grow-1">
-          <p class="mb-0 text-naranja fw-bold">{{ item.precio | currency }}</p>
+          <p class="mb-0 text-naranja fw-bold">
+            <span *ngIf="$any(item).descuento > 0" class="text-muted text-decoration-line-through me-1" style="font-size: 0.8rem;">
+              {{ item.precio | currency }}
+            </span>
+            {{ item.precio - (item.precio * ($any(item).descuento || 0) / 100) | currency }}
+          </p>
           <p class="mb-0 fw-bold">{{ item.nombre }}</p>
           <input type="text" [(ngModel)]="item.especificaciones" class="form-control form-control-sm mt-1" placeholder="Notas (ej: sin cebolla)">
         </div>
@@ -34,7 +39,7 @@
   </div>
 
   <ng-template #carritoVacio>
-    <div class="alert alert-secondary text-center">
+    <div class="alert alert-secondary text-center shadow-sm">
       Tu carrito está vacío.
     </div>
   </ng-template>
@@ -43,7 +48,7 @@
     <i class="bi bi-plus-circle"></i> Añadir más productos
   </a>
 
-  <div class="card p-3 mt-4">
+  <div class="card shadow-sm p-3 mt-4 border-0 rounded-4">
     <div class="mb-3">
       <label class="form-label fw-bold">Nombre</label>
       <input type="text" class="form-control" [(ngModel)]="nombreCliente" placeholder="Tu nombre para el pedido">
@@ -53,21 +58,23 @@
       <input type="tel" class="form-control" [(ngModel)]="telefonoCliente" placeholder="Tu teléfono de contacto">
     </div>
     <hr>
-    <div class="d-flex justify-content-between">
-      <span>Subtotal</span>
+    <div class="d-flex justify-content-between text-muted">
+      <span>Subtotal (Precio Original)</span>
       <span>{{ subtotal | currency }}</span>
     </div>
-    <div class="d-flex justify-content-between">
-      <span>Descuento</span>
-      <span>$0</span>
+    
+    <div *ngIf="descuentoTotal > 0" class="d-flex justify-content-between text-success fw-bold mt-1">
+      <span>Descuento Promociones</span>
+      <span>-{{ descuentoTotal | currency }}</span>
     </div>
-    <div class="d-flex justify-content-between fw-bold mt-3 fs-5">
-      <span>Total</span>
-      <span>{{ subtotal | currency }}</span>
+
+    <div class="d-flex justify-content-between fw-bold mt-3 fs-4 text-marron">
+      <span>Total a Pagar</span>
+      <span>{{ totalFinal | currency }}</span>
     </div>
   </div>
 
-  <button class="btn btn-naranja w-100 btn-lg mt-3 fw-bold" (click)="confirmarPedido()">
+  <button class="btn btn-naranja shadow-sm w-100 btn-lg mt-3 mb-3 fw-bold rounded-pill" (click)="confirmarPedido()">
     Confirmar Pedido
   </button>
 </div>

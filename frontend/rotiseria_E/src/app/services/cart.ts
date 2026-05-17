@@ -23,7 +23,6 @@ export class CartService {
     localStorage.setItem('cart', JSON.stringify(items));
   }
 
-
   addProduct(product: Product): void {
     const items = this.itemsSubject.getValue();
     const existingItem = items.find(item => item.id_prod === product.id_prod);
@@ -37,7 +36,9 @@ export class CartService {
         precio: product.precio,
         img: getProductImage(product.nombre), 
         cantidad: 1,
-        especificaciones: ''
+        especificaciones: '',
+        // ACÁ LE ENSEÑAMOS A SUBIR EL DESCUENTO AL CARRITO
+        descuento: (product as any).descuento || 0 
       });
     }
     this.saveCart(items);

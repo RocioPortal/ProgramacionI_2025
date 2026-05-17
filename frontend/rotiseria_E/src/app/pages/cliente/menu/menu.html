@@ -1,40 +1,78 @@
+<div class="page-header text-center mt-4 mb-2">
+  <h1 class="header-title fw-bold text-white">Nuestro Menú</h1>
+</div>
+
 <div class="container mt-3 mb-5 pb-5">
-  <div class="input-group mb-4">
-    <input type="text" class="form-control" placeholder="Busca tu comida favorita" style="border-right: 0;">
-    <button class="btn btn-naranja" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">Buscar</button>
-  </div>
-
-  <div class="d-flex justify-content-between align-items-center">
-      <h5 class="fw-bold text-marron mb-0">Mejores calificados 🔥</h5>
-      <a routerLink="/cliente/top" class="small text-decoration-none text-naranja">Ver todo</a>
-  </div>
   
-  <div class="card my-3 card-mejor-calificado">
-    <img src="assets/menu/entre_panes/hamburguesa.png" class="card-img-top" alt="Hamburguesa">
-    <div class="card-body">
-      <h6 class="card-title fw-bold">Hamburguesa completa</h6>
-      <p class="card-text text-muted">“¡La mejor hamburguesa que probé en mi vida!”</p>
-      <p class="mb-0 estrella">★★★★★ </p>
+  <div class="input-group mb-4">
+    <input 
+      #buscador
+      type="text" 
+      class="form-control" 
+      placeholder="Busca tu comida favorita" 
+      style="border-right: 0;"
+      (input)="aplicarFiltros(buscador.value)"
+    >
+    <button 
+      class="btn btn-naranja" 
+      style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
+      (click)="aplicarFiltros(buscador.value)"
+    >
+      Buscar
+    </button>
+  </div>
+
+  <div *ngIf="filtroNombre.trim() !== ''">
+    <h5 class="fw-bold text-marron mb-3">Resultados para "{{ filtroNombre }}"</h5>
+    
+    <div *ngIf="productosFiltrados.length === 0" class="text-center mt-4">
+      <p class="text-muted">No encontramos productos con ese nombre 😥</p>
     </div>
+
+    <app-product-list 
+      *ngIf="productosFiltrados.length > 0"
+      [products]="productosFiltrados" 
+      listStyle="row"  
+      userRole="cliente">
+    </app-product-list>
   </div>
 
-  <div class="d-flex justify-content-between align-items-center mt-4">
-    <h5 class="fw-bold text-marron mb-0">Categorías</h5>
-    <a routerLink="/cliente/todos" class="small text-decoration-none text-naranja">Ver todos</a>
-  </div>
+  <div *ngIf="filtroNombre.trim() === ''">
+    
+    <div class="d-flex justify-content-between align-items-center">
+        <h5 class="fw-bold text-marron mb-0">Mejores calificados 🔥</h5>
+        <a routerLink="/cliente/top" class="small text-decoration-none text-naranja">Ver todo</a>
+    </div>
+    
+    <div class="card my-3 card-mejor-calificado">
+      <img src="assets/menu/entre_panes/hamburguesa.png" class="card-img-top" alt="Hamburguesa">
+      <div class="card-body">
+        <h6 class="card-title fw-bold">Hamburguesa completa</h6>
+        <p class="card-text text-muted">“¡La mejor hamburguesa que probé en mi vida!”</p>
+        <p class="mb-0 estrella">★★★★★ </p>
+      </div>
+    </div>
 
-  <div class="row g-3 mt-1">
-    <div *ngFor="let category of categories" class="col-6">
-      <a [routerLink]="['/cliente/categoria', category.id]" class="text-decoration-none">
-        <div class="card categoria-card">
-          <img [src]="category.imageUrl" class="card-img-top" [alt]="category.name">
-          <div class="card-body text-center py-2">
-            <span class="fw-bold text-dark">{{ category.name }}</span>
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <h5 class="fw-bold text-marron mb-0">Categorías</h5>
+      <a routerLink="/cliente/todos" class="small text-decoration-none text-naranja">Ver todos</a>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div *ngFor="let category of categories" class="col-6">
+        <a [routerLink]="category.id === 'todos' ? '/cliente/todos' : ['/cliente/categoria', category.id]" class="text-decoration-none">
+          <div class="card categoria-card">
+            <img [src]="category.imageUrl" class="card-img-top" [alt]="category.name">
+            <div class="card-body text-center py-2">
+              <span class="fw-bold text-dark">{{ category.name }}</span>
+            </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
+
   </div>
+
 </div>
 
 <app-navbar></app-navbar>

@@ -2,10 +2,23 @@
   <div [ngClass]="listStyle === 'card' ? 'row justify-content-center' : ''">
     <div *ngFor="let product of products" [ngClass]="listStyle === 'card' ? 'col-12 col-sm-6 col-lg-4' : 'col-12'">
 
-      <div *ngIf="listStyle === 'card'" class="card product-card-item">
+      <div *ngIf="listStyle === 'card'" class="card product-card-item position-relative">
+        
+        <div *ngIf="$any(product).descuento > 0" 
+             class="position-absolute top-0 start-0 m-2 badge rounded-pill shadow-sm z-1" 
+             style="background-color: #ff0000; font-size: 0.85rem; padding: 0.4rem 0.6rem;">
+          ¡{{ $any(product).descuento }}% OFF!
+        </div>
+
         <img [src]="getProductImage(product.nombre)" [alt]="product.nombre" class="product-img">
         <h5>{{ product.nombre }}</h5>
-        <p class="price">${{ product.precio }}</p>
+        
+        <p class="price">
+          <span *ngIf="$any(product).descuento > 0" class="text-muted text-decoration-line-through me-1" style="font-size: 0.8rem;">
+            ${{ product.precio }}
+          </span>
+          ${{ product.precio - (product.precio * ($any(product).descuento || 0) / 100) }}
+        </p>
         
         <button *ngIf="userRole === 'admin'" class="btn btn-outline-primary btn-sm" (click)="onProductClick(product)">
           Ver Producto
@@ -15,11 +28,24 @@
         </a>
       </div>
 
-      <div *ngIf="listStyle === 'row'" class="product-row-item">
+      <div *ngIf="listStyle === 'row'" class="product-row-item position-relative">
+        
+        <div *ngIf="$any(product).descuento > 0" 
+             class="position-absolute top-0 start-0 m-1 badge rounded-pill shadow-sm z-1" 
+             style="background-color: #ff0000; font-size: 0.7rem; padding: 0.3rem 0.5rem;">
+          {{ $any(product).descuento }}% OFF
+        </div>
+
         <img [src]="getProductImage(product.nombre)" [alt]="product.nombre" />
         <div class="info-container">
           <h6>{{ product.nombre }}</h6>
-          <p class="price">${{ product.precio }}</p>
+          
+          <p class="price">
+            <span *ngIf="$any(product).descuento > 0" class="text-muted text-decoration-line-through me-1" style="font-size: 0.8rem;">
+              ${{ product.precio }}
+            </span>
+            ${{ product.precio - (product.precio * ($any(product).descuento || 0) / 100) }}
+          </p>
         </div>
         <a *ngIf="userRole === 'cliente'" (click)="addToCart(product)" class="add-button" style="cursor: pointer;">
           <button class="btn-naranja rounded-circle p-0">+</button>

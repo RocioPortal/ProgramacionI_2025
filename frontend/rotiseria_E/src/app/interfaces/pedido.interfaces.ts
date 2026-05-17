@@ -49,6 +49,7 @@ export interface CartItem {
   img: string; 
   cantidad: number;
   especificaciones: string;
+  descuento?: number; // <-- Acá agregamos la propiedad opcional para la promo
 }
 
 export interface PaginatedOrdenes {

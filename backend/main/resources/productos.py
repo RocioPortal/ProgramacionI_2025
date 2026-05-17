@@ -28,6 +28,8 @@ class Producto(Resource):
         producto.precio = data.get('precio', producto.precio)
         producto.disponible = data.get('disponible', producto.disponible)
 
+        producto.descuento = data.get('descuento', producto.descuento)
+
         db.session.commit()
         return {'message': 'Producto actualizado con éxito'}, 200
 

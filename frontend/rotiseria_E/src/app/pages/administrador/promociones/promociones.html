@@ -1,48 +1,65 @@
 <section id="page-lista" *ngIf="mostrarLista">
   <header>
     <app-boton-volver text="← volver" routerLink="/administrador/menu"></app-boton-volver>
-    <h2 class="titulo-promos">PROMOCIONES</h2>
+    <h2 class="titulo-promos text-naranja fw-bold mt-3">PROMOCIONES ACTIVAS</h2>
   </header>
-  <div class="container">
-    <div class="promo-card promo1">
-      <div>
-        <h3>2X1 En Gaseosas<br>¡Válido por 24 horas!</h3>
-        <button>Enviar a usuarios</button>
-      </div>
-      <img src="assets/promos/promociones_sanguches.png" alt="Sandwich">
+  
+  <div class="container mt-4 mb-5">
+    
+    <div class="row">
+      <ng-container *ngFor="let prod of productos">
+        <div class="col-12 mb-3" *ngIf="prod.descuento > 0">
+          <div class="card shadow-sm border-0 rounded-4 p-3 d-flex flex-row align-items-center" style="background-color: #fff4ed; border-left: 6px solid #ff6b00 !important;">
+            
+            <div class="flex-grow-1">
+              <h3 class="fw-bold text-naranja mb-1" style="font-size: 1.3rem;">¡{{ prod.descuento }}% OFF!</h3>
+              <h5 class="fw-bold text-dark mb-1">{{ prod.nombre }}</h5>
+              <p class="text-muted small mb-2">
+                Precio real: <del>${{ prod.precio }}</del> <br>
+                <span class="fw-bold text-success">Precio Promo: ${{ prod.precio - (prod.precio * prod.descuento / 100) }}</span>
+              </p>
+            </div>
+            
+            <img [src]="'assets/todos/' + prod.imagen" alt="producto" style="width: 90px; height: 90px; object-fit: cover; border-radius: 50%;" onerror="this.src='assets/logoprincipal.png'">
+          </div>
+        </div>
+      </ng-container>
     </div>
-    <div class="promo-card promo2">
-      <div>
-        <h3>¡15% de descuento en “Entre panes”!</h3>
-        <button>Enviar a usuarios</button>
-      </div>
-      <img src="assets/promos/promociones_coca.png" alt="Coca">
+
+    <div class="text-center mt-5">
+      <app-boton-crearpromo (onClick)="showForm()"></app-boton-crearpromo>
     </div>
-    <app-boton-crearpromo (onClick)="showForm()"></app-boton-crearpromo>
   </div>
 </section>
 
 <section id="page-form" *ngIf="!mostrarLista">
-  <div class="form-container">
-    <h2>CREAR PROMOCIÓN</h2>
-    <form>
-      <div class="mb-3">
-        <label class="form-label">Título</label>
-        <input type="text" class="form-control" placeholder="Ej: 30% Disfruta esta promo imperdible" required>
+  <div class="container mt-4">
+    <h3 class="text-center fw-bold text-marron mb-4">APLICAR DESCUENTO</h3>
+    
+    <form class="p-4 shadow bg-white rounded-4 border-0">
+      
+      <div class="mb-4">
+        <label class="form-label fw-bold text-dark">1. ¿A qué producto le aplicamos la promo?</label>
+        <select class="form-select shadow-sm" [(ngModel)]="productoSeleccionadoId" name="producto" required>
+          <option [ngValue]="null" disabled selected>Seleccioná un plato de tu rotisería...</option>
+          <option *ngFor="let prod of productos" [value]="prod.id_prod || prod.id_producto">
+            {{ prod.nombre }} (Original: ${{ prod.precio }})
+          </option>
+        </select>
       </div>
-      <div class="mb-3">
-        <label class="form-label">Validez</label>
-        <input type="text" class="form-control" placeholder="dd/mm/aaaa" required>
+
+      <div class="mb-5">
+        <label class="form-label fw-bold text-dark">2. Porcentaje de Descuento</label>
+        <div class="input-group shadow-sm">
+          <input type="number" class="form-control" placeholder="Ejemplo: 20" [(ngModel)]="porcentajeDescuento" name="descuento" min="1" max="99" required>
+          <span class="input-group-text fw-bold text-white" style="background-color: #ff6b00; border:none;">% OFF</span>
+        </div>
       </div>
-      <div class="mb-3">
-        <label class="form-label">Descripción</label>
-        <textarea class="form-control" rows="3" placeholder="Añada una breve descripción" required></textarea>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary rounded-pill px-4 fw-bold" (click)="showList()">Cancelar</button>
+        <button type="button" class="btn btn-naranja rounded-pill px-4 fw-bold shadow-sm" (click)="guardarPromocion()">✓ GUARDAR PROMO</button>
       </div>
-      <div class="mb-3">
-        <label class="form-label">Foto</label>
-        <input type="file" class="form-control" required>
-      </div>
-      <button type="button" class="btn-save" (click)="showList()">GUARDAR</button>
     </form>
   </div>
 </section>

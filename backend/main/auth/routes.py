@@ -8,8 +8,8 @@ from main.mail.functions import sendMail  # Importar la función para enviar cor
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
-@auth.route('/login', methods=['POST'])
-def login():
+@auth.route('/login', methods=['POST'])                  
+def login():                                                #verifica credenciales y devuelve el token JWT.
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
@@ -32,7 +32,7 @@ def login():
 
 
 @auth.route('/register', methods=['POST'])
-def register():
+def register():                                                 #crea el usuario y manda el mail de bienvenida.
     data = request.get_json()
 
     if not data.get("email") or not data.get("password") or not data.get("nombre"):
