@@ -1,23 +1,116 @@
 <div class="page-header">
   <a routerLink="/cliente/notificaciones" class="back-button"><i class="bi bi-arrow-left"></i></a>
-  <h1 class="header-title">Sabores de Mamás</h1>
+  <h1 class="header-title">Calificar pedido</h1>
 </div>
 
-  <div class="container mt-3 mb-5">
+<div class="container mt-3 mb-5">
 
+  <!-- Cargando -->
+  <div *ngIf="cargando" class="text-center my-5">
+    <div class="spinner-border text-naranja"></div>
+    <p class="mt-2 text-muted">Cargando pedido...</p>
+  </div>
 
-    <div class="card p-3 mt-3">
-      <h6 class="fw-bold">Calificación</h6>
-      <div class="text-warning fs-4">★ ★ ★ ★ ☆</div>
+  <!-- Enviado con éxito -->
+  <div *ngIf="enviado" class="text-center mt-5">
+    <i class="bi bi-patch-check-fill text-success" style="font-size:4rem"></i>
+    <h5 class="mt-3 fw-bold">¡Gracias por tu valoración!</h5>
+    <p class="text-muted">Tu opinión nos ayuda a mejorar.</p>
+    <a routerLink="/cliente/notificaciones" class="btn btn-naranja mt-2">Volver a mis pedidos</a>
+  </div>
 
-      <p class="mt-2">Por favor, compártenos tu experiencia acerca de la comida!</p>
-      <textarea class="form-control mb-3" rows="3">Estoy súper feliz con el servicio! Pedí una pizza de ananá y una coca. La pizza estaba exquisita, con la cantidad justa de ananá y queso. Muy conforme con el servicio, seguro vuelvo a pedir.</textarea>
+  <div *ngIf="!cargando && !enviado">
 
-      <div class="d-flex gap-2 mb-3">
-        <img src="assets/menu/pizzas/pizza.jpg" class="rounded" alt="pizza" style="width: 80px; height: 80px;">
-        <img src="assets/menu/bebidas/gaseosa.png" class="rounded" alt="coca" style="width: 80px; height: 80px;">
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+    <!-- Sin pedido -->
+    <div *ngIf="!pedidoId" class="alert alert-info">
+      Accedé desde un pedido confirmado para poder calificarlo.
+      <a routerLink="/cliente/notificaciones" class="d-block mt-2 btn btn-sm btn-naranja">Ver mis pedidos</a>
+    </div>
+
+    <div *ngIf="pedidoId">
+      <p class="text-muted mb-3">Pedido #{{ pedidoId }}</p>
+
+      <!-- ── MODO LECTURA: ya calificó ── -->
+      <div *ngIf="yaCalifico">
+        <div class="alert alert-success d-flex align-items-center gap-2 mb-3">
+          <i class="bi bi-check-circle-fill"></i>
+          <span>Ya calificaste este pedido. Acá podés ver tu valoración.</span>
+        </div>
+
+        <div *ngFor="let orden of ordenes" class="card p-3 mb-3">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img *ngIf="orden.producto.img" [src]="orden.producto.img" class="rounded"
+                 style="width:60px;height:60px;object-fit:cover" alt="producto">
+            <div>
+              <div class="fw-bold">{{ orden.producto.nombre }}</div>
+              <div class="text-muted" style="font-size:.85rem">x{{ orden.cantidad }} · ${{ orden.precio_total }}</div>
+            </div>
+          </div>
+
+          <div *ngIf="valoracionesExistentes[orden.producto.id_prod] as val">
+            <!-- Estrellas en modo lectura -->
+            <div class="stars-row mb-2">
+              <span *ngFor="let s of starsFilled(val.calificacion)" class="star active">★</span>
+              <span *ngFor="let s of starsEmpty(val.calificacion)" class="star">★</span>
+            </div>
+            <p class="text-muted fst-italic mb-0" style="font-size:.9rem">
+              "{{ val.comentario }}"
+            </p>
+          </div>
+
+          <div *ngIf="!valoracionesExistentes[orden.producto.id_prod]" class="text-muted" style="font-size:.85rem">
+            Sin valoración registrada para este producto.
+          </div>
+        </div>
+
+        <a routerLink="/cliente/notificaciones" class="btn btn-outline-secondary w-100 mt-2">
+          <i class="bi bi-arrow-left me-1"></i>Volver a mis pedidos
+        </a>
       </div>
 
-      <a [routerLink]="['/cliente/mensaje', 'calificar']" class="btn btn-naranja w-100 mt-3">Confirmar calificación</a>
+      <!-- ── MODO FORMULARIO: aún no calificó ── -->
+      <div *ngIf="!yaCalifico">
+        <p class="text-muted mb-3" style="font-size:.9rem">Calificá cada producto</p>
+
+        <div *ngIf="ordenes.length === 0" class="text-muted text-center py-4">
+          No hay productos para calificar en este pedido.
+        </div>
+
+        <div *ngFor="let orden of ordenes" class="card p-3 mb-3">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img *ngIf="orden.producto.img" [src]="orden.producto.img" class="rounded"
+                 style="width:70px;height:70px;object-fit:cover" alt="producto">
+            <div>
+              <div class="fw-bold">{{ orden.producto.nombre }}</div>
+              <div class="text-muted" style="font-size:.85rem">x{{ orden.cantidad }} · ${{ orden.precio_total }}</div>
+            </div>
+          </div>
+
+          <label class="fw-semibold mb-1">Tu calificación</label>
+          <div class="stars-row mb-2">
+            <span *ngFor="let s of starsArray"
+              class="star"
+              [class.active]="s <= (hoverStars[orden.producto.id_prod] || valoraciones[orden.producto.id_prod].calificacion)"
+              (mouseenter)="hoverStars[orden.producto.id_prod] = s"
+              (mouseleave)="hoverStars[orden.producto.id_prod] = 0"
+              (click)="setEstrella(orden.producto.id_prod, s)">★</span>
+          </div>
+
+          <label class="fw-semibold mb-1">Comentario (opcional)</label>
+          <textarea class="form-control" rows="2"
+            [(ngModel)]="valoraciones[orden.producto.id_prod].comentario"
+            placeholder="¿Qué te pareció este producto?"></textarea>
+        </div>
+
+        <button class="btn btn-naranja w-100 mt-3" (click)="confirmar()" [disabled]="enviando">
+          <span *ngIf="enviando" class="spinner-border spinner-border-sm me-2"></span>
+          <i *ngIf="!enviando" class="bi bi-send me-2"></i>
+          Confirmar calificación
+        </button>
+      </div>
+
     </div>
   </div>
+</div>

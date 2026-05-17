@@ -23,8 +23,16 @@ class Usuario(Resource):
             return usuario.to_json_complete(), 200
         return {'message': 'El usuario no existe'}, 404
 
-    @role_required(['ADMIN', 'EMPLEADO'])
+    @role_required(['USER', 'ADMIN', 'EMPLEADO'])
     def put(self, id_user):
+        usuario_actual_id = get_jwt_identity()
+        usuario_actual = db.session.get(UsuarioModel, usuario_actual_id)
+
+        # Un USER solo puede editar su propio perfil
+        if str(usuario_actual_id) != str(id_user):
+            if not usuario_actual or usuario_actual.rol not in ['ADMIN', 'EMPLEADO']:
+                return {'message': 'No tienes permiso para editar este usuario'}, 403
+
         usuario = db.session.query(UsuarioModel).get(id_user)
         if not usuario:
             return 'El id que intentan editar es inexistente', 404
@@ -39,13 +47,15 @@ class Usuario(Resource):
 
         if 'nombre' in data:
             usuario.nombre = data['nombre']
-        if 'rol' in data:
-            usuario.rol = data['rol']
-        if 'estado' in data:
-            if data['estado'] == 'activo' and usuario.estado == 'suspendido':
-                usuario.estado = 'activo'
-            else:
-                usuario.estado = data['estado']
+        # Solo ADMIN/EMPLEADO pueden cambiar rol y estado
+        if usuario_actual and usuario_actual.rol in ['ADMIN', 'EMPLEADO']:
+            if 'rol' in data:
+                usuario.rol = data['rol']
+            if 'estado' in data:
+                if data['estado'] == 'activo' and usuario.estado == 'suspendido':
+                    usuario.estado = 'activo'
+                else:
+                    usuario.estado = data['estado']
         if 'email' in data:
             usuario.email = data['email']
         if 'telefono' in data:

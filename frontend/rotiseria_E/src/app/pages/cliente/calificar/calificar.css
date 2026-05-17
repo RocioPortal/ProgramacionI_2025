@@ -1,0 +1,15 @@
+.stars-row {
+  display: flex;
+  gap: 4px;
+}
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ddd;
+  transition: color .15s;
+  line-height: 1;
+  user-select: none;
+}
+.star.active {
+  color: #f5a623;
+}

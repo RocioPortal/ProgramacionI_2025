@@ -15,7 +15,8 @@ export interface Pedido {
   nombre: string;
   telefono: string;
   estado: 'pendiente' | 'confirmado' | 'cancelado';
-  fecha: string; 
+  fecha: string;
+  fecha_pedido?: string;
   ordenes: OrdenItem[];
   usuario?: User;
   total: number;

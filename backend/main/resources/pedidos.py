@@ -46,14 +46,28 @@ class Pedido(Resource):
 
 class Pedidos(Resource):
     @jwt_required()
-    @role_required(['ADMIN', 'EMPLEADO'])
+    @role_required(['ADMIN', 'EMPLEADO', 'USER'])
     def get(self):
+        from flask_jwt_extended import get_jwt_identity
+        from main.models import UsuarioModel
+
+        usuario_actual_id = get_jwt_identity()
+        usuario_actual = db.session.get(UsuarioModel, usuario_actual_id)
+
         page = int(request.args.get('page', 1))
         per_page = int(request.args.get('per_page', 10))
 
         pedidos_query = db.session.query(PedidoModel)
 
-        # Filtros
+        # Si es USER solo puede ver sus propios pedidos
+        if usuario_actual and usuario_actual.rol == 'USER':
+            pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(usuario_actual_id))
+        else:
+            # ADMIN/EMPLEADO pueden filtrar por id_user
+            if request.args.get('id_user'):
+                pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(request.args.get('id_user')))
+
+        # Filtros (el resto queda igual que antes)
         estado = request.args.get('estado')
         if estado:
             pedidos_query = pedidos_query.filter(PedidoModel.estado.ilike(f"%{estado}%"))

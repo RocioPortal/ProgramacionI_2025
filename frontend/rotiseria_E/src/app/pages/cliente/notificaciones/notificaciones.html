@@ -1,45 +1,98 @@
 <div class="page-header">
-  <h1 class="header-title">Notificaciones</h1>
+  <h1 class="header-title">Mis Pedidos</h1>
 </div>
 
 <div class="container mb-5 pb-5">
-  <div class="text-center my-3">
-    <span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis fw-medium p-2">Tu pedido</span>
+
+  <!-- Cargando -->
+  <div *ngIf="cargando" class="text-center my-5">
+    <div class="spinner-border text-naranja" role="status"></div>
+    <p class="mt-2 text-muted">Cargando tus pedidos...</p>
   </div>
 
-  <h6 class="text-muted fw-bold">Hoy</h6>
-  <div class="notif-card">
-    <div class="notif-icon-container bg-success-subtle text-success">
-      <i class="bi bi-check-circle-fill"></i>
-    </div>
-    <div class="notif-content">
-      <div class="notif-title">Tu pedido está listo para retirar</div>
-      <p class="notif-body">Hola! Tu pedido ya está en el local, listo para distribuir.</p>
-      <a routerLink="/cliente/calificar" class="btn btn-sm btn-naranja mt-2">Califica tu pedido</a>
-    </div>
-  </div>
-  <div class="notif-card">
-    <div class="notif-icon-container bg-warning-subtle text-warning">
-      <i class="bi bi-hourglass-split"></i>
-    </div>
-    <div class="notif-content">
-      <div class="notif-title">Pendiente</div>
-      <p class="notif-body">Estamos procesando tu pedido.</p>
-    </div>
+  <!-- Error -->
+  <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+
+  <!-- Sin pedidos -->
+  <div *ngIf="!cargando && !error && pedidos.length === 0" class="text-center mt-5">
+    <i class="bi bi-bag-x fs-1 text-muted"></i>
+    <p class="text-muted mt-2">Todavía no tenés pedidos.</p>
   </div>
 
-  <h6 class="text-muted fw-bold mt-4">Ayer</h6>
-  <div class="notif-card">
-    <div class="notif-icon-container bg-danger-subtle text-danger">
-      <i class="bi bi-x-circle-fill"></i>
-    </div>
-    <div class="notif-content">
-      <div class="notif-title">Cancelado</div>
-      <p class="notif-body">Ups! Tu orden ha sido cancelada.</p>
-    </div>
-  </div>
+  <!-- Pedidos -->
+  <div *ngIf="!cargando && pedidos.length > 0">
 
-  <p class="text-center text-muted mt-4">Sin más notificaciones</p>
+    <!-- Chips resumen -->
+    <div class="d-flex gap-2 flex-wrap my-3">
+      <span class="badge rounded-pill bg-success">{{ pedidosConfirmados.length }} confirmados</span>
+      <span class="badge rounded-pill bg-warning text-dark">{{ pedidosPendientes.length }} pendientes</span>
+      <span class="badge rounded-pill bg-danger">{{ pedidosCancelados.length }} cancelados</span>
+    </div>
+
+    <!-- Lista de pedidos -->
+    <div *ngFor="let pedido of pedidos" class="notif-card" (click)="togglePedido(pedido.id_pedido)" style="cursor:pointer;">
+
+      <div class="notif-icon-container" [ngClass]="getClaseEstado(pedido.estado)">
+        <i class="bi" [ngClass]="getIconoEstado(pedido.estado)"></i>
+      </div>
+
+      <div class="notif-content w-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <div class="notif-title">{{ getTituloEstado(pedido.estado) }}</div>
+          <span class="badge" [ngClass]="getBadgeEstado(pedido.estado)">{{ pedido.estado | titlecase }}</span>
+        </div>
+        <p class="notif-body mb-1">{{ getMensajeEstado(pedido.estado) }}</p>
+        <p class="notif-body text-muted" style="font-size:.8rem">
+          <i class="bi bi-calendar3 me-1"></i>{{ pedido.fecha_pedido || pedido.fecha }}
+          &nbsp;·&nbsp; Pedido #{{ pedido.id_pedido }}
+        </p>
+
+        <!-- Detalle expandido -->
+        <div *ngIf="pedidoExpandido === pedido.id_pedido" class="mt-2 pt-2 border-top">
+
+          <div *ngIf="cargandoOrdenes[pedido.id_pedido]" class="text-center py-2">
+            <div class="spinner-border spinner-border-sm text-naranja"></div>
+          </div>
+
+          <div *ngIf="!cargandoOrdenes[pedido.id_pedido]">
+            <p class="fw-semibold mb-2" style="font-size:.85rem">Productos del pedido:</p>
+
+            <div *ngIf="ordenesPorPedido[pedido.id_pedido]?.length === 0" class="text-muted" style="font-size:.85rem">
+              Sin detalle de productos.
+            </div>
+
+            <div *ngFor="let orden of ordenesPorPedido[pedido.id_pedido]" class="d-flex align-items-center gap-2 mb-2">
+              <img *ngIf="orden.producto?.img" [src]="orden.producto.img" class="rounded"
+                   style="width:50px;height:50px;object-fit:cover" alt="">
+              <div style="font-size:.85rem">
+                <div class="fw-semibold">{{ orden.producto.nombre }}</div>
+                <div class="text-muted">x{{ orden.cantidad }} · ${{ orden.precio_total }}</div>
+                <div *ngIf="orden.especificaciones" class="text-muted fst-italic">{{ orden.especificaciones }}</div>
+              </div>
+            </div>
+
+            <!-- Botón calificar -->
+            <div *ngIf="pedido.estado === 'confirmado'" class="mt-3">
+              <a [routerLink]="['/cliente/calificar']"
+                 [queryParams]="{ pedidoId: pedido.id_pedido }"
+                 class="btn btn-sm btn-naranja w-100"
+                 (click)="$event.stopPropagation()">
+                <i class="bi bi-star me-1"></i>Calificar este pedido
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flecha expand/collapse -->
+        <div class="text-end mt-1">
+          <i class="bi text-muted"
+             [ngClass]="pedidoExpandido === pedido.id_pedido ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-center text-muted mt-4" style="font-size:.85rem">· Fin del historial ·</p>
+  </div>
 </div>
 
 <app-navbar></app-navbar>

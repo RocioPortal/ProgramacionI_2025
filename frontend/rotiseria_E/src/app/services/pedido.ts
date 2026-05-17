@@ -60,6 +60,16 @@ export class PedidoService {
       headers: this.getAuthHeaders()
     });
   }
+  getPedidosByUsuario(page: number = 1, perPage: number = 50, estado?: string): Observable<PaginatedPedidos> {
+  let params = new HttpParams()
+    .set('page', page.toString())
+    .set('per_page', perPage.toString());
+  if (estado) params = params.set('estado', estado);
+  return this.http.get<PaginatedPedidos>(`${this.apiUrl}/pedidos`, {
+    headers: this.getAuthHeaders(),
+    params
+  });
+}
   getOrdenesByPedidoId(id_pedido: number): Observable<any> {
     let params = new HttpParams()
       .set('id_pedido', id_pedido.toString());

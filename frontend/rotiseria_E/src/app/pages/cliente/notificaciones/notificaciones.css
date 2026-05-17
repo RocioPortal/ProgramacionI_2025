@@ -49,3 +49,7 @@
   color: #6c757d;
   margin: 0;
 }
+.text-naranja,
+.spinner-border.text-naranja {
+  color: var(--color-texto) !important;
+}

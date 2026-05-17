@@ -5,6 +5,7 @@ export interface Product {
   descripcion: string;
   precio: number;
   disponible: boolean;
+  img?: string;
 }
 
 export interface PaginatedProducts {
