@@ -1,10 +1,12 @@
 from flask_restful import Resource
 from flask import request, jsonify
 from main.models import ProductoModel
+from main.models import UsuarioModel
 from .. import db
 from sqlalchemy import desc
 from flask_jwt_extended import jwt_required
 from main.auth.decorators import role_required
+from main.mail.functions import sendMail
 
 class Producto(Resource):
     @jwt_required()
@@ -27,8 +29,21 @@ class Producto(Resource):
         producto.descripcion = data.get('descripcion', producto.descripcion)
         producto.precio = data.get('precio', producto.precio)
         producto.disponible = data.get('disponible', producto.disponible)
-
         producto.descuento = data.get('descuento', producto.descuento)
+
+        # --- NUEVA LÓGICA DE NOTIFICACIONES POR MAIL ---
+        if data.get('notificar') == True:
+            clientes = db.session.query(UsuarioModel).filter(UsuarioModel.rol == 'USER').all()
+            correos = [cliente.email for cliente in clientes]
+            
+            if correos:
+                sendMail(
+                    to=correos,
+                    subject=f"¡Oferta especial en {producto.nombre}!",
+                    template='promo_mail', # Nombre de la plantilla HTML
+                    producto=producto
+                )
+        # -----------------------------------------------
 
         db.session.commit()
         return {'message': 'Producto actualizado con éxito'}, 200

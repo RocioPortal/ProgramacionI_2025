@@ -18,9 +18,15 @@
                 Precio real: <del>${{ prod.precio }}</del> <br>
                 <span class="fw-bold text-success">Precio Promo: ${{ prod.precio - (prod.precio * prod.descuento / 100) }}</span>
               </p>
-            </div>
+              
+              <button class="btn btn-sm text-white fw-bold shadow-sm mt-1 px-3 py-2" 
+                      style="background-color: #f39c12; border-radius: 20px;" 
+                      (click)="enviarNotificacion(prod)">
+                ✉️ Enviar promo a clientes
+              </button>
+              </div>
             
-            <img [src]="'assets/todos/' + prod.imagen" alt="producto" style="width: 90px; height: 90px; object-fit: cover; border-radius: 50%;" onerror="this.src='assets/logoprincipal.png'">
+            <img src="assets/logoprincipal.png" alt="producto" style="width: 90px; height: 90px; object-fit: cover; border-radius: 50%;">
           </div>
         </div>
       </ng-container>

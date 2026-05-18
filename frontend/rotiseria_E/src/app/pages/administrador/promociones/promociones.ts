@@ -14,7 +14,7 @@ import { ProductService } from '../../../services/product.service'; // <-- FUNDA
     BotonVolverComponent, BotonCrearpromoComponent
   ],
   templateUrl: './promociones.html',
-  styleUrls: ['./promociones.css'] // Corregí "styleUrl" por "styleUrls" para evitar errores
+  styleUrls: ['./promociones.css'] 
 })
 export class Promociones implements OnInit {
   mostrarLista: boolean = true;
@@ -64,6 +64,34 @@ export class Promociones implements OnInit {
           this.porcentajeDescuento = 0;
         },
         error: (err) => console.error('Error al guardar promo:', err)
+      });
+    }
+  }
+
+  // --- NUEVA FUNCIÓN PARA MANDAR MAILS REUTILIZANDO EL SERVICIO ---
+  enviarNotificacion(promo: any) {
+    if (confirm(`¿Querés enviar esta promoción de ${promo.nombre} por mail a todos los clientes?`)) {
+      
+      const idParaActualizar = promo.id_prod || promo.id_producto;
+      
+      // Armamos el paquete de datos y le inyectamos la bandera que activará el mail en Flask
+      const datosActualizados = {
+        nombre: promo.nombre,
+        descripcion: promo.descripcion,
+        precio: promo.precio,
+        disponible: promo.disponible,
+        descuento: promo.descuento,
+        notificar: true // <-- ¡Esta es la llave maestra!
+      };
+
+      this.productService.updateProduct(idParaActualizar, datosActualizados).subscribe({
+        next: () => {
+          alert('✅ ¡Mails enviados con éxito a todos los clientes!');
+        },
+        error: (err) => {
+          console.error('Error al enviar correos:', err);
+          alert('❌ Hubo un error al intentar enviar los correos.');
+        }
       });
     }
   }
