@@ -1,0 +1,15 @@
+¡Oferta Especial para vos! 🏷️
+
+No te pierdas esta promo de Sabores de Mamás. Porque sabemos que te encanta la comida rica y casera, te traemos un descuento exclusivo para que lo disfrutes hoy mismo:
+
+🍝 Producto: {{ producto.nombre }}
+⭐ Descuento: ¡{{ producto.descuento }}% OFF!
+💬 Descripción: {{ producto.descripcion }}
+
+Para aprovecharlo, ingresá a nuestra web o vení directo a la rotisería. 
+Hacé tu pedido ahora desde aquí: http://localhost:4200/login
+
+Aprovechá antes de que se agote el stock.
+¡Te esperamos!
+
+— El equipo de Sabores de Mamás

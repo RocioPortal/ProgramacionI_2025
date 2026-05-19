@@ -16,12 +16,12 @@ import { ProductListComponent } from '../../../components/product-list/product-l
 export class Menu implements OnInit {
 
   categories = [
-    { id: 'todos', name: 'Todos', imageUrl: 'assets/logoprincipal.png' },
     { id: 'entre_panes', name: 'Entre Panes', imageUrl: 'assets/menu/entre_panes/hamburguesa.png' },
     { id: 'pizzas', name: 'Pizzas', imageUrl: 'assets/menu/pizzas/logo.png' },
     { id: 'empanadas', name: 'Empanadas', imageUrl: 'assets/menu/empanadas/logo.png' },
     { id: 'pastas', name: 'Pastas', imageUrl: 'assets/menu/pastas/ravioles.png' },
-    { id: 'bebidas', name: 'Bebidas', imageUrl: 'assets/menu/bebidas/gaseosa.png' }
+    { id: 'bebidas', name: 'Bebidas', imageUrl: 'assets/menu/bebidas/gaseosa.png' },
+    { id: 'caserito', name: 'Caserito', imageUrl: 'assets/menu/caserito/logo.png' }
   ];
 
   productos: any[] = [];

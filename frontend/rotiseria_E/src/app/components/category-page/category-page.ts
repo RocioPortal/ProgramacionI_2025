@@ -46,7 +46,8 @@ export class CategoryPage implements OnInit {
         { id_prod: 20, name: 'Ravioles', description: 'Ravioles rellenos de carne o verdura.', price: 9500, image: 'assets/menu/pastas/ravioles.png' }
       ]
     },
-    'entre-panes': {
+
+    'entre_panes': {
       title: 'Entre Panes',
       products: [
         { id_prod: 1, name: 'Hamburguesa', description: 'Completa con carne, queso, lechuga y tomate.', price: 9000, image: 'assets/menu/entre_panes/hamburguesa.png' },
