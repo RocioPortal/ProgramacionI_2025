@@ -11,3 +11,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient()
   ]
 };
+
+
+//Su única función es proveer (inyectar) las herramientas globales que toda tu aplicación va a necesitar desde el segundo cero.

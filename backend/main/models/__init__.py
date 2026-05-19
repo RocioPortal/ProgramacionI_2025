@@ -8,3 +8,6 @@ from .usuarios import Usuario as UsuarioModel
 from .pedido import Pedido as PedidoModel
 
 from .orden import Orden as OrdenModel
+
+
+#Para crear un atajo centralizado , para no confundir modelos

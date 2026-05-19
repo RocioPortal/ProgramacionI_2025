@@ -13,3 +13,8 @@ export const authGuard: CanActivateFn = (route, state) => {      //"¿Esta perso
     return false;
   }
 };
+
+
+
+//auth-guard es patovica de pta principal, Solo se fija si tenés un token JWT guardado en tu navegador
+//role-guard es patovica del vip, Mira tu token y lo abre para leer el campo rol. Si la pantalla dice que solo entran ['ADMIN'] y vos tenés rol de USER, te rebota.

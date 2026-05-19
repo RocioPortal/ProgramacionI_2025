@@ -1,7 +1,7 @@
-import { Product } from "./product.interfaces";
+import { Product } from "./product.interfaces";  //reflejan lo de to_json_complete que definimos en los modelos -MOLDES-
 import { User } from "./user.interfaces";
 
-export interface OrdenItem {
+export interface OrdenItem {     //Se generan y se inventan ahí mismo (plano de arquitecto)
   id_orden: number;
   cantidad: number;
   precio_total: number;
@@ -60,3 +60,5 @@ export interface PaginatedOrdenes {
   page: number;
   per_page: number;
 }
+
+//Ese archivo de interfaces no tiene memoria, solo saben la forma

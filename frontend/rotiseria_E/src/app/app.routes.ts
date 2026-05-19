@@ -76,6 +76,6 @@ export const routes: Routes = [
   { path: 'empleado/stock', component: Stock, canActivate: [authGuard, roleGuard(['EMPLEADO'])] },
 
   // --- Ruta por defecto
-  { path: '', redirectTo: 'index', pathMatch: 'full' },
-  { path: '**', redirectTo: 'bienvenida' }
+  { path: '', redirectTo: 'index', pathMatch: 'full' },  //Si alguien entra a tu página web pura (www.turotiseria.com/), esto lo ataja y lo redirige automáticamente a la pantalla de /index
+  { path: '**', redirectTo: 'bienvenida' }  //Si un usuario tipea cualquier barbaridad, lo redirige elegantemente a la pantalla de /bienvenida.
 ];

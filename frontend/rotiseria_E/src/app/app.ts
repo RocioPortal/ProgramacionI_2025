@@ -10,3 +10,5 @@ import { RouterOutlet } from '@angular/router';
 export class App {
   protected readonly title = signal('rotiseria_E');
 }
+
+//Importa el motor de navegación, se engancha a la página principal y utiliza el estado reactivo más moderno disponible en el framework.

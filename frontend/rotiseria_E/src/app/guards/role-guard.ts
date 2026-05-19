@@ -7,7 +7,7 @@ export const roleGuard = (allowedRoles: string[]): CanActivateFn => {      //¿t
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    if (!authService.isLoggedIn()) {
+    if (!authService.isLoggedIn()) {     //si no esta loguineado, lo manda al login sin importar el rol
       router.navigate(['/login']);
       return false;
     }

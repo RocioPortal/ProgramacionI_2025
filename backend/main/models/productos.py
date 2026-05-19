@@ -7,10 +7,10 @@ class Producto(db.Model):
     nombre = db.Column(db.String(100), nullable=False)
     descripcion = db.Column(db.String(200))
     precio = db.Column(db.Float, nullable=False)
-    disponible = db.Column(db.Boolean, default=True)
+    disponible = db.Column(db.Boolean, default=True)  ## Maneja si hay stock o no.
     descuento = db.Column(db.Float, default=0.0) 
     
-    valoraciones = db.relationship('Valoracion', back_populates='producto', cascade="all, delete", single_parent=True)
+    valoraciones = db.relationship('Valoracion', back_populates='producto', cascade="all, delete", single_parent=True)  #relacion con valoraciones
     ordenes = db.relationship('Orden',back_populates='producto',cascade='all, delete-orphan',lazy='select')
     
     def to_json(self):

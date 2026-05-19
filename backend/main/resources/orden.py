@@ -4,7 +4,7 @@ from sqlalchemy import desc
 from .. import db
 from main.models import OrdenModel, PedidoModel, ProductoModel
 
-class Orden(Resource):
+class Orden(Resource):                                      #para tocar un renglón específico)
     # Obtener una orden específica por ID
     def get(self, id):
         orden = db.session.query(OrdenModel).get_or_404(id)
@@ -26,10 +26,10 @@ class Orden(Resource):
         db.session.commit()
         return orden.to_json(), 201
 
-class Ordenes(Resource):
+class Ordenes(Resource):                                     #para manejar el listado completo
     def get(self):
-        page = 1
-        per_page = 10
+        page = 1               #Número de página
+        per_page = 10          #Cantidad por página
         
         if request.args.get('page'):
             page = int(request.args.get('page'))
@@ -46,7 +46,7 @@ class Ordenes(Resource):
         
         # Filtrar por ID de usuario (asumiendo que existe una relación con pedido y pedido tiene id_user)
         if request.args.get('id_user'):
-            ordenes = ordenes.join(PedidoModel).filter(PedidoModel.id_user == int(request.args.get('id_user')))
+            ordenes = ordenes.join(PedidoModel).filter(PedidoModel.id_user == int(request.args.get('id_user')))    #Como la tabla Orden (los renglones) no tiene los datos del cliente, fíjate cómo usás .join(PedidoModel)
         
         # Filtrar por fecha (asumiendo que existe un campo fecha_creacion)
         if request.args.get('fecha_desde') and hasattr(OrdenModel, 'fecha_creacion'):
@@ -68,12 +68,12 @@ class Ordenes(Resource):
         
         # Ordenar por ID
         if request.args.get('sortby_id'):
-            if request.args.get('sortby_id').lower() == 'desc':
+            if request.args.get('sortby_id').lower() == 'desc':          # mayor a menor
                 ordenes = ordenes.order_by(desc(OrdenModel.id))
             else:
                 ordenes = ordenes.order_by(OrdenModel.id)
         
-        # Ordenar por fecha (asumiendo que existe un campo fecha_creacion)
+        # Ordenar por fecha 
         if request.args.get('sortby_fecha') and hasattr(OrdenModel, 'fecha_creacion'):
             if request.args.get('sortby_fecha').lower() == 'desc':
                 ordenes = ordenes.order_by(desc(OrdenModel.fecha_creacion))
@@ -100,15 +100,15 @@ class Ordenes(Resource):
     def post(self):
         data = request.get_json()
 
-        pedido_data = data.get("pedido")
+        pedido_data = data.get("pedido")               #Obtenemos el pedido
         if not pedido_data:
             return {"message": "Datos del pedido faltan"}, 400
 
         nuevo_pedido = PedidoModel.from_json(pedido_data)
         db.session.add(nuevo_pedido)
-        db.session.flush()  
+        db.session.flush()            #avisa a SQLite: "Che, andá reservándome un número de ID para este pedido"
 
-        productos_data = data.get("productos")
+        productos_data = data.get("productos")        #Extrae el carrito de compras
         if not productos_data:
             return {"message": "Lista de productos faltante"}, 400
 
@@ -116,12 +116,12 @@ class Ordenes(Resource):
             try:
                 orden = OrdenModel.from_json({
                     **producto,
-                    "id_pedido": nuevo_pedido.id_pedido
+                    "id_pedido": nuevo_pedido.id_pedido  #A cada producto del carrito le inyecta "id_pedido"    
                 })
                 db.session.add(orden)
-            except ValueError as e:
+            except ValueError as e:   #alidación de que la cantidad  (definida en models)
                 db.session.rollback()
                 return {"message": str(e)}, 400
 
-        db.session.commit()
+        db.session.commit()           #guarda
         return {"message": "Pedido y órdenes creados con éxito"}, 201

@@ -11,3 +11,6 @@ from .valoraciones import Valoracion as ValoracionResource
 from .notificaciones import Notificacion as NotificacionResource
 
 from .orden import Orden as OrdenResource, Ordenes as OrdenesResource
+
+#para crear un atajo centralizado , para no confundir recursos 
+#los endpoints de tu API
