@@ -5,7 +5,7 @@ from main.models import PedidoModel, OrdenModel, ProductoModel
 from .. import db
 from main.auth.decorators import role_required
 
-class Pedido(Resource):
+class Pedido(Resource):              #Manejar un ticket puntual
     @jwt_required()
     @role_required(['USER', 'ADMIN', 'EMPLEADO'])
     def get(self, id):
@@ -107,11 +107,12 @@ class Pedidos(Resource):
         pedidos_query = db.session.query(PedidoModel)
 
         if usuario_actual and usuario_actual.rol == 'USER':
-            pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(usuario_actual_id))
+            pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(usuario_actual_id))  #solo va a poder ver su propio historial de compras
         else:
             if request.args.get('id_user'):
-                pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(request.args.get('id_user')))
+                pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(request.args.get('id_user')))  #os deja ver todo
 
+        # Filtros 
         estado = request.args.get('estado')
         if estado:
             pedidos_query = pedidos_query.filter(PedidoModel.estado.ilike(f"%{estado}%"))
@@ -166,18 +167,24 @@ class Pedidos(Resource):
                         db.session.rollback()
                         return {"mensaje": f"Producto con ID {id_prod} no encontrado"}, 404
 
-                    descuento = getattr(producto, 'descuento', 0) or 0
-                    precio_rebajado = producto.precio - (producto.precio * descuento / 100)
-                    precio_final = precio_rebajado * cantidad
-
-                    orden = OrdenModel(
-                        id_pedido=nuevo_pedido.id_pedido,
-                        id_prod=id_prod,
-                        cantidad=cantidad,
-                        especificaciones=prod.get("especificaciones", ""),
-                        precio_total=precio_final
-                    )
-                    db.session.add(orden)
+        #DESCUENTOS
+                # 1. Obtenemos el descuento (si no tiene, asumimos 0)
+                descuento = getattr(producto, 'descuento', 0)
+                
+                # 2. Calculamos el precio real rebajado
+                precio_rebajado = producto.precio - (producto.precio * descuento / 100)
+                
+                # 3. Lo multiplicamos por la cantidad y lo guardamos
+                precio_final = precio_rebajado * cantidad
+                    
+                orden = OrdenModel(
+                    id_pedido=nuevo_pedido.id_pedido,
+                    id_prod=id_prod,
+                    cantidad=cantidad,
+                    especificaciones=prod.get("especificaciones", ""),
+                    precio_total=precio_final
+                 )
+                db.session.add(orden)
 
                 db.session.commit()  
 

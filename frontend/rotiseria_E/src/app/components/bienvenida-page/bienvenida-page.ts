@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
-interface OnboardingStep {
+interface OnboardingStep {  // carrusel de 3 pasos
   imageSrc: string;
   imageAlt: string;
   title: string;
@@ -11,7 +11,7 @@ interface OnboardingStep {
   nextLink: string;
 }
 
-@Component({
+@Component({                        //conecta el html con el css y el ts
   selector: 'app-bienvenida-page',
   standalone: true,
   imports: [CommonModule, RouterLink],
@@ -21,7 +21,7 @@ interface OnboardingStep {
 export class BienvenidaPage implements OnInit {
 
   currentStep: OnboardingStep | undefined;
-  private allSteps: OnboardingStep[] = [
+  private allSteps: OnboardingStep[] = [        //3 pasos de tu carrusel
     {
       imageSrc: 'assets/bienvenida1/image.png',
       imageAlt: 'Elegí tu producto favorito',
@@ -44,13 +44,13 @@ export class BienvenidaPage implements OnInit {
       title: 'Come rico y casero',
       text: 'Disfruta de un sabroso plato a un precio increíble.',
       buttonText: 'COMENZAR',
-      nextLink: '/login'
+      nextLink: '/login'          //termina y manda al login
     }
   ];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) { }  //espía que está todo el tiempo mirando la barra de direcciones del navegador.
 
-  ngOnInit(): void {
+  ngOnInit(): void {                        //función que Angular ejecuta automáticamente apenas el usuario abre esta pantalla.
     this.route.paramMap.subscribe(params => {
       const stepParam = params.get('step');
       const stepNumber = stepParam ? parseInt(stepParam, 10) : 1;

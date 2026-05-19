@@ -1,6 +1,6 @@
 from .. import db
 from datetime import datetime
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash    # importamos funciones para encriptar y verificar contraseñas
 
 class Usuario(db.Model):
     __tablename__ = 'usuario'
@@ -13,21 +13,21 @@ class Usuario(db.Model):
     password = db.Column(db.String(128), nullable=False)
     telefono = db.Column(db.String(20))
 
-    pedidos = db.relationship('Pedido', back_populates='usuario', cascade='all, delete-orphan')
-    valoraciones = db.relationship('Valoracion', back_populates='usuario', cascade="all, delete-orphan")
-    notificaciones = db.relationship('Notificacion', back_populates='usuario', cascade="all, delete-orphan")
+    pedidos = db.relationship('Pedido', back_populates='usuario', cascade='all, delete-orphan')   #clases padres
+    valoraciones = db.relationship('Valoracion', back_populates='usuario', cascade="all, delete-orphan")  #clases padres
+    notificaciones = db.relationship('Notificacion', back_populates='usuario', cascade="all, delete-orphan")   #clase padre c/notificaciones
 
-    # ----- Autenticación -----
+    # ----- Autenticación ----- 
 
     @property
-    def plain_password(self):
+    def plain_password(self):    #Si algún programador intenta leer la contraseña de un user, devuelve error
         raise AttributeError('La contraseña no se puede leer.')
 
-    @plain_password.setter
+    @plain_password.setter                #ENCRIPTACIÓN
     def plain_password(self, password):
         self.password = generate_password_hash(password)
 
-    def validate_pass(self, password):
+    def validate_pass(self, password):       #se fija si el resultado coincide con lo que está guardado
         return check_password_hash(self.password, password)
 
 
@@ -80,7 +80,7 @@ class Usuario(db.Model):
             rol=rol
         )
 
-        if password:
+        if password:               #Si Angular mandó una contraseña, no la guarda en 'usuario.password' directo. Llama a 'plain_password' para obligarla a pasar por la función licuadora del bloque 4.
             usuario.plain_password = password
 
         return usuario

@@ -31,21 +31,21 @@ class Producto(Resource):
         producto.disponible = data.get('disponible', producto.disponible)
         producto.descuento = data.get('descuento', producto.descuento)
 
-        # LÓGICA DE NOTIFICACIONES POR MAIL ---
+
+        # NOTIFICACIONES POR MAIL 
         if data.get('notificar') == True:
-            clientes = db.session.query(UsuarioModel).filter(UsuarioModel.rol == 'USER').all()
-            correos = [cliente.email for cliente in clientes]
+            clientes = db.session.query(UsuarioModel).filter(UsuarioModel.rol == 'USER').all()  #va a la BD y busca a todos los users
+            correos = [cliente.email for cliente in clientes]  #junta todos sus correos en una lista
             
             if correos:
                 sendMail(
                     to=correos,
                     subject=f"¡Oferta especial en {producto.nombre}!",
-                    template='promo_mail', 
+                    template='promo_mail',  #plantilla templates de html
                     producto=producto
                 )
-        # -----------------------------------------------
 
-        db.session.commit()
+        db.session.commit()   #manda por mail y guarda
         return {'message': 'Producto actualizado con éxito'}, 200
 
     @jwt_required()
