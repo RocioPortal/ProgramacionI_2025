@@ -66,6 +66,20 @@ export class Promociones implements OnInit {
       });
     }
   }
+  quitarPromocion(prod: any): void {
+    if (confirm(`¿Querés quitar la promoción de ${prod.nombre}?`)) {
+      const id = prod.id_prod || prod.id_producto;
+      const productoSinDescuento = { ...prod, descuento: 0 };
+
+      this.productService.updateProduct(id, productoSinDescuento).subscribe({
+        next: () => {
+          alert('✅ Promoción quitada con éxito.');
+          this.cargarProductos();
+        },
+        error: () => alert('❌ Error al quitar la promoción.')
+      });
+    }
+  }
 
   // --- NUEVA FUNCIÓN PARA MANDAR MAILS REUTILIZANDO EL SERVICIO ---
   enviarNotificacion(promo: any) {

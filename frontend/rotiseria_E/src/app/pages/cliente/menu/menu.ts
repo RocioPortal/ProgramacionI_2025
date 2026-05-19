@@ -37,7 +37,9 @@ export class Menu implements OnInit {
   cargarProductos(): void {
     this.productService.getProducts(1, 100).subscribe({
       next: (data: any) => {
-        this.productos = data.productos || data;
+        const todos = data.productos || data;
+        // Solo mostramos productos disponibles
+        this.productos = todos.filter((p: any) => p.disponible === true || p.disponible === 1);
         this.productosFiltrados = this.productos;
       },
       error: (error) => console.error('Error al cargar productos:', error)

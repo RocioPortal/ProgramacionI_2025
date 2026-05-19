@@ -29,7 +29,8 @@ export class ProductListComponent {
 
   // 3. AÑADE LA FUNCIÓN 'addToCart'
   addToCart(product: Product) {
+    if (!(product as any).disponible) return;
     this.cartService.addProduct(product);
-    alert(`${product.nombre} añadido al carrito!`); // Feedback
+    alert(`${product.nombre} añadido al carrito!`);
   }
 }
