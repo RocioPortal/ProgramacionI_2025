@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; }
+        .container { border: 1px solid #ddd; padding: 20px; border-radius: 10px; text-align: center; }
+        .estado { font-size: 20px; font-weight: bold; color: #d35400; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>¡Hola, {{ cliente }}!</h2>
+        <p>Te escribimos de <strong>Sabores de Mamás</strong> para avisarte que tu pedido <b>#{{ pedido.id_pedido }}</b> tiene un nuevo estado:</p>
+        
+        <p class="estado">¡Tu pedido ahora está {{ estado|upper }}!</p>
+        
+        <p>Gracias por elegir nuestra comida casera.</p>
+    </div>
+</body>
+</html>

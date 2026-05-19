@@ -34,11 +34,33 @@ class Pedido(Resource):
 
         data = request.get_json()
         pedido.nombre = data.get('nombre', pedido.nombre)
-        nuevo_estado = data.get('estado', pedido.estado)
-        estados_permitidos = ['pendiente', 'en preparación', 'listo para retiro', 'entregado', 'cancelado']
-        if nuevo_estado not in estados_permitidos:
-            return {"mensaje": f"Estado inválido. Los estados permitidos son: {estados_permitidos}"}, 400
-        pedido.estado = nuevo_estado
+        
+        nuevo_estado = data.get('estado')
+        
+        if nuevo_estado and nuevo_estado != pedido.estado:
+            estados_permitidos = ['pendiente', 'en preparación', 'listo para retiro', 'entregado', 'cancelado']
+            if nuevo_estado not in estados_permitidos:
+                return {"mensaje": f"Estado inválido. Los estados permitidos son: {estados_permitidos}"}, 400
+            
+            pedido.estado = nuevo_estado
+
+            from main.models import UsuarioModel
+            from main.mail.functions import sendMail
+
+            cliente = db.session.get(UsuarioModel, pedido.id_user)
+            if cliente and cliente.email:
+                try:
+                    sendMail(
+                        to=[cliente.email],
+                        subject=f"Actualización de tu pedido #{pedido.id_pedido}",
+                        template='estado_mail',
+                        cliente=cliente.nombre,
+                        pedido=pedido,
+                        estado=nuevo_estado
+                    )
+                except Exception as e:
+                    print(f"Error al enviar el mail: {e}")
+            # ---------------------------------
 
         db.session.commit()
 
@@ -53,7 +75,7 @@ class Pedidos(Resource):
     @role_required(['ADMIN', 'EMPLEADO', 'USER'])
     def get(self):
         from flask_jwt_extended import get_jwt_identity
-        from main.models import UsuarioModel
+        from main.models import UsuarioModel # ACÁ VOLVEMOS A DEJARLO DONDE LO TENÍAS VOS
 
         usuario_actual_id = get_jwt_identity()
         usuario_actual = db.session.get(UsuarioModel, usuario_actual_id)
@@ -63,15 +85,12 @@ class Pedidos(Resource):
 
         pedidos_query = db.session.query(PedidoModel)
 
-        # Si es USER solo puede ver sus propios pedidos
         if usuario_actual and usuario_actual.rol == 'USER':
             pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(usuario_actual_id))
         else:
-            # ADMIN/EMPLEADO pueden filtrar por id_user
             if request.args.get('id_user'):
                 pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(request.args.get('id_user')))
 
-        # Filtros (el resto queda igual que antes)
         estado = request.args.get('estado')
         if estado:
             pedidos_query = pedidos_query.filter(PedidoModel.estado.ilike(f"%{estado}%"))
@@ -80,7 +99,6 @@ class Pedidos(Resource):
         if nombre:
             pedidos_query = pedidos_query.filter(PedidoModel.nombre.ilike(f"%{nombre}%"))
 
-        # Ordenamientos
         sort_applied = False 
 
         if request.args.get('sortby_estado'):
@@ -113,12 +131,10 @@ class Pedidos(Resource):
             return {"mensaje": "El campo 'id_user' es obligatorio"}, 400
 
         try:
-            # 1. Crear y guardar el pedido primero
             nuevo_pedido = PedidoModel.from_json(data)
             db.session.add(nuevo_pedido)
             db.session.commit()  
 
-            # 2. Ahora agregar las órdenes con el id_pedido real
             if productos:
                 for prod in productos:
                     id_prod = prod.get('id_prod')
@@ -142,9 +158,8 @@ class Pedidos(Resource):
                     )
                     db.session.add(orden)
 
-                db.session.commit()  # commit de las órdenes
+                db.session.commit()  
 
-            # 3. Recargar el pedido limpio desde la BD
             db.session.expire(nuevo_pedido)
             pedido_final = db.session.get(PedidoModel, nuevo_pedido.id_pedido)
 

@@ -1,0 +1,3 @@
+Hola {{ cliente }}!
+Te avisamos que tu pedido #{{ pedido.id_pedido }} ahora se encuentra en estado: {{ estado|upper }}.
+Gracias por elegir Sabores de Mamás.
