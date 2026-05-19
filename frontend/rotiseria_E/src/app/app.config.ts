@@ -12,5 +12,3 @@ export const appConfig: ApplicationConfig = {
   ]
 };
 
-
-//Su única función es proveer (inyectar) las herramientas globales que toda tu aplicación va a necesitar desde el segundo cero.

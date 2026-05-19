@@ -1,7 +1,6 @@
-<div *ngIf="currentStep" class="onboarding-container">   //Si por alguna razón la variable currentStep todavía está vacía o no cargó, no dibujes este contenedor
-  
+<div *ngIf="currentStep" class="onboarding-container">   
   <div class="image-panel">
-    <img [src]="currentStep.imageSrc" [alt]="currentStep.imageAlt"> //nombre de una variable de tu TypeScript ,ngular sabe que tiene que ir a buscar la foto de la carpeta assets/bienvenida1/
+    <img [src]="currentStep.imageSrc" [alt]="currentStep.imageAlt"> 
   </div>
 
   <div class="content-panel">
@@ -9,7 +8,7 @@
       <h2 class="text-marron fw-bold">{{ currentStep.title }}</h2>
       <p class="text-muted">{{ currentStep.text }}</p>
     </div>
-    <a [routerLink]="currentStep.nextLink" class="btn btn-naranja">{{ currentStep.buttonText }}</a> //destruye el componente actual y dibuja el siguiente sin recargar la página.
+    <a [routerLink]="currentStep.nextLink" class="btn btn-naranja">{{ currentStep.buttonText }}</a>
   </div>
 
 </div>
