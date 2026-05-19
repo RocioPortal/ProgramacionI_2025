@@ -50,16 +50,17 @@
 
 /* --- Estados (Clases dinámicas) --- */
 .status {
-  font-weight: bold;
-  padding: 5px 12px;
-  border-radius: 15px;
-  font-size: 14px;
-  color: #fff;
-  text-transform: capitalize;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: .82rem;
+  font-weight: 600;
 }
-.status.Confirmado { background-color: #198754; }
-.status.Pendiente { background-color: #ffc107; color: #333; }
-.status.Cancelado { background-color: #dc3545; }
+.estado-pendiente { background-color: #f59e0b; color: white; }
+.estado-preparacion { background-color: #f97316; color: white; }
+.estado-retiro { background-color: #3b82f6; color: white; }
+.estado-entregado { background-color: #10b981; color: white; }
+.estado-cancelado { background-color: #ef4444; color: white; }
+.estado-confirmado { background-color: #10b981; color: white; }
 
 /* --- Acciones (Botones) --- */
 .acciones {

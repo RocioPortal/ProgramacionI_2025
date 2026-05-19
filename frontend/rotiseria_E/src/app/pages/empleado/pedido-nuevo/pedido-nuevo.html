@@ -1,56 +1,173 @@
 <nav class="navbar bg-brand">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold text-white" routerLink="/empleado/pedidos">← Volver</a>
-      <span class="navbar-text text-white fw-bold">Agregar Pedido</span>
-      <span></span>
-    </div>
-  </nav>
-  
-  <div class="container pt-4">
-  
-    <div class="text-center mb-3">
-      <button type="button" class="pill-tab">NUEVO PEDIDO</button>
-    </div>
-  
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-white" routerLink="/empleado/pedidos">← Volver</a>
+    <span class="navbar-text text-white fw-bold">Nuevo Pedido</span>
+    <span></span>
+  </div>
+</nav>
+
+<div class="container pt-4 pb-5">
+
+  <!-- Indicador de pasos -->
+  <div class="d-flex justify-content-center gap-2 mb-4">
+    <span class="paso-chip" [class.activo]="paso === 1" [class.completado]="paso > 1">1. Cliente</span>
+    <span class="paso-chip" [class.activo]="paso === 2" [class.completado]="paso > 2">2. Productos</span>
+    <span class="paso-chip" [class.activo]="paso === 3">3. Confirmar</span>
+  </div>
+
+  <!-- ── PASO 1: Buscar cliente ── -->
+  <div *ngIf="paso === 1">
     <div class="card info-card">
-      <div class="info-row">
-        <div class="info-label">Id Pedido</div>
-        <div># 5431</div>
+      <p class="fw-bold mb-3">Buscar cliente por email</p>
+
+      <div class="d-flex gap-2 mb-3">
+        <input type="email" class="form-control" [(ngModel)]="busquedaEmail"
+               placeholder="email@ejemplo.com"
+               (keyup.enter)="buscarCliente()">
+        <button class="btn btn-custom" (click)="buscarCliente()" [disabled]="buscando">
+          <span *ngIf="buscando" class="spinner-border spinner-border-sm"></span>
+          <i *ngIf="!buscando" class="bi bi-search"></i>
+        </button>
       </div>
-      <div class="info-row">
-        <div class="info-label">Nombre</div>
-        <div>Claudia</div>
-      </div>
-      <div class="info-row">
-        <div class="info-label">Teléfono</div>
-        <div>261241543</div>
-      </div>
-      <div class="info-row">
-        <div class="info-label">Productos</div>
-        <div>Pizza muzza, lata stella</div>
-      </div>
-      <div class="info-row">
-        <div class="info-label">Detalles</div>
-        <div>Tener en cuenta …</div>
-      </div>
-    </div>
-  
-    <div class="totals-box">
-      <div class="d-flex justify-content-between mb-2">
-        <span>Subtotal</span>
-        <input type="number" class="form-control form-control-sm" placeholder="$ Ingrese monto" style="max-width: 180px;">
-      </div>
-      <div class="d-flex justify-content-between mb-2">
-        <span>Código de promoción</span>
-        <input type="text" class="form-control form-control-sm" placeholder="$ --------" style="max-width: 180px;">
-      </div>
-      <div class="d-flex justify-content-between fw-bold mt-3">
-        <span>Total</span>
-        <span>$ 0</span>
+
+      <div *ngIf="errorCliente" class="alert alert-danger py-2">{{ errorCliente }}</div>
+
+      <!-- Cliente encontrado -->
+      <div *ngIf="clienteEncontrado" class="cliente-encontrado">
+        <i class="bi bi-person-check-fill me-2 text-success"></i>
+        <div>
+          <div class="fw-bold">{{ clienteEncontrado.nombre }}</div>
+          <div class="text-muted" style="font-size:.85rem">{{ clienteEncontrado.email }}</div>
+          <div class="text-muted" style="font-size:.85rem" *ngIf="clienteEncontrado.telefono">
+            <i class="bi bi-telephone me-1"></i>{{ clienteEncontrado.telefono }}
+          </div>
+        </div>
       </div>
     </div>
-  
-    <div class="text-center">
-      <a routerLink="/empleado/pedidos" class="btn btn-custom btn-confirmar">Confirmar</a>
+
+    <button class="btn btn-custom btn-confirmar" (click)="siguientePaso()" [disabled]="!clienteEncontrado">
+      Siguiente <i class="bi bi-arrow-right ms-1"></i>
+    </button>
+  </div>
+
+  <!-- ── PASO 2: Elegir productos ── -->
+  <div *ngIf="paso === 2">
+
+    <!-- Buscador de productos -->
+    <input type="text" class="form-control mb-3" [(ngModel)]="busquedaProducto"
+           placeholder="Buscar producto...">
+
+    <div *ngIf="cargandoProductos" class="text-center py-4">
+      <div class="spinner-border" style="color:var(--color-principal)"></div>
+    </div>
+
+    <!-- Lista de productos -->
+    <div *ngFor="let prod of productosFiltrados" class="producto-row">
+      <div class="d-flex align-items-center gap-2 flex-fill">
+        <img *ngIf="prod.img" [src]="prod.img" class="rounded" style="width:48px;height:48px;object-fit:cover" alt="">
+        <div>
+          <div class="fw-semibold" style="font-size:.95rem">{{ prod.nombre }}</div>
+          <!-- Con descuento -->
+          <div *ngIf="prod.descuento && prod.descuento > 0">
+            <span class="text-muted text-decoration-line-through" style="font-size:.78rem">${{ prod.precio }}</span>
+            <span class="fw-bold ms-1" style="font-size:.85rem; color: var(--color-principal)">
+              ${{ prod.precio - (prod.precio * prod.descuento / 100) | number:'1.0-0' }}
+            </span>
+            <span class="badge bg-success ms-1" style="font-size:.7rem">-{{ prod.descuento }}%</span>
+          </div>
+          <!-- Sin descuento -->
+          <div *ngIf="!prod.descuento || prod.descuento === 0" class="text-muted" style="font-size:.82rem">
+            ${{ prod.precio }}
+          </div>
+        </div>
+      </div>
+      <div class="cantidad-control">
+        <button class="btn-cant" (click)="quitar(prod)">−</button>
+        <span class="cant-num">{{ getCantidad(prod.id_prod) }}</span>
+        <button class="btn-cant" (click)="agregar(prod)">+</button>
+      </div>
+    </div>
+
+    <div *ngIf="productosFiltrados.length === 0 && !cargandoProductos" class="text-center text-muted py-4">
+      Sin productos disponibles.
+    </div>
+
+    <!-- Resumen carrito -->
+    <div *ngIf="carrito.length > 0" class="totals-box mt-3">
+      <div class="d-flex justify-content-between fw-bold">
+        <span>{{ carrito.length }} producto(s) seleccionado(s)</span>
+        <span>${{ total }}</span>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn btn-outline-secondary flex-fill" (click)="volverPaso()">← Volver</button>
+      <button class="btn btn-custom flex-fill" (click)="siguientePaso()" [disabled]="carrito.length === 0">
+        Siguiente <i class="bi bi-arrow-right ms-1"></i>
+      </button>
     </div>
   </div>
+
+  <!-- ── PASO 3: Confirmación ── -->
+  <div *ngIf="paso === 3">
+
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+    <div class="card info-card mb-3">
+      <p class="fw-bold mb-2">Cliente</p>
+      <div class="info-row">
+        <div class="info-label">Nombre</div>
+        <div>{{ clienteEncontrado?.nombre }}</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Email</div>
+        <div>{{ clienteEncontrado?.email }}</div>
+      </div>
+      <div class="info-row" *ngIf="clienteEncontrado?.telefono">
+        <div class="info-label">Teléfono</div>
+        <div>{{ clienteEncontrado?.telefono }}</div>
+      </div>
+    </div>
+
+    <div class="card info-card mb-3">
+      <p class="fw-bold mb-2">Productos del pedido</p>
+      <div *ngFor="let item of carrito" class="info-row">
+        <div class="info-label">{{ item.nombre }}</div>
+        <div>
+          x{{ item.cantidad }} ·
+          <ng-container *ngIf="item.descuento && item.descuento > 0">
+            <span class="text-decoration-line-through text-muted" style="font-size:.85rem">
+              ${{ item.precio * item.cantidad }}
+            </span>
+            <span class="fw-bold ms-1" style="color:var(--color-principal)">
+              ${{ (item.precio - (item.precio * item.descuento / 100)) * item.cantidad | number:'1.0-0' }}
+            </span>
+            <span class="badge bg-success ms-1" style="font-size:.75rem">-{{ item.descuento }}%</span>
+          </ng-container>
+          <ng-container *ngIf="!item.descuento || item.descuento === 0">
+            ${{ item.precio * item.cantidad }}
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="totals-box">
+      <div class="d-flex justify-content-between fw-bold">
+        <span>Total</span>
+        <span>${{ total }}</span>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn btn-outline-secondary flex-fill" (click)="volverPaso()" [disabled]="enviando">
+        ← Volver
+      </button>
+      <button class="btn btn-custom flex-fill" (click)="confirmarPedido()" [disabled]="enviando">
+        <span *ngIf="enviando" class="spinner-border spinner-border-sm me-1"></span>
+        <i *ngIf="!enviando" class="bi bi-check-lg me-1"></i>
+        Confirmar pedido
+      </button>
+    </div>
+  </div>
+
+</div>

@@ -59,6 +59,10 @@
           <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Debe tener al menos 6 caracteres.</div>
         </div>
       </div>
+      <div class="alert alert-info mt-3" style="font-size:.9rem">
+        <i class="bi bi-info-circle me-2"></i>
+        Tu cuenta quedará pendiente de aprobación. Un empleado deberá activarla antes de que puedas iniciar sesión.
+      </div>
 
       <button type="submit" class="btn btn-custom w-100" [disabled]="registerForm.invalid">Crear cuenta</button>
 

@@ -49,13 +49,14 @@
   </a>
 
   <div class="card shadow-sm p-3 mt-4 border-0 rounded-4">
-    <div class="mb-3">
-      <label class="form-label fw-bold">Nombre</label>
-      <input type="text" class="form-control" [(ngModel)]="nombreCliente" placeholder="Tu nombre para el pedido">
-    </div>
-    <div class="mb-3">
-      <label class="form-label fw-bold">Teléfono</label>
-      <input type="tel" class="form-control" [(ngModel)]="telefonoCliente" placeholder="Tu teléfono de contacto">
+    <div class="d-flex align-items-center gap-2 mb-3 p-2 rounded-3" style="background:#f9f9f9">
+      <i class="bi bi-person-circle fs-4 text-muted"></i>
+      <div>
+        <div class="fw-bold" style="font-size:.95rem">{{ nombreCliente }}</div>
+        <div class="text-muted" style="font-size:.82rem">
+          <i class="bi bi-telephone me-1"></i>{{ telefonoCliente || 'Sin teléfono registrado' }}
+        </div>
+      </div>
     </div>
     <hr>
     <div class="d-flex justify-content-between text-muted">

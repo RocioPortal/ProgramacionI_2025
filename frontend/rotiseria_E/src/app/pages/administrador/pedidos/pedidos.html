@@ -27,7 +27,14 @@
         <tr *ngFor="let pedido of pedidos">
           <td># {{ pedido.id_pedido }}</td>
           <td>{{ pedido.nombre }}</td> <td>
-            <span class="status {{ pedido.estado | titlecase }}">{{ pedido.estado | titlecase }}</span>
+            <span class="status" [ngClass]="{
+              'estado-pendiente': pedido.estado === 'pendiente',
+              'estado-preparacion': pedido.estado === 'en preparación',
+              'estado-retiro': pedido.estado === 'listo para retiro',
+              'estado-entregado': pedido.estado === 'entregado',
+              'estado-cancelado': pedido.estado === 'cancelado',
+              'estado-confirmado': pedido.estado === 'confirmado'
+            }">{{ pedido.estado | titlecase }}</span>
           </td>
           <td class="acciones">
             <button class="accion-editar" (click)="verDetalle(pedido)" title="Editar">✎</button>
@@ -57,26 +64,33 @@
 
 <div id="pantallaDetalle" *ngIf="!mostrarLista && pedidoSeleccionado">
   <header>
-    <button (click)="cancelar()" class="btn btn-outline-light" style="width: 90px; position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%);">← volver</button>
+    <button (click)="cancelar()" class="btn btn-outline-light"
+      style="width: 90px; position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%);">
+      ← volver
+    </button>
     Información del pedido
   </header>
   <div class="container">
     <p><b>ID Pedido:</b> {{ pedidoSeleccionado.id_pedido }}</p>
-    <p><b>Nombre:</b> {{ pedidoSeleccionado.nombre }}</p>
-    <p><b>Teléfono:</b> {{ pedidoSeleccionado.telefono }}</p>
+    <p><b>Nombre:</b> {{ pedidoSeleccionado.usuario?.nombre || pedidoSeleccionado.nombre }}</p>
+    <p><b>Teléfono:</b> {{ pedidoSeleccionado.usuario?.telefono || 'No especificado' }}</p>
     <p><b>Email:</b> {{ pedidoSeleccionado.usuario?.email || 'No especificado' }}</p>
+    <p><b>Fecha:</b> {{ pedidoSeleccionado.fecha_pedido }}</p>
     <p>
       <b>Estado:</b>
       <select id="estadoPedido" [(ngModel)]="pedidoSeleccionado.estado">
         <option value="pendiente">Pendiente</option>
-        <option value="confirmado">Confirmado</option>
+        <option value="en preparación">En preparación</option>
+        <option value="listo para retiro">Listo para retiro</option>
+        <option value="entregado">Entregado</option>
         <option value="cancelado">Cancelado</option>
       </select>
     </p>
 
     <h5>Productos en este pedido</h5>
     <ul class="list-group list-group-flush mb-3">
-      <li *ngFor="let item of pedidoSeleccionado.ordenes" class="list-group-item d-flex justify-content-between">
+      <li *ngFor="let item of pedidoSeleccionado.ordenes"
+          class="list-group-item d-flex justify-content-between">
         <span>{{ item.cantidad }}x {{ item.producto.nombre }}</span>
         <span>{{ item.precio_total | currency }}</span>
       </li>

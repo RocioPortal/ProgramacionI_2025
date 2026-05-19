@@ -7,7 +7,7 @@
 </nav>
 
 <div class="container pt-4">
-  <div class="text-center mb-3">
+  <div class="text-center mb-3 d-flex gap-2 justify-content-center">
     <button 
       type="button" 
       class="btn btn-pedidos-pill"
@@ -15,6 +15,9 @@
       (click)="filtrarPendientes()">
       {{ estadoFiltro === 'Pendiente' ? 'MOSTRAR TODOS' : 'PEDIDOS PENDIENTES' }}
     </button>
+    <a routerLink="/empleado/pedido-nuevo" class="btn btn-pedidos-pill">
+      <i class="bi bi-plus-lg me-1"></i>NUEVO PEDIDO
+    </a>
   </div>
 
   <hr class="mt-4">

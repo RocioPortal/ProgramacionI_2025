@@ -18,6 +18,9 @@ def login():                                                #verifica credencial
     if not usuario or not usuario.validate_pass(password):
         return {'mensaje': 'Email o contraseña incorrectos'}, 401
 
+    if usuario.estado == 'suspendido':
+        return {'mensaje': 'Tu cuenta está pendiente de aprobación. Contactá con el local.'}, 403
+
     access_token = create_access_token(identity=str(usuario.id_user))
 
     return {
@@ -44,6 +47,7 @@ def register():                                                 #crea el usuario
 
     try:
         nuevo_usuario = Usuario.from_json(data)
+        nuevo_usuario.estado = 'suspendido'
         db.session.add(nuevo_usuario)
         db.session.commit()
 

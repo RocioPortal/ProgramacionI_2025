@@ -23,6 +23,7 @@ class Pedido(db.Model):
         self.usuario = db.session.query(UsuarioModel).get_or_404(self.id_user)
         return {
             'id_pedido': self.id_pedido,
+            'id_user': self.id_user,
             'nombre': str(self.nombre),
             'estado': str(self.estado),
             'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
@@ -33,10 +34,21 @@ class Pedido(db.Model):
         self.usuario = db.session.query(UsuarioModel).get_or_404(self.id_user)
         return {
             'id_pedido': self.id_pedido,
+            'id_user': self.id_user,
             'nombre': str(self.nombre),
             'estado': str(self.estado),
             'fecha_pedido': self.fecha_pedido.strftime("%d/%m/%Y"),
-            'usuario': self.usuario.to_json()
+            'usuario': self.usuario.to_json(),
+            'ordenes': [
+                {
+                    'id_orden': o.id_orden,
+                    'cantidad': o.cantidad,
+                    'especificaciones': o.especificaciones,
+                    'precio_total': o.precio_total,
+                    'producto': o.producto.to_json() if o.producto else None
+                }
+                for o in self.ordenes
+            ]
         }
 
     def to_json_short(self):
@@ -65,7 +77,6 @@ class Pedido(db.Model):
 
 
         return Pedido(
-            id_pedido=id_pedido,
             id_user=id_user,
             nombre=nombre,
             estado=estado,

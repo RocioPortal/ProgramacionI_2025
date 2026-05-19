@@ -61,37 +61,57 @@ export class Notificaciones implements OnInit {
     }
   }
 
-  get pedidosConfirmados() { return this.pedidos.filter(p => p.estado === 'confirmado'); }
-  get pedidosPendientes() { return this.pedidos.filter(p => p.estado === 'pendiente'); }
-  get pedidosCancelados() { return this.pedidos.filter(p => p.estado === 'cancelado'); }
+  get pedidosConfirmados() {
+    return this.pedidos.filter(p =>
+      p.estado === 'entregado' || p.estado === 'listo para retiro'
+    );
+  }
+  get pedidosPendientes() {
+    return this.pedidos.filter(p =>
+      p.estado === 'pendiente' || p.estado === 'en preparación'
+    );
+  }
+  get pedidosCancelados() {
+    return this.pedidos.filter(p => p.estado === 'cancelado');
+  }
 
   getIconoEstado(estado: string): string {
-    if (estado === 'confirmado') return 'bi-check-circle-fill';
+    if (estado === 'entregado') return 'bi-check-circle-fill';
+    if (estado === 'listo para retiro') return 'bi-bag-check-fill';
+    if (estado === 'en preparación') return 'bi-fire';
     if (estado === 'pendiente') return 'bi-hourglass-split';
     return 'bi-x-circle-fill';
   }
 
   getClaseEstado(estado: string): string {
-    if (estado === 'confirmado') return 'bg-success-subtle text-success';
-    if (estado === 'pendiente') return 'bg-warning-subtle text-warning';
+    if (estado === 'entregado') return 'bg-success-subtle text-success';
+    if (estado === 'listo para retiro') return 'bg-info-subtle text-info';
+    if (estado === 'en preparación') return 'bg-warning-subtle text-warning';
+    if (estado === 'pendiente') return 'bg-secondary-subtle text-secondary';
     return 'bg-danger-subtle text-danger';
   }
 
   getBadgeEstado(estado: string): string {
-    if (estado === 'confirmado') return 'bg-success';
-    if (estado === 'pendiente') return 'bg-warning text-dark';
+    if (estado === 'entregado') return 'bg-success';
+    if (estado === 'listo para retiro') return 'bg-info';
+    if (estado === 'en preparación') return 'bg-warning text-dark';
+    if (estado === 'pendiente') return 'bg-secondary';
     return 'bg-danger';
   }
 
   getTituloEstado(estado: string): string {
-    if (estado === 'confirmado') return 'Pedido confirmado ✓';
+    if (estado === 'entregado') return 'Pedido entregado ✓';
+    if (estado === 'listo para retiro') return 'Listo para retirar 🛍️';
+    if (estado === 'en preparación') return 'En preparación 🔥';
     if (estado === 'pendiente') return 'Pedido pendiente';
     return 'Pedido cancelado';
   }
 
   getMensajeEstado(estado: string): string {
-    if (estado === 'confirmado') return 'Tu pedido fue confirmado y está listo.';
-    if (estado === 'pendiente') return 'Estamos procesando tu pedido.';
+    if (estado === 'entregado') return 'Tu pedido fue entregado. ¡Gracias!';
+    if (estado === 'listo para retiro') return 'Tu pedido está listo. Podés pasar a retirarlo.';
+    if (estado === 'en preparación') return 'Estamos preparando tu pedido.';
+    if (estado === 'pendiente') return 'Tu pedido está siendo procesado.';
     return 'Tu pedido fue cancelado.';
   }
 }

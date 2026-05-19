@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { PedidoService } from '../../../services/pedido';
 import { Pedido, OrdenItem } from '../../../interfaces/pedido.interfaces';
 import { getProductImage } from '../../../utils/image-helper';
-import { forkJoin } from 'rxjs'; 
 import { RouterLink } from '@angular/router'; 
 
 @Component({
@@ -43,20 +42,16 @@ export class PedidoInfo implements OnInit {
   }
 
   loadPedidoData(id: number): void {
-    forkJoin({
-      pedido: this.pedidoService.getPedidoById(id),
-      ordenesResponse: this.pedidoService.getOrdenesByPedidoId(id)
-    }).subscribe({
-      next: ({ pedido, ordenesResponse }) => {
+    this.pedidoService.getPedidoById(id).subscribe({
+      next: (pedido: any) => {
         this.pedido = pedido;
-        this.ordenes = ordenesResponse.ordenes;
+        this.ordenes = pedido.ordenes || [];
         this.selectedStatus = pedido.estado;
-        
         this.totalPedido = this.ordenes.reduce((sum, item) => sum + item.precio_total, 0);
       },
       error: (err) => {
         console.error('Error al cargar datos del pedido', err);
-        alert('No se pudo encontrar el pedido o sus productos.');
+        alert('No se pudo encontrar el pedido.');
         this.router.navigate(['/empleado/pedidos']);
       }
     });

@@ -6,6 +6,7 @@ export interface Product {
   precio: number;
   disponible: boolean;
   img?: string;
+  descuento?: number;
 }
 
 export interface PaginatedProducts {

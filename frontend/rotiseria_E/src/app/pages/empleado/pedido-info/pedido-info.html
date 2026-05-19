@@ -22,19 +22,25 @@
     </div>
     <div class="info-row">
       <div class="info-label">Teléfono</div>
-      <div class="fw-semibold">{{ pedido.telefono }}</div>
+<div class="fw-semibold">{{ pedido.usuario?.telefono || 'No especificado' }}</div>
     </div>
     <div class="info-row">
       <div class="info-label">Email</div>
       <div class="fw-semibold">{{ pedido.usuario?.email || 'No especificado' }}</div>
     </div>
+    <div class="info-row">
+      <div class="info-label">Fecha</div>
+      <div class="fw-semibold">{{ pedido.fecha_pedido }}</div>
+    </div>
     <div class="info-row"> 
       <div class="info-label">Estado</div>
       <div>
-        <select class="form-select select-lg" [(ngModel)]="selectedStatus">
-          <option *ngFor="let estado of posiblesEstados" [value]="estado">
-            {{ estado | titlecase }}
-          </option>
+        <select class="form-select" [(ngModel)]="selectedStatus">
+          <option value="pendiente">Pendiente</option>
+          <option value="en preparación">En preparación</option>
+          <option value="listo para retiro">Listo para retiro</option>
+          <option value="entregado">Entregado</option>
+          <option value="cancelado">Cancelado</option>
         </select>
       </div>
     </div>
@@ -52,6 +58,11 @@
         <span class="fw-bold">{{ item.producto.nombre }}</span>
         <small class="text-muted">Cantidad: {{ item.cantidad }}</small>
         <small class="text-muted" *ngIf="item.especificaciones">Notas: {{ item.especificaciones }}</small>
+        <!-- Precio original si hubo descuento -->
+        <small *ngIf="item.producto.descuento && item.producto.descuento > 0" class="text-muted">
+          <span class="text-decoration-line-through">${{ item.producto.precio * item.cantidad }}</span>
+          <span class="badge bg-success ms-1">-{{ item.producto.descuento }}%</span>
+        </small>
       </div>
       <span class="fw-bold">{{ item.precio_total | currency }}</span>
     </div>

@@ -57,20 +57,16 @@ export class Pedidos implements OnInit {
 
 
   verDetalle(pedido: Pedido): void {
-    
-    forkJoin({
-      pedido: this.pedidoService.getPedidoById(pedido.id_pedido),
-      ordenesResponse: this.pedidoService.getOrdenesByPedidoId(pedido.id_pedido)
-    }).subscribe({
-      next: ({ pedido, ordenesResponse }) => {
-        // Combinamos la info
-        pedido.ordenes = ordenesResponse.ordenes; 
-        pedido.total = ordenesResponse.ordenes.reduce((sum: number, item: any) => sum + item.precio_total, 0);
-        
-        this.pedidoSeleccionado = pedido;
+    this.pedidoService.getPedidoById(pedido.id_pedido).subscribe({
+      next: (pedidoCompleto: any) => {
+        pedidoCompleto.ordenes = pedidoCompleto.ordenes || [];
+        pedidoCompleto.total = pedidoCompleto.ordenes.reduce(
+          (sum: number, item: any) => sum + item.precio_total, 0
+        );
+        this.pedidoSeleccionado = pedidoCompleto;
         this.mostrarLista = false;
       },
-      error: (err) => alert('Error al cargar el detalle del pedido.')
+      error: () => alert('Error al cargar el detalle del pedido.')
     });
   }
 

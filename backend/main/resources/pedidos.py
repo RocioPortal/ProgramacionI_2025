@@ -34,7 +34,11 @@ class Pedido(Resource):
 
         data = request.get_json()
         pedido.nombre = data.get('nombre', pedido.nombre)
-        pedido.estado = data.get('estado', pedido.estado)
+        nuevo_estado = data.get('estado', pedido.estado)
+        estados_permitidos = ['pendiente', 'en preparación', 'listo para retiro', 'entregado', 'cancelado']
+        if nuevo_estado not in estados_permitidos:
+            return {"mensaje": f"Estado inválido. Los estados permitidos son: {estados_permitidos}"}, 400
+        pedido.estado = nuevo_estado
 
         db.session.commit()
 
@@ -108,41 +112,47 @@ class Pedidos(Resource):
         if not data.get('id_user'):
             return {"mensaje": "El campo 'id_user' es obligatorio"}, 400
 
-        nuevo_pedido = PedidoModel.from_json(data)
-        db.session.add(nuevo_pedido)
-        db.session.flush()  
+        try:
+            # 1. Crear y guardar el pedido primero
+            nuevo_pedido = PedidoModel.from_json(data)
+            db.session.add(nuevo_pedido)
+            db.session.commit()  # commit real, no flush
 
-        if productos:
-            for prod in productos:
-                id_prod = prod.get('id_prod')
-                cantidad = prod.get('cantidad', 1)
-                producto = db.session.get(ProductoModel, id_prod)
+            # 2. Ahora agregar las órdenes con el id_pedido real
+            if productos:
+                for prod in productos:
+                    id_prod = prod.get('id_prod')
+                    cantidad = prod.get('cantidad', 1)
+                    producto = db.session.get(ProductoModel, id_prod)
 
-                if not producto:
-                    db.session.rollback()
-                    return {"mensaje": f"Producto con ID {id_prod} no encontrado"}, 404
+                    if not producto:
+                        db.session.rollback()
+                        return {"mensaje": f"Producto con ID {id_prod} no encontrado"}, 404
 
-                # 1. Obtenemos el descuento (si no tiene, asumimos 0)
-                descuento = getattr(producto, 'descuento', 0)
-                
-                # 2. Calculamos el precio real rebajado
-                precio_rebajado = producto.precio - (producto.precio * descuento / 100)
-                
-                # 3. Lo multiplicamos por la cantidad y lo guardamos
-                precio_final = precio_rebajado * cantidad
+                    descuento = getattr(producto, 'descuento', 0) or 0
+                    precio_rebajado = producto.precio - (producto.precio * descuento / 100)
+                    precio_final = precio_rebajado * cantidad
 
-                orden = OrdenModel(
-                    id_pedido=nuevo_pedido.id_pedido,
-                    id_prod=id_prod,
-                    cantidad=cantidad,
-                    especificaciones=prod.get("especificaciones", ""),
-                    precio_total=precio_final
-                )
-                db.session.add(orden)
+                    orden = OrdenModel(
+                        id_pedido=nuevo_pedido.id_pedido,
+                        id_prod=id_prod,
+                        cantidad=cantidad,
+                        especificaciones=prod.get("especificaciones", ""),
+                        precio_total=precio_final
+                    )
+                    db.session.add(orden)
 
-        db.session.commit()
+                db.session.commit()  # commit de las órdenes
 
-        return {
-            "mensaje": "Pedido creado con éxito",
-            "pedido": nuevo_pedido.to_json_complete()
-        }, 201
+            # 3. Recargar el pedido limpio desde la BD
+            db.session.expire(nuevo_pedido)
+            pedido_final = db.session.get(PedidoModel, nuevo_pedido.id_pedido)
+
+            return {
+                "mensaje": "Pedido creado con éxito",
+                "pedido": pedido_final.to_json_complete()
+            }, 201
+
+        except Exception as e:
+            db.session.rollback()
+            return {"mensaje": f"Error al crear el pedido: {str(e)}"}, 500

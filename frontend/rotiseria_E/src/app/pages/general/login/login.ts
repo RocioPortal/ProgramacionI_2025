@@ -51,7 +51,11 @@ export class Login {
         }
       },
       error: (err) => {
-        this.errorMsg = 'Email o contraseña incorrectos.';
+        if (err.status === 403) {
+          this.errorMsg = 'Tu cuenta está pendiente de aprobación. Contactá con el local para activarla.';
+        } else {
+          this.errorMsg = 'Email o contraseña incorrectos.';
+        }
       }
     });
   }
