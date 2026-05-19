@@ -52,19 +52,27 @@
   <h5 class="mt-4 mb-3">Productos en este pedido</h5>
   <div class="card info-card">
     
-    <div *ngFor="let item of ordenes" class="order-item">
-      <img [src]="getProductImage(item.producto.nombre)" [alt]="item.producto.nombre" class="order-item-img">
-      <div class="order-item-info">
-        <span class="fw-bold">{{ item.producto.nombre }}</span>
-        <small class="text-muted">Cantidad: {{ item.cantidad }}</small>
-        <small class="text-muted" *ngIf="item.especificaciones">Notas: {{ item.especificaciones }}</small>
-        <!-- Precio original si hubo descuento -->
-        <small *ngIf="item.producto.descuento && item.producto.descuento > 0" class="text-muted">
-          <span class="text-decoration-line-through">${{ item.producto.precio * item.cantidad }}</span>
-          <span class="badge bg-success ms-1">-{{ item.producto.descuento }}%</span>
-        </small>
+    <div *ngFor="let item of ordenes" class="order-item flex-column align-items-start"> <div class="d-flex w-100 justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <img [src]="getProductImage(item.producto.nombre)" [alt]="item.producto.nombre" class="order-item-img me-3">
+          <div class="order-item-info">
+            <span class="fw-bold">{{ item.producto.nombre }}</span>
+            <small class="text-muted d-block">Cantidad: {{ item.cantidad }}</small>
+            
+            <small *ngIf="item.producto.descuento && item.producto.descuento > 0" class="text-muted d-block mt-1">
+              <span class="text-decoration-line-through">${{ item.producto.precio * item.cantidad }}</span>
+              <span class="badge bg-success ms-1">-{{ item.producto.descuento }}%</span>
+            </small>
+          </div>
+        </div>
+        <span class="fw-bold">{{ item.precio_total | currency }}</span>
       </div>
-      <span class="fw-bold">{{ item.precio_total | currency }}</span>
+
+      <div class="w-100 mt-2">
+        <label class="text-muted small fw-bold">Notas/Especificaciones:</label>
+        <input type="text" class="form-control form-control-sm" [(ngModel)]="item.especificaciones" placeholder="Ej: Sin sal, extra mayonesa...">
+      </div>
+
     </div>
 
     <hr *ngIf="ordenes && ordenes.length > 0">

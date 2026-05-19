@@ -42,15 +42,24 @@ export class PedidoService {
       headers: this.getAuthHeaders()
     });
   }
+
   createPedido(pedidoData: CrearPedidoRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/pedidos`, pedidoData, {
       headers: this.getAuthHeaders()
     });
   }
 
+  // Mantenemos este por si se usa en otro lado
   updatePedidoStatus(id: number, estado: string): Observable<any> {
     const body = { estado: estado };
     return this.http.put(`${this.apiUrl}/pedido/${id}`, body, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  // --- NUEVO MÉTODO GENÉRICO PARA ENVIAR EL PAQUETE COMPLETO ---
+  updatePedido(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/pedido/${id}`, data, {
       headers: this.getAuthHeaders()
     });
   }
@@ -60,16 +69,18 @@ export class PedidoService {
       headers: this.getAuthHeaders()
     });
   }
+
   getPedidosByUsuario(page: number = 1, perPage: number = 50, estado?: string): Observable<PaginatedPedidos> {
-  let params = new HttpParams()
-    .set('page', page.toString())
-    .set('per_page', perPage.toString());
-  if (estado) params = params.set('estado', estado);
-  return this.http.get<PaginatedPedidos>(`${this.apiUrl}/pedidos`, {
-    headers: this.getAuthHeaders(),
-    params
-  });
-}
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('per_page', perPage.toString());
+    if (estado) params = params.set('estado', estado);
+    return this.http.get<PaginatedPedidos>(`${this.apiUrl}/pedidos`, {
+      headers: this.getAuthHeaders(),
+      params
+    });
+  }
+
   getOrdenesByPedidoId(id_pedido: number): Observable<any> {
     let params = new HttpParams()
       .set('id_pedido', id_pedido.toString());

@@ -7,7 +7,7 @@ from main.auth.decorators import role_required
 
 class Notificacion(Resource):
     @jwt_required()
-    @role_required(['ADMIN', 'EMPEADO'])
+    @role_required(['ADMIN', 'EMPLEADO'])
     def post(self, usuario_id):
         data = request.get_json()
         

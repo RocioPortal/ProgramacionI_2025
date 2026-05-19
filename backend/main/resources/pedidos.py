@@ -35,6 +35,19 @@ class Pedido(Resource):
         data = request.get_json()
         pedido.nombre = data.get('nombre', pedido.nombre)
         
+        # --- NOVEDAD 1: ACTUALIZAR ESPECIFICACIONES (NOTAS) ---
+        # Recibimos la lista de órdenes desde Angular y actualizamos una por una
+        ordenes_data = data.get('ordenes')
+        if ordenes_data:
+            for ord_data in ordenes_data:
+                id_orden = ord_data.get('id_orden')
+                if id_orden:
+                    orden_db = db.session.get(OrdenModel, id_orden)
+                    # Verificamos que la orden exista y pertenezca a este pedido por seguridad
+                    if orden_db and orden_db.id_pedido == pedido.id_pedido:
+                        orden_db.especificaciones = ord_data.get('especificaciones', orden_db.especificaciones)
+        # ------------------------------------------------------
+
         nuevo_estado = data.get('estado')
         
         if nuevo_estado and nuevo_estado != pedido.estado:
@@ -46,6 +59,15 @@ class Pedido(Resource):
 
             from main.models import UsuarioModel
             from main.mail.functions import sendMail
+            from main.models.notificaciones import Notificacion # Importamos tu modelo
+
+            # --- NOVEDAD 2: CREAR NOTIFICACIÓN EN LA BASE DE DATOS ---
+            nueva_notificacion = Notificacion(
+                id_user=pedido.id_user,
+                mensaje=f"Tu pedido #{pedido.id_pedido} ahora se encuentra en estado: {nuevo_estado.upper()}"
+            )
+            db.session.add(nueva_notificacion)
+            # ---------------------------------------------------------
 
             cliente = db.session.get(UsuarioModel, pedido.id_user)
             if cliente and cliente.email:
@@ -60,7 +82,6 @@ class Pedido(Resource):
                     )
                 except Exception as e:
                     print(f"Error al enviar el mail: {e}")
-            # ---------------------------------
 
         db.session.commit()
 
@@ -75,7 +96,7 @@ class Pedidos(Resource):
     @role_required(['ADMIN', 'EMPLEADO', 'USER'])
     def get(self):
         from flask_jwt_extended import get_jwt_identity
-        from main.models import UsuarioModel # ACÁ VOLVEMOS A DEJARLO DONDE LO TENÍAS VOS
+        from main.models import UsuarioModel
 
         usuario_actual_id = get_jwt_identity()
         usuario_actual = db.session.get(UsuarioModel, usuario_actual_id)

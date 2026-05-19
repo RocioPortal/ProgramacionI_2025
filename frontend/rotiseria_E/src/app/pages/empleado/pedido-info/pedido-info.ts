@@ -13,7 +13,6 @@ import { RouterLink } from '@angular/router';
   imports: [ CommonModule, FormsModule, RouterLink ],
   templateUrl: './pedido-info.html',
   styleUrl: './pedido-info.css'
-
 })
 export class PedidoInfo implements OnInit {
 
@@ -25,7 +24,7 @@ export class PedidoInfo implements OnInit {
   public getProductImage = getProductImage;
 
   posiblesEstados = [
-    'pendiente', 'confirmado', 'cancelado'
+    'pendiente', 'en preparación', 'listo para retiro', 'entregado', 'cancelado'
   ];
 
   constructor(
@@ -59,13 +58,21 @@ export class PedidoInfo implements OnInit {
 
   guardarEstado(): void {
     if (!this.pedido) return;
-    this.pedidoService.updatePedidoStatus(this.pedido.id_pedido, this.selectedStatus).subscribe({
+    
+    // Armamos el paquete con el estado y la lista de órdenes editables
+    const payload = {
+      estado: this.selectedStatus,
+      ordenes: this.ordenes 
+    };
+
+    // Usamos el método genérico updatePedido
+    this.pedidoService.updatePedido(this.pedido.id_pedido, payload).subscribe({
       next: () => {
-        alert('Estado del pedido actualizado con éxito.');
+        alert('Pedido actualizado con éxito (Estado y Notas guardadas).');
         this.router.navigate(['/empleado/pedidos']);
       },
       error: (err) => {
-        console.error('Error al actualizar el estado', err);
+        console.error('Error al actualizar', err);
         alert('Hubo un error al guardar los cambios.');
       }
     });
