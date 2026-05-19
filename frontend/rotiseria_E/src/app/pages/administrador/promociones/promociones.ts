@@ -41,7 +41,7 @@ export class Promociones implements OnInit {
   showForm() { this.mostrarLista = false; }
   showList() { this.mostrarLista = true; }
 
-  // La magia ocurre acá:
+
   guardarPromocion() {
     if (!this.productoSeleccionadoId || this.porcentajeDescuento <= 0) {
       alert('⚠️ Por favor, seleccioná un producto y un porcentaje válido.');
@@ -51,7 +51,6 @@ export class Promociones implements OnInit {
     const productoActual = this.productos.find(p => p.id_prod == this.productoSeleccionadoId || p.id_producto == this.productoSeleccionadoId);
     
     if (productoActual) {
-      // Le mandamos un PUT con su nuevo descuento
       const idParaActualizar = productoActual.id_prod || productoActual.id_producto;
       const productoActualizado = { ...productoActual, descuento: this.porcentajeDescuento };
 
@@ -59,7 +58,7 @@ export class Promociones implements OnInit {
         next: () => {
           alert('✅ ¡Promoción aplicada al producto con éxito!');
           this.mostrarLista = true;
-          this.cargarProductos(); // Recargamos la lista
+          this.cargarProductos(); 
           this.productoSeleccionadoId = null;
           this.porcentajeDescuento = 0;
         },
@@ -74,14 +73,13 @@ export class Promociones implements OnInit {
       
       const idParaActualizar = promo.id_prod || promo.id_producto;
       
-      // Armamos el paquete de datos y le inyectamos la bandera que activará el mail en Flask
       const datosActualizados = {
         nombre: promo.nombre,
         descripcion: promo.descripcion,
         precio: promo.precio,
         disponible: promo.disponible,
         descuento: promo.descuento,
-        notificar: true // <-- ¡Esta es la llave maestra!
+        notificar: true 
       };
 
       this.productService.updateProduct(idParaActualizar, datosActualizados).subscribe({

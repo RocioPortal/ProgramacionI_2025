@@ -116,7 +116,7 @@ class Pedidos(Resource):
             # 1. Crear y guardar el pedido primero
             nuevo_pedido = PedidoModel.from_json(data)
             db.session.add(nuevo_pedido)
-            db.session.commit()  # commit real, no flush
+            db.session.commit()  
 
             # 2. Ahora agregar las órdenes con el id_pedido real
             if productos:

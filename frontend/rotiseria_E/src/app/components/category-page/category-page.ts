@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../../services/cart'; // <-- 1. IMPORTAMOS EL CARRITO
-import { Product as RealProduct } from '../../interfaces/product.interfaces'; // <-- 2. IMPORTAMOS LA INTERFAZ "REAL"
+import { CartService } from '../../services/cart'; 
+import { Product as RealProduct } from '../../interfaces/product.interfaces'; 
 
-// 3. ACTUALIZAMOS LA INTERFAZ LOCAL
 interface Product {
-  id_prod: number; // <-- Añadido ID
+  id_prod: number; 
   name: string;
   description: string;
-  price: number; // <-- Cambiado a number
+  price: number; 
   image: string;
 }
 

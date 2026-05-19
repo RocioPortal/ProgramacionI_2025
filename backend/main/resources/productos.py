@@ -31,7 +31,7 @@ class Producto(Resource):
         producto.disponible = data.get('disponible', producto.disponible)
         producto.descuento = data.get('descuento', producto.descuento)
 
-        # --- NUEVA LÓGICA DE NOTIFICACIONES POR MAIL ---
+        # LÓGICA DE NOTIFICACIONES POR MAIL ---
         if data.get('notificar') == True:
             clientes = db.session.query(UsuarioModel).filter(UsuarioModel.rol == 'USER').all()
             correos = [cliente.email for cliente in clientes]
@@ -40,7 +40,7 @@ class Producto(Resource):
                 sendMail(
                     to=correos,
                     subject=f"¡Oferta especial en {producto.nombre}!",
-                    template='promo_mail', # Nombre de la plantilla HTML
+                    template='promo_mail', 
                     producto=producto
                 )
         # -----------------------------------------------
