@@ -61,4 +61,3 @@ export interface PaginatedOrdenes {
   per_page: number;
 }
 
-//Ese archivo de interfaces no tiene memoria, solo saben la forma

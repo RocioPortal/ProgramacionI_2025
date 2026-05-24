@@ -25,7 +25,6 @@ export class Carrito implements OnInit {
   descuentoTotal: number = 0;
   totalFinal: number = 0;
 
-  // Datos del usuario cargados automáticamente
   nombreCliente: string = '';
   telefonoCliente: string = '';
 
@@ -49,7 +48,6 @@ export class Carrito implements OnInit {
       this.totalFinal = this.subtotal - this.descuentoTotal;
     });
 
-    // Cargar datos del usuario logueado
     const userId = this.authService.getUserId();
     if (userId) {
       this.userService.getUserById(Number(userId)).subscribe({

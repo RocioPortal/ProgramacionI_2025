@@ -29,7 +29,6 @@ export class CategoryPage implements OnInit {
   categoryTitle: string = '';
   products: Product[] = [];
 
-  // 4. ACTUALIZAMOS LOS DATOS DE PRUEBA (con id_prod y precio como número)
   private allData: { [key: string]: CategoryData } = {
     pizzas: {
       title: 'Pizzas',
@@ -101,14 +100,12 @@ export class CategoryPage implements OnInit {
 
   // 6. CREAMOS LA FUNCIÓN 'addToCart'
   addToCart(product: Product) {
-    // Transformamos el producto de "prueba" a un producto "real"
-    // que el CartService pueda entender
     const productToAdd: RealProduct = {
       id_prod: product.id_prod,
       nombre: product.name,
       descripcion: product.description,
       precio: product.price,
-      disponible: true // Asumimos que está disponible
+      disponible: true 
     };
 
     this.cartService.addProduct(productToAdd);

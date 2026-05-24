@@ -4,24 +4,23 @@ from main.models.usuarios import Usuario
 from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token, get_jwt, get_jwt_identity, verify_jwt_in_request, jwt_required
 from flask_jwt_extended.exceptions import NoAuthorizationError
-from main.mail.functions import sendMail                  # Importar la función para enviar correos
+from main.mail.functions import sendMail                  
 
-auth = Blueprint('auth', __name__, url_prefix='/auth') #Le dice a Flask: "Agrupá todas las rutas de este archivo y ponele a todas el prefijo /auth por delante".
-
+auth = Blueprint('auth', __name__, url_prefix='/auth') 
 @auth.route('/login', methods=['POST'])                  
-def login():                                                #verifica credenciales y devuelve el token JWT.
+def login():                                               
     data = request.get_json()
-    email = data.get('email')                #agarra el paquete con email y password que mandó el cliente
+    email = data.get('email')                
     password = data.get('password')
 
-    usuario = db.session.query(Usuario).filter_by(email=email).first()  #busca en la base de datos un usuario con ese email. Si no encuentra, devuelve None. Si encuentra, devuelve el objeto Usuario.
+    usuario = db.session.query(Usuario).filter_by(email=email).first()  
     if not usuario or not usuario.validate_pass(password):
         return {'mensaje': 'Email o contraseña incorrectos'}, 401
 
     if usuario.estado == 'suspendido':
         return {'mensaje': 'Tu cuenta está pendiente de aprobación. Contactá con el local.'}, 403
 
-    access_token = create_access_token(identity=str(usuario.id_user)) #máquina que fabrica el Token JWT
+    access_token = create_access_token(identity=str(usuario.id_user)) 
 
 
     return {
@@ -36,15 +35,15 @@ def login():                                                #verifica credencial
 
 
 @auth.route('/register', methods=['POST'])
-def register():                                                 #crea el usuario y manda el mail de bienvenida.
+def register():                                                 
     data = request.get_json()
 
-    if not data.get("email") or not data.get("password") or not data.get("nombre"):  #Verifica que no falten datos
+    if not data.get("email") or not data.get("password") or not data.get("nombre"): 
         return {"mensaje": "Faltan datos obligatorios (email, nombre o password)"}, 400
 
     existe = db.session.query(Usuario).filter_by(email=data["email"]).first()
     if existe:
-        return {"mensaje": "El email ya está registrado"}, 409  #conflicto
+        return {"mensaje": "El email ya está registrado"}, 409  
 
     try:
         nuevo_usuario = Usuario.from_json(data)
@@ -53,8 +52,7 @@ def register():                                                 #crea el usuario
         db.session.add(nuevo_usuario)
         db.session.commit()
 
-        # Enviar correo de bienvenida
-        sendMail(                                          # garra plantilla HTML register.html
+        sendMail(                                          
             to=[nuevo_usuario.email],         
             subject="¡Bienvenid@ a nuestra aplicación!",
             template="register",

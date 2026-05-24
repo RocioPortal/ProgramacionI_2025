@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common'; // <-- Importante
-import { FormsModule } from '@angular/forms'; // <-- Importante
-import { getProductImage } from '../../../utils/image-helper'; // <-- 1. IMPORTA EL HELPER
-// --- Imports de Servicios y Modelos ---
+import { CommonModule } from '@angular/common'; 
+import { FormsModule } from '@angular/forms'; 
+import { getProductImage } from '../../../utils/image-helper'; 
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../interfaces/product.interfaces';
 
@@ -12,8 +11,8 @@ import { Product } from '../../../interfaces/product.interfaces';
   standalone: true,
   imports: [
     RouterLink,
-    CommonModule, // <-- Añadido
-    FormsModule   // <-- Añadido
+    CommonModule, 
+    FormsModule  
   ],
   templateUrl: './stock.html',
   styleUrl: './stock.css'
@@ -23,8 +22,8 @@ export class Stock implements OnInit {
   products: Product[] = [];
   currentPage: number = 1;
   totalPages: number = 1;
-  perPage: number = 10; // Productos por página
-  public getProductImage = getProductImage; // <-- 2. AÑADE ESTA LÍNEA
+  perPage: number = 10; 
+  public getProductImage = getProductImage; 
   
   constructor(private productService: ProductService) {}
 
@@ -32,7 +31,6 @@ export class Stock implements OnInit {
     this.loadProducts();
   }
 
-  // --- 1. CARGAR PRODUCTOS (Paginados) ---
   loadProducts(): void {
     this.productService.getProducts(this.currentPage, this.perPage).subscribe(response => {
       this.products = response.productos;
@@ -40,25 +38,21 @@ export class Stock implements OnInit {
     });
   }
 
-  // --- 2. ACTUALIZAR DISPONIBILIDAD (PUT) ---
   updateDisponibilidad(product: Product, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
 
     this.productService.updateProduct(product.id_prod, { disponible: isChecked }).subscribe({
       next: () => {
-        // Actualiza el estado localmente para que se vea el cambio
         product.disponible = isChecked; 
         console.log(`Estado de ${product.nombre} actualizado a ${isChecked}`);
       },
       error: (err) => {
         alert('Error al actualizar el producto.');
-        // Revertimos el switch si falla la API
         (event.target as HTMLInputElement).checked = !isChecked;
       }
     });
   }
 
-  // --- 3. PAGINACIÓN ---
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;

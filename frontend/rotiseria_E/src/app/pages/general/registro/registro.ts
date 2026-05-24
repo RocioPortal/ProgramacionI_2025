@@ -45,14 +45,12 @@ export class Registro {
       next: (res) => {
         console.log('Registro exitoso!', res);
         this.successMsg = '¡Te has registrado con éxito! Serás redirigido al login...';
-        // Espera 2 segundos y redirige al login
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 2000);
       },
       error: (err) => {
         console.error('Error de registro:', err);
-        // El backend puede enviar un mensaje de error específico
         this.errorMsg = err.error?.mensaje || 'Ocurrió un error durante el registro.';
       }
     });

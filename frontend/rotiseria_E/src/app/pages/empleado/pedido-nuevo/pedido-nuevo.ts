@@ -17,24 +17,19 @@ import { CartItem, CrearOrdenItem } from '../../../interfaces/pedido.interfaces'
 })
 export class PedidoNuevo implements OnInit {
 
-  // Paso actual: 1 = datos cliente, 2 = elegir productos, 3 = confirmación
   paso = 1;
 
-  // Datos del cliente (búsqueda)
   busquedaEmail = '';
   clienteEncontrado: any = null;
   errorCliente = '';
   buscando = false;
 
-  // Productos disponibles
   productos: Product[] = [];
   cargandoProductos = false;
   busquedaProducto = '';
 
-  // Carrito del pedido
   carrito: CartItem[] = [];
 
-  // Estado del envío
   enviando = false;
   error = '';
 

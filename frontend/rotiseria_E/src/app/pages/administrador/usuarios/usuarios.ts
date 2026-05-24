@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importamos ReactiveFormsModule
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'; 
 import { RouterLink } from '@angular/router';
 
-import { UserService } from '../../../services/user'; // <-- Servicio real
-import { User } from '../../../interfaces/user.interfaces';    // <-- Interfaz real
+import { UserService } from '../../../services/user'; 
+import { User } from '../../../interfaces/user.interfaces';    
 import { BotonVolverComponent } from '../componentes/boton-volver/boton-volver';
 
 @Component({

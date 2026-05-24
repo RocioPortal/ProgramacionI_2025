@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UserService } from '../../../services/user'; // <-- Servicio
-import { User } from '../../../interfaces/user.interfaces'; // <-- Interfaz
+import { UserService } from '../../../services/user'; 
+import { User } from '../../../interfaces/user.interfaces';
 
 @Component({
   selector: 'app-clientes',
@@ -42,21 +42,16 @@ export class Clientes implements OnInit {
     });
   }
 
-  // --- ¡NUEVA FUNCIÓN AÑADIDA! ---
-  /**
-   * Cambia el estado de un usuario (activo <-> suspendido)
-   */
   toggleEstado(user: User): void {
     const nuevoEstado = user.estado === 'activo' ? 'suspendido' : 'activo';
     const accion = nuevoEstado === 'suspendido' ? 'suspender' : 'reactivar';
 
     if (confirm(`¿Estás seguro de que deseas ${accion} a ${user.nombre}?`)) {
       
-      // Llamamos al servicio para actualizar solo el estado
       this.userService.updateUser(user.id_user, { estado: nuevoEstado }).subscribe({
         next: () => {
           alert(`Cliente ${accion} con éxito.`);
-          this.loadClientes(); // Recargamos la lista para ver el cambio
+          this.loadClientes();
         },
         error: (err) => {
           alert('Error al actualizar el estado del cliente.');
@@ -66,7 +61,6 @@ export class Clientes implements OnInit {
     }
   }
 
-  // --- PAGINACIÓN ---
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;

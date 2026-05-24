@@ -2,11 +2,11 @@
    VARIABLES DE MARCA Y RESET
 ================================ */
 :root {
-  --color-principal: #FF4500;   /* naranja vibrante principal */
-  --color-secundario:#D32F2F;   /* rojo para detalles o alertas */
-  --color-texto:     #7B3F00;   /* marrón oscuro para títulos */
-  --color-fondo:     #FFEBD5;   /* fondo crema suave */
-  --color-ink:       #2d2a26;   /* texto estándar */
+  --color-principal: #FF4500;   
+  --color-secundario:#D32F2F;  
+  --color-texto:     #7B3F00;   
+  --color-fondo:     #FFEBD5;   
+  --color-ink:       #2d2a26;   
 
   --radius-lg:       20px;
   --radius-pill:     999px;

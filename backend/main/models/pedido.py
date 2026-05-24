@@ -8,15 +8,14 @@ class Pedido(db.Model):
     id_pedido = db.Column(db.Integer, primary_key=True)
     id_user = db.Column(db.Integer, db.ForeignKey('usuario.id_user'), nullable=False)
     nombre = db.Column(db.String(100), nullable=False)
-    estado = db.Column(db.String(20), nullable=False, default='pendiente')  #todo pedido nuevo entra por default como pendiente
+    estado = db.Column(db.String(20), nullable=False, default='pendiente') 
     fecha_pedido = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    usuario = db.relationship("Usuario", back_populates="pedidos")  #relacion con usuario (para obtener el nombre)
+    usuario = db.relationship("Usuario", back_populates="pedidos") 
     
-    # Relación con tabla intermedia Orden
     ordenes = db.relationship("Orden",back_populates="pedido",cascade="all, delete-orphan",lazy="select",passive_deletes=True)
     
-    def __repr__(self):                           #Si imprimís el pedido en la consola, va a aparecer asi
+    def __repr__(self):                         
         return f"<Pedido nombre='{self.nombre}', estado='{self.estado}'>"
 
     def to_json(self):
@@ -51,7 +50,7 @@ class Pedido(db.Model):
             ]
         }
 
-    def to_json_short(self):      #Manda SOLO los datos del ticket, sin el cliente
+    def to_json_short(self):      
         return {
             'id_pedido': self.id_pedido,
             'nombre': str(self.nombre),

@@ -19,7 +19,6 @@ import { ProductService } from '../../../services/product.service'; // <-- FUNDA
 export class Promociones implements OnInit {
   mostrarLista: boolean = true;
   
-  // Variables reales conectadas a tu DB
   productos: any[] = [];
   productoSeleccionadoId: number | null = null;
   porcentajeDescuento: number = 0;
@@ -81,7 +80,6 @@ export class Promociones implements OnInit {
     }
   }
 
-  // --- NUEVA FUNCIÓN PARA MANDAR MAILS REUTILIZANDO EL SERVICIO ---
   enviarNotificacion(promo: any) {
     if (confirm(`¿Querés enviar esta promoción de ${promo.nombre} por mail a todos los clientes?`)) {
       

@@ -34,18 +34,18 @@ class Producto(Resource):
 
         # NOTIFICACIONES POR MAIL 
         if data.get('notificar') == True:
-            clientes = db.session.query(UsuarioModel).filter(UsuarioModel.rol == 'USER').all()  #va a la BD y busca a todos los users
-            correos = [cliente.email for cliente in clientes]  #junta todos sus correos en una lista
+            clientes = db.session.query(UsuarioModel).filter(UsuarioModel.rol == 'USER').all() 
+            correos = [cliente.email for cliente in clientes]
             
             if correos:
                 sendMail(
                     to=correos,
                     subject=f"¡Oferta especial en {producto.nombre}!",
-                    template='promo_mail',  #plantilla templates de html
+                    template='promo_mail',  
                     producto=producto
                 )
 
-        db.session.commit()   #manda por mail y guarda
+        db.session.commit()  
         return {'message': 'Producto actualizado con éxito'}, 200
 
     @jwt_required()

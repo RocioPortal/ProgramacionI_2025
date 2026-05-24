@@ -5,7 +5,7 @@ from main.models import PedidoModel, OrdenModel, ProductoModel
 from .. import db
 from main.auth.decorators import role_required
 
-class Pedido(Resource):              #Manejar un ticket puntual
+class Pedido(Resource):              
     @jwt_required()
     @role_required(['USER', 'ADMIN', 'EMPLEADO'])
     def get(self, id):
@@ -35,8 +35,6 @@ class Pedido(Resource):              #Manejar un ticket puntual
         data = request.get_json()
         pedido.nombre = data.get('nombre', pedido.nombre)
         
-        # --- NOVEDAD 1: ACTUALIZAR ESPECIFICACIONES (NOTAS) ---
-        # Recibimos la lista de órdenes desde Angular y actualizamos una por una
         ordenes_data = data.get('ordenes')
         if ordenes_data:
             for ord_data in ordenes_data:
@@ -46,7 +44,6 @@ class Pedido(Resource):              #Manejar un ticket puntual
                     # Verificamos que la orden exista y pertenezca a este pedido por seguridad
                     if orden_db and orden_db.id_pedido == pedido.id_pedido:
                         orden_db.especificaciones = ord_data.get('especificaciones', orden_db.especificaciones)
-        # ------------------------------------------------------
 
         nuevo_estado = data.get('estado')
         
@@ -59,15 +56,13 @@ class Pedido(Resource):              #Manejar un ticket puntual
 
             from main.models import UsuarioModel
             from main.mail.functions import sendMail
-            from main.models.notificaciones import Notificacion # Importamos tu modelo
+            from main.models.notificaciones import Notificacion
 
-            # --- NOVEDAD 2: CREAR NOTIFICACIÓN EN LA BASE DE DATOS ---
             nueva_notificacion = Notificacion(
                 id_user=pedido.id_user,
                 mensaje=f"Tu pedido #{pedido.id_pedido} ahora se encuentra en estado: {nuevo_estado.upper()}"
             )
             db.session.add(nueva_notificacion)
-            # ---------------------------------------------------------
 
             cliente = db.session.get(UsuarioModel, pedido.id_user)
             if cliente and cliente.email:
@@ -107,10 +102,10 @@ class Pedidos(Resource):
         pedidos_query = db.session.query(PedidoModel)
 
         if usuario_actual and usuario_actual.rol == 'USER':
-            pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(usuario_actual_id))  #solo va a poder ver su propio historial de compras
+            pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(usuario_actual_id)) 
         else:
             if request.args.get('id_user'):
-                pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(request.args.get('id_user')))  #os deja ver todo
+                pedidos_query = pedidos_query.filter(PedidoModel.id_user == int(request.args.get('id_user'))) 
 
         # Filtros 
         estado = request.args.get('estado')

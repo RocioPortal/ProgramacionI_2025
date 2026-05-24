@@ -20,14 +20,12 @@ export class ProductListComponent {
 
   public getProductImage = getProductImage;
 
-  // 2. INYECTA EL CART SERVICE
   constructor(private cartService: CartService) { }
 
   onProductClick(product: Product) {
     this.productSelect.emit(product);
   }
 
-  // 3. AÑADE LA FUNCIÓN 'addToCart'
   addToCart(product: Product) {
     if (!(product as any).disponible) return;
     this.cartService.addProduct(product);

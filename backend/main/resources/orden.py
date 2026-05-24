@@ -4,7 +4,7 @@ from sqlalchemy import desc
 from .. import db
 from main.models import OrdenModel, PedidoModel, ProductoModel
 
-class Orden(Resource):                                      #para tocar un renglón específico)
+class Orden(Resource):                                      
     # Obtener una orden específica por ID
     def get(self, id):
         orden = db.session.query(OrdenModel).get_or_404(id)
@@ -26,10 +26,10 @@ class Orden(Resource):                                      #para tocar un rengl
         db.session.commit()
         return orden.to_json(), 201
 
-class Ordenes(Resource):                                     #para manejar el listado completo
+class Ordenes(Resource):                                     
     def get(self):
-        page = 1               #Número de página
-        per_page = 10          #Cantidad por página
+        page = 1              
+        per_page = 10         
         
         if request.args.get('page'):
             page = int(request.args.get('page'))
@@ -44,11 +44,11 @@ class Ordenes(Resource):                                     #para manejar el li
         if request.args.get('id_pedido'):
             ordenes = ordenes.filter(OrdenModel.id_pedido == int(request.args.get('id_pedido')))
         
-        # Filtrar por ID de usuario (asumiendo que existe una relación con pedido y pedido tiene id_user)
+        # Filtrar por ID de usuario 
         if request.args.get('id_user'):
-            ordenes = ordenes.join(PedidoModel).filter(PedidoModel.id_user == int(request.args.get('id_user')))    #Como la tabla Orden (los renglones) no tiene los datos del cliente, fíjate cómo usás .join(PedidoModel)
+            ordenes = ordenes.join(PedidoModel).filter(PedidoModel.id_user == int(request.args.get('id_user')))   
         
-        # Filtrar por fecha (asumiendo que existe un campo fecha_creacion)
+        # Filtrar por fecha 
         if request.args.get('fecha_desde') and hasattr(OrdenModel, 'fecha_creacion'):
             ordenes = ordenes.filter(OrdenModel.fecha_creacion >= request.args.get('fecha_desde'))
         if request.args.get('fecha_hasta') and hasattr(OrdenModel, 'fecha_creacion'):
@@ -58,7 +58,7 @@ class Ordenes(Resource):                                     #para manejar el li
         if request.args.get('estado'):
             ordenes = ordenes.join(PedidoModel).filter(PedidoModel.estado == request.args.get('estado'))
         
-        # Filtrar por nombre de cliente (asumiendo relación con pedido)
+        # Filtrar por nombre de cliente 
         if request.args.get('nombre_cliente'):
             ordenes = ordenes.join(PedidoModel).filter(
                 PedidoModel.nombre.like(f"%{request.args.get('nombre_cliente')}%")
@@ -100,15 +100,15 @@ class Ordenes(Resource):                                     #para manejar el li
     def post(self):
         data = request.get_json()
 
-        pedido_data = data.get("pedido")               #Obtenemos el pedido
+        pedido_data = data.get("pedido")               
         if not pedido_data:
             return {"message": "Datos del pedido faltan"}, 400
 
         nuevo_pedido = PedidoModel.from_json(pedido_data)
         db.session.add(nuevo_pedido)
-        db.session.flush()            #avisa a SQLite: "Che, andá reservándome un número de ID para este pedido"
+        db.session.flush()          
 
-        productos_data = data.get("productos")        #Extrae el carrito de compras
+        productos_data = data.get("productos")        
         if not productos_data:
             return {"message": "Lista de productos faltante"}, 400
 
@@ -116,10 +116,10 @@ class Ordenes(Resource):                                     #para manejar el li
             try:
                 orden = OrdenModel.from_json({
                     **producto,
-                    "id_pedido": nuevo_pedido.id_pedido  #A cada producto del carrito le inyecta "id_pedido"    
+                    "id_pedido": nuevo_pedido.id_pedido  
                 })
                 db.session.add(orden)
-            except ValueError as e:   #alidación de que la cantidad  (definida en models)
+            except ValueError as e:  
                 db.session.rollback()
                 return {"message": str(e)}, 400
 

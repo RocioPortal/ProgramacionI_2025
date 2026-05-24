@@ -2,19 +2,14 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth';
 
-export const authGuard: CanActivateFn = (route, state) => {      //"¿Esta persona inició sesión o es un visitante anónimo?"
-  const authService = inject(AuthService);   //authservice es el servicio que maneja el login
+export const authGuard: CanActivateFn = (route, state) => {      
+  const authService = inject(AuthService);   
   const router = inject(Router);
 
-  if (authService.isLoggedIn()) {        //verifica que este loguineado
+  if (authService.isLoggedIn()) {       
     return true;
   } else {
-    router.navigate(['/login']);           //patea directametne a la pantalla login si NO esta loguineado
+    router.navigate(['/login']);           
     return false;
   }
 };
-
-
-
-//auth-guard es patovica de pta principal, Solo se fija si tenés un token JWT guardado en tu navegador
-//role-guard es patovica del vip, Mira tu token y lo abre para leer el campo rol. Si la pantalla dice que solo entran ['ADMIN'] y vos tenés rol de USER, te rebota.

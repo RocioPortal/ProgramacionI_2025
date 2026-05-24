@@ -6,4 +6,3 @@ bootstrapApplication(App, appConfig)
   .catch((err) => console.error(err));
 
 
-  //Inicia la aplicación y carga la configuración de Angular (index.html)

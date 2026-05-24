@@ -1,8 +1,8 @@
 flask
-python-dotenv       # variables de entorno
-flask-restful       #Resources y definir endpoints
-flask_sqlalchemy    #definir modelos
-flask_migrate       #migraciones de la base de datos
-flask_jwt_extended  #manejar tokens
-flask-mail          #enviar correos
-flask-cors          #front hable con el back
+python-dotenv       
+flask-restful       
+flask_sqlalchemy    
+flask_migrate       
+flask_jwt_extended  
+flask-mail          
+flask-cors          

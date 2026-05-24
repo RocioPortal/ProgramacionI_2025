@@ -52,7 +52,7 @@ export class Pedidos implements OnInit {
       this.pedidoService.deletePedido(id).subscribe({
         next: () => {
           alert('Pedido eliminado');
-          this.loadPedidos(); // Esto ya funciona bien
+          this.loadPedidos(); 
         },
         error: (err) => alert('Error al eliminar el pedido')
       });

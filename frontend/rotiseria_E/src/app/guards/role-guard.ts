@@ -2,17 +2,17 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth';
 
-export const roleGuard = (allowedRoles: string[]): CanActivateFn => {      //¿tiene el ROL adecuado para ver esta pantalla específica?"
-  return (route, state) => {                                               // allowRoles da una lista con los roles permitidos
+export const roleGuard = (allowedRoles: string[]): CanActivateFn => {      
+  return (route, state) => {                                               
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    if (!authService.isLoggedIn()) {     //si no esta loguineado, lo manda al login sin importar el rol
+    if (!authService.isLoggedIn()) {    
       router.navigate(['/login']);
       return false;
     }
 
-    const userRole = authService.getRole();          //obtiene rol del usuario actual y compara con la lista de roles permitidos
+    const userRole = authService.getRole();          
 
     if (userRole && allowedRoles.includes(userRole)) {
       return true;
@@ -20,7 +20,7 @@ export const roleGuard = (allowedRoles: string[]): CanActivateFn => {      //¿t
       alert('No tienes permiso para acceder a esta sección.');
 
       if (userRole === 'ADMIN') {
-        router.navigate(['/administrador/menu']);             //redirigue segun toque
+        router.navigate(['/administrador/menu']);             
       } else if (userRole === 'EMPLEADO') {
         router.navigate(['/empleado/menu']);
       } else { 

@@ -10,9 +10,7 @@ from flask_jwt_extended import get_jwt_identity
 class Usuario(Resource):
     @role_required(['USER', 'ADMIN', 'EMPLEADO'])
     def get(self, id_user):
-        # id del usuario autenticado
         usuario_actual_id = get_jwt_identity()
-        # comparación
         if str(usuario_actual_id) != str(id_user):
             usuario_actual = db.session.get(UsuarioModel, usuario_actual_id)
             if not usuario_actual or usuario_actual.rol != 'ADMIN':
@@ -39,7 +37,6 @@ class Usuario(Resource):
 
         data = request.get_json()
 
-        # Validación del correo electrónico
         if 'email' in data:
             email = data['email']
             if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
@@ -47,7 +44,6 @@ class Usuario(Resource):
 
         if 'nombre' in data:
             usuario.nombre = data['nombre']
-        # Solo ADMIN/EMPLEADO pueden cambiar rol y estado
         if usuario_actual and usuario_actual.rol in ['ADMIN', 'EMPLEADO']:
             if 'rol' in data:
                 usuario.rol = data['rol']
@@ -177,7 +173,7 @@ class Usuarios(Resource):
         if 'rol' in data and data['rol'] != 'USER':
             return {"message": "Solo ADMIN puede asignar roles distintos a USER"}, 403
         else:
-            data['rol'] = 'USER'  # Asignación automática si no es ADMIN
+            data['rol'] = 'USER' 
 
         # Validación de correo
         if 'email' in data:
